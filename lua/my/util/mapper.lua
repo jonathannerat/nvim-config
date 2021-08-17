@@ -1,29 +1,15 @@
 local M = {}
 
-local function build_string(inner, prefix, suffix)
-	prefix = prefix or "<cmd>"
-	suffix = suffix or "<cr>"
-	return ("%s%s%s"):format(prefix, inner, suffix)
-end
-
-function M.cmd(command, cr)
-	return build_string(command, nil, cr)
-end
-
-function M.colon(command, cr)
-	return build_string(command, ":", cr)
-end
-
-function M.raw(command)
-	return build_string(command, "", "")
+function M.cmd(command)
+	return "<cmd>" .. command .. "<cr>"
 end
 
 function M.plug(command)
-	return build_string(command, "<plug>", "")
+	return "<plug>" .. command
 end
 
 function M.lua(command)
-	return M.cmd("lua " .. command)
+	return M.cmd("lua" .. command)
 end
 
 function M.bind(mappings, bufnr)

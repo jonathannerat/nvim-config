@@ -1,17 +1,16 @@
+local m = require "my.util.mapper"
+local bind, cmd, lua = m.bind, m.cmd, m.lua
+
 local M = {}
 
 M.packages = {
 	"editorconfig/editorconfig-vim",
 	"folke/lua-dev.nvim",
 	"folke/tokyonight.nvim",
-	"kyazdani42/nvim-tree.lua",
-	"lambdalisue/suda.vim",
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	"ray-x/lsp_signature.nvim",
 	"tpope/vim-commentary",
-	"tpope/vim-fugitive",
 	"tpope/vim-surround",
-	"wbthomason/packer.nvim",
 
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
@@ -22,7 +21,6 @@ M.packages = {
 	["leafo/moonscript-vim"] = { ft = "moon" },
 	["neomutt/neomutt.vim"] = { ft = { "mutt", "neomutt" } },
 	["nvim-telescope/telescope-fzf-native.nvim"] = { run = "make" },
-	["nvim-treesitter/playground"] = { run = ":TSUpdate query" },
 	["tbastos/vim-lua"] = { ft = "lua" },
 	["tridactyl/vim-tridactyl"] = { ft = "tridactyl" },
 	["vhyrro/tree-sitter-norg"] = { ft = "norg" },
@@ -49,8 +47,11 @@ M.packages = {
 
 	["L3MON4D3/LuaSnip"] = {
 		config = function()
-			require("my.snippets").setup()
+			require("my.plugins.luasnip").config()
 		end,
+		user = {
+			m = require("my.plugins.luasnip").mappings,
+		},
 	},
 
 	["norcalli/nvim-colorizer.lua"] = {
@@ -65,6 +66,14 @@ M.packages = {
 				icons = false,
 			}
 		end,
+		user = {
+			m = {
+				["n|ns|<leader>tR"] = cmd "TroubleRefresh",
+				["n|ns|<leader>td"] = cmd "Trouble lsp_document_diagnostics",
+				["n|ns|<leader>tr"] = cmd "Trouble lsp_references",
+				["n|ns|<leader>tt"] = cmd "TroubleToggle",
+			},
+		},
 	},
 
 	["iamcco/markdown-preview.nvim"] = {
@@ -77,6 +86,10 @@ M.packages = {
 				mkdp_echo_preview_url = 1,
 				mkdp_port = 8007,
 			},
+			m = {
+				["n|ns|<leader>mP"] = cmd "MarkdownPreviewStop",
+				["n|ns|<leader>mp"] = cmd "MarkdownPreview",
+			},
 		},
 	},
 
@@ -84,6 +97,9 @@ M.packages = {
 		config = function()
 			require("my.plugins.compe").config()
 		end,
+		user = {
+			m = require("my.plugins.compe").mappings,
+		},
 	},
 
 	["nvim-treesitter/nvim-treesitter"] = {
@@ -104,6 +120,9 @@ M.packages = {
 		config = function()
 			require("my.plugins.telescope").config()
 		end,
+		user = {
+			m = require("my.plugins.telescope").mappings,
+		},
 	},
 
 	["vhyrro/neorg"] = {
@@ -157,6 +176,7 @@ M.packages = {
 			},
 		},
 	},
+
 	["lervag/vimtex"] = {
 		user = {
 			g = {
@@ -169,6 +189,55 @@ M.packages = {
 					executable = "latexmk",
 					options = { "-verbose", "-file-line-error", "-synctex=1", "-interaction=nonstopmode" },
 				},
+			},
+		},
+	},
+
+	["tpope/vim-fugitive"] = {
+		user = {
+			m = {
+				["n|ns|<leader>g"] = cmd "G",
+				["n|ns|<leader>gc"] = cmd "Git commit",
+				["n|ns|<leader>gm"] = cmd "Git mergetool",
+			},
+		},
+	},
+
+	["kyazdani42/nvim-tree.lua"] = {
+		user = {
+			m = {
+				["n|ns|<c-n>"] = cmd "NvimTreeToggle",
+				["n|ns|<leader>N"] = cmd "NvimTreeFocus",
+				["n|ns|<leader>n"] = cmd "NvimTreeFindFile",
+			},
+		},
+	},
+	["wbthomason/packer.nvim"] = {
+		user = {
+			m = {
+				["n|ns|<leader>pc"] = cmd "PackerClean",
+				["n|ns|<leader>pi"] = cmd "PackerInstall",
+				["n|ns|<leader>pp"] = cmd "PackerCompile profile=true",
+				["n|ns|<leader>ps"] = cmd "PackerSync",
+				["n|ns|<leader>pu"] = cmd "PackerUpdate",
+			},
+		},
+	},
+	["lambdalisue/suda.vim"] = {
+		user = {
+			m = {
+				["n|ns|<leader>sr"] = cmd "SudaRead",
+				["n|ns|<leader>sw"] = cmd "SudaWrite",
+			},
+		},
+	},
+
+	["nvim-treesitter/playground"] = {
+		run = ":TSUpdate query",
+		user = {
+			m = {
+				["n|ns|<leader>th"] = cmd "TSHighlightCapturesUnderCursor",
+				["n|ns|<leader>tp"] = cmd "TSPlaygroundToggle",
 			},
 		},
 	},
@@ -202,12 +271,18 @@ local function packer_setup(use)
 			end
 		end
 
+		-- run commands
 		if opts.c then
 			for _, cmd in ipairs(opts.c) do
 				if cmd:sub(1, 1) == ":" then
 					vim.api.nvim_command(cmd:sub(2))
 				end
 			end
+		end
+
+		-- setup mappings
+		if opts.m then
+			bind(opts.m)
 		end
 	end
 end

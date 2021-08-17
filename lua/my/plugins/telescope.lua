@@ -1,9 +1,9 @@
 local t = require "telescope"
 local tp = require "telescope.previewers"
+local m = require "my.util.mapper"
+local cmd, lua = m.cmd, m.lua
 
 local M = {}
-
-M.extensions = { "fzf", "projects" }
 
 --- opens the selected file on your system's default file opener
 local function action_open(prompt_bufnr)
@@ -37,7 +37,21 @@ local function action_open(prompt_bufnr)
 	os.execute(string.format("%s %s", opener, filename))
 end
 
-function M.config()
+M.extensions = { "fzf", "projects" }
+
+M.mappings = {
+	["n|ns|<leader>fF"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-HI",
+	["n|ns|<leader>fb"] = cmd "Telescope buffers",
+	["n|ns|<leader>ff"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-H",
+	["n|ns|<leader>fg"] = cmd "Telescope git_files show_untracked=false",
+	["n|ns|<leader>fh"] = cmd "Telescope help_tags",
+	["n|ns|<leader>fl"] = lua "require'telescope.builtin'.live_grep{ layout_strategy='vertical' }",
+	["n|ns|<leader>fm"] = cmd "Telescope man_pages",
+	["n|ns|<leader>fp"] = cmd "Telescope projects",
+	["n|ns|<leader>ft"] = cmd "Telescope treesitter",
+}
+
+M.config = function()
 	t.setup {
 		defaults = {
 			file_previewer = tp.vim_buffer_cat.new,

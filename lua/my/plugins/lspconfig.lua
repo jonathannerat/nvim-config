@@ -1,6 +1,5 @@
-local M = {}
-
 local m = require "my.util.mapper"
+local cmd, bind = m.cmd, m.bind
 
 local lualsp_path = os.getenv "HOME" .. "/.local/src/lua-language-server/"
 
@@ -13,6 +12,21 @@ local luadev = require("lua-dev").setup {
 		},
 	},
 }
+
+local default_mappings = {
+	["n|ns|<C-k>"] = cmd "lua vim.lsp.buf.signature_help()",
+	["n|ns|<leader>A"] = cmd "lua vim.lsp.buf.code_action()",
+	["n|ns|<leader>R"] = cmd "lua vim.lsp.buf.rename()",
+	["n|ns|K"] = cmd "lua vim.lsp.buf.hover()",
+	["n|ns|[d"] = cmd "lua vim.lsp.diagnostic.goto_prev()",
+	["n|ns|]d"] = cmd "lua vim.lsp.diagnostic.goto_next()",
+	["n|ns|gD"] = cmd "lua vim.lsp.buf.declaration()",
+	["n|ns|gd"] = cmd "lua vim.lsp.buf.definition()",
+	["n|ns|gi"] = cmd "lua vim.lsp.buf.implementation()",
+	["n|ns|gr"] = cmd "lua vim.lsp.buf.references()",
+}
+
+local M = {}
 
 M.lsp_servers = {
 	bashls = {},
@@ -39,36 +53,23 @@ M.lsp_signature_config = {
 	},
 }
 
-M.default_mappings = {
-	["n|ns|<C-k>"] = m.cmd "lua vim.lsp.buf.signature_help()",
-	["n|ns|<leader>A"] = m.cmd "lua vim.lsp.buf.code_action()",
-	["n|ns|<leader>R"] = m.cmd "lua vim.lsp.buf.rename()",
-	["n|ns|K"] = m.cmd "lua vim.lsp.buf.hover()",
-	["n|ns|[d"] = m.cmd "lua vim.lsp.diagnostic.goto_prev()",
-	["n|ns|]d"] = m.cmd "lua vim.lsp.diagnostic.goto_next()",
-	["n|ns|gD"] = m.cmd "lua vim.lsp.buf.declaration()",
-	["n|ns|gd"] = m.cmd "lua vim.lsp.buf.definition()",
-	["n|ns|gi"] = m.cmd "lua vim.lsp.buf.implementation()",
-	["n|ns|gr"] = m.cmd "lua vim.lsp.buf.references()",
-}
-
 M.on_attach = function(client, bufnr)
 	-- share this instance for all buffers
-	local mappings = M.default_mappings
+	local mappings = default_mappings
 
 	if client.resolved_capabilities.document_formatting then
 		-- create a copy for a specific buffer if it has more capabilities
-		mappings = vim.fn.copy(M.default_mappings)
-		mappings["n|ns|<leader>sf"] = m.cmd "lua vim.lsp.buf.formatting()"
+		mappings = vim.fn.copy(default_mappings)
+		mappings["n|ns|<leader>sf"] = cmd "lua vim.lsp.buf.formatting()"
 	end
 
 	if client.resolved_capabilities.document_range_formatting then
 		-- only create one copy
-		mappings = mappings == M.default_mappings and vim.fn.copy(M.default_mappings) or mappings
-		mappings["v|ns|<leader>sf"] = m.cmd "lua vim.lsp.buf.range_formatting()"
+		mappings = mappings == default_mappings and vim.fn.copy(default_mappings) or mappings
+		mappings["v|ns|<leader>sf"] = cmd "lua vim.lsp.buf.range_formatting()"
 	end
 
-	m.bind(mappings, bufnr)
+	bind(mappings, bufnr)
 
 	require("lsp_signature").on_attach(M.lsp_signature_config)
 end
@@ -83,7 +84,7 @@ M.capabilities.textDocument.completion.completionItem.resolveSupport = {
 	},
 }
 
-function M.config()
+M.config = function()
 	local lspconfig = require "lspconfig"
 
 	for lsp, config in pairs(M.lsp_servers) do

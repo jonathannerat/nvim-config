@@ -1,5 +1,33 @@
 local M = {}
 
+local completion_item_kind = {
+	"   (Text) ",
+	"   (Method)",
+	"   (Function)",
+	"   (Constructor)",
+	" ﴲ  (Field)",
+	"[] (Variable)",
+	"   (Class)",
+	" ﰮ  (Interface)",
+	"   (Module)",
+	" 襁 (Property)",
+	"   (Unit)",
+	"   (Value)",
+	" 練 (Enum)",
+	"   (Keyword)",
+	"   (Snippet)",
+	"   (Color)",
+	"   (File)",
+	"   (Reference)",
+	"   (Folder)",
+	"   (EnumMember)",
+	" ﲀ  (Constant)",
+	" ﳤ  (Struct)",
+	"   (Event)",
+	"   (Operator)",
+	"   (TypeParameter)",
+}
+
 M.setup_config = {
 	enabled = true,
 	autocomplete = true,
@@ -34,38 +62,14 @@ M.setup_config = {
 	},
 }
 
-M.completion_item_kind = {
-	"   (Text) ",
-	"   (Method)",
-	"   (Function)",
-	"   (Constructor)",
-	" ﴲ  (Field)",
-	"[] (Variable)",
-	"   (Class)",
-	" ﰮ  (Interface)",
-	"   (Module)",
-	" 襁 (Property)",
-	"   (Unit)",
-	"   (Value)",
-	" 練 (Enum)",
-	"   (Keyword)",
-	"   (Snippet)",
-	"   (Color)",
-	"   (File)",
-	"   (Reference)",
-	"   (Folder)",
-	"   (EnumMember)",
-	" ﲀ  (Constant)",
-	" ﳤ  (Struct)",
-	"   (Event)",
-	"   (Operator)",
-	"   (TypeParameter)",
-}
-
 M.config = function()
-	vim.lsp.protocol.CompletionItemKind = M.completion_item_kind
+	vim.lsp.protocol.CompletionItemKind = completion_item_kind
 
 	require("compe").setup(M.setup_config)
 end
+
+M.mappings = {
+	["i|ens|<cr>"] = "compe#confirm('<cr>')",
+}
 
 return M
