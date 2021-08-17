@@ -21,3 +21,9 @@
 	)
 	(#eq? @_identifier "tex_snippets")
 ))
+
+((local_variable_declaration
+	(variable_declarator (identifier) @_identifier)
+	(string) @vim
+	(#eq? @_identifier "vim_cmds")
+))

@@ -1,19 +1,16 @@
 local M = {}
 
 M.packages = {
-	"eddyekofo94/gruvbox-flat.nvim",
 	"editorconfig/editorconfig-vim",
 	"folke/lua-dev.nvim",
 	"folke/tokyonight.nvim",
 	"kyazdani42/nvim-tree.lua",
 	"lambdalisue/suda.vim",
-	"lervag/vimtex",
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	"ray-x/lsp_signature.nvim",
 	"tpope/vim-commentary",
 	"tpope/vim-fugitive",
 	"tpope/vim-surround",
-	"vim-pandoc/vim-pandoc",
 	"wbthomason/packer.nvim",
 
 	["arrufat/vala.vim"] = { ft = "vala" },
@@ -22,7 +19,6 @@ M.packages = {
 	["cespare/vim-toml"] = { ft = "toml" },
 	["embark-theme/vim"] = { as = "embark-theme" },
 	["gkz/vim-ls"] = { as = "livescript-syntax", ft = "ls" },
-	["glacambre/firenvim"] = { run = ":call firenvim#install(0)" },
 	["leafo/moonscript-vim"] = { ft = "moon" },
 	["neomutt/neomutt.vim"] = { ft = { "mutt", "neomutt" } },
 	["nvim-telescope/telescope-fzf-native.nvim"] = { run = "make" },
@@ -73,7 +69,15 @@ M.packages = {
 
 	["iamcco/markdown-preview.nvim"] = {
 		run = "cd app && yarn install",
+		cmd = "MarkdownPreview",
 		ft = { "markdown", "pandoc.markdown", "rmd" },
+		user = {
+			g = {
+				mkdp_open_to_the_world = 1,
+				mkdp_echo_preview_url = 1,
+				mkdp_port = 8007,
+			},
+		},
 	},
 
 	["hrsh7th/nvim-compe"] = {
@@ -108,9 +112,72 @@ M.packages = {
 		end,
 		ft = "norg",
 	},
+
+	["ahmedkhalf/project.nvim"] = {
+		config = function()
+			require("project_nvim").setup {
+				silent_chdir = false,
+				datapath = vim.fn.stdpath "data" .. "/projects",
+			}
+		end,
+		user = {
+			g = {
+				nvim_tree_update_cwd = 1,
+				nvim_tree_respect_buf_cwd = 1,
+			},
+		},
+	},
+
+	["vim-pandoc/vim-pandoc"] = {
+		user = {
+			g = {
+				["pandoc#formattings#mode"] = "h",
+				["pandoc#formattings#textwidth"] = 100,
+			},
+		},
+	},
+
+	["eddyekofo94/gruvbox-flat.nvim"] = {
+		user = {
+			g = {
+				gruvbox_flat_style = "hard",
+			},
+		},
+	},
+
+	["glacambre/firenvim"] = {
+		run = ":call firenvim#install(0)",
+		user = {
+			g = {
+				firenvim_config = {
+					localSettings = {
+						[".*"] = { cmdline = "neovim", takeover = "never" },
+					},
+				},
+			},
+		},
+	},
+	["lervag/vimtex"] = {
+		user = {
+			g = {
+				tex_flavor = "latex",
+				tex_conceal = "adbmg",
+				vimtex_compiler_latexmk = {
+					build_dir = "build",
+					callback = 1,
+					continuous = 1,
+					executable = "latexmk",
+					options = { "-verbose", "-file-line-error", "-synctex=1", "-interaction=nonstopmode" },
+				},
+			},
+		},
+	},
 }
 
 local function packer_setup(use)
+	local useropts = {}
+
+	-- setup packages
 	for k, package in pairs(M.packages) do
 		if type(k) == "number" then
 			package = { package }
@@ -118,7 +185,30 @@ local function packer_setup(use)
 			package[1] = k
 		end
 
+		if package.user then
+			useropts[k] = package.user
+			package.user = nil
+		end
+
 		use(package)
+	end
+
+	-- setup user options
+	for _, opts in pairs(useropts) do
+		-- define globals
+		if opts.g then
+			for gk, gv in pairs(opts.g) do
+				vim.g[gk] = gv
+			end
+		end
+
+		if opts.c then
+			for _, cmd in ipairs(opts.c) do
+				if cmd:sub(1, 1) == ":" then
+					vim.api.nvim_command(cmd:sub(2))
+				end
+			end
+		end
 	end
 end
 

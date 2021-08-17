@@ -44,8 +44,6 @@ M.globals = {
 }
 
 M.setup = function()
-	vim.cmd("colorscheme " .. custom.theme)
-
 	for opt, value in pairs(M.options) do
 		vim.o[opt] = value
 	end
