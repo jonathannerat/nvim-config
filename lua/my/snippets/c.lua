@@ -15,16 +15,13 @@ rec_case = function()
 		c(1, {
 			t "",
 			s(nil, { t { "", "\t\tbreak;", "\tdefault:", "\t\t" }, i(1, "// code") }),
-			s(
-				nil,
-				{
-					t { "", "\t\tbreak;", "\tcase " },
-					i(1, "value"),
-					t { ":", "\t\t" },
-					i(2, "// code"),
-					d(3, rec_case, {}),
-				}
-			),
+			s(nil, {
+				t { "", "\t\tbreak;", "\tcase " },
+				i(1, "value"),
+				t { ":", "\t\t" },
+				i(2, "// code"),
+				d(3, rec_case, {}),
+			}),
 		}),
 	})
 end
