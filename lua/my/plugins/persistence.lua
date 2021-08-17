@@ -1,8 +1,8 @@
 local M = {}
 
 function M.config()
-	require'persistence'.setup {
-		dir = vim.fn.expand(vim.fn.stdpath('data') .. '/sessions/'),
+	require("persistence").setup {
+		dir = vim.fn.expand(vim.fn.stdpath "data" .. "/sessions/"),
 	}
 end
 

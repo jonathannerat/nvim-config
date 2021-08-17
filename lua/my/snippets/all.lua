@@ -1,4 +1,4 @@
-local ls = require'luasnip'
+local ls = require "luasnip"
 local S, c, s, t, i = ls.s, ls.c, ls.sn, ls.t, ls.i
 
 ---snippet builder for AutoPairs like behavious
@@ -14,24 +14,24 @@ local function pairs(p, opts)
 	}
 
 	if opts and opts.spaced then
-		choices[#choices+1] = s(nil, { t(l..' '), i(1), t(' '..r)})
+		choices[#choices + 1] = s(nil, { t(l .. " "), i(1), t(" " .. r) })
 	end
 
 	if opts and opts.newline then
-		choices[#choices+1] = s(nil, { t { l, '\t' }, i(1), t { '', r } })
+		choices[#choices + 1] = s(nil, { t { l, "\t" }, i(1), t { "", r } })
 	end
 
-	return S({ trig=l, wordTrig=false }, {
-		c(1, choices)
+	return S({ trig = l, wordTrig = false }, {
+		c(1, choices),
 	})
 end
 
 return {
-	pairs({ '(', ')' }, { spaced = true, newline = true }),
-	pairs({ '{', '}' }, { spaced = true, newline = true }),
-	pairs({ '[', ']' }, { spaced = true, newline = true }),
-	pairs({ '[[', ']]' }),
-	pairs('`'),
-	pairs("'"),
-	pairs('"'),
+	pairs({ "(", ")" }, { spaced = true, newline = true }),
+	pairs({ "{", "}" }, { spaced = true, newline = true }),
+	pairs({ "[", "]" }, { spaced = true, newline = true }),
+	pairs { "[[", "]]" },
+	pairs "`",
+	pairs "'",
+	pairs '"',
 }

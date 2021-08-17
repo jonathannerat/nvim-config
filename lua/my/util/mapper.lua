@@ -1,9 +1,9 @@
 local M = {}
 
 local function build_string(inner, prefix, suffix)
-	prefix = prefix or '<cmd>'
-	suffix = suffix or '<cr>'
-	return ('%s%s%s'):format(prefix, inner, suffix)
+	prefix = prefix or "<cmd>"
+	suffix = suffix or "<cr>"
+	return ("%s%s%s"):format(prefix, inner, suffix)
 end
 
 function M.cmd(command, cr)
@@ -11,19 +11,19 @@ function M.cmd(command, cr)
 end
 
 function M.colon(command, cr)
-	return build_string(command, ':', cr)
+	return build_string(command, ":", cr)
 end
 
 function M.raw(command)
-	return build_string(command, '', '')
+	return build_string(command, "", "")
 end
 
 function M.plug(command)
-	return build_string(command, '<plug>', '')
+	return build_string(command, "<plug>", "")
 end
 
 function M.lua(command)
-	return M.cmd('lua ' .. command)
+	return M.cmd("lua " .. command)
 end
 
 function M.bind(mappings, bufnr)
@@ -44,18 +44,18 @@ function M.parse_opt_chars(optchars)
 		expr = false,
 		noremap = false,
 		silent = false,
-		nowait = false
+		nowait = false,
 	}
 
 	for i = 1, #optchars do
 		local c = optchars:sub(i, i)
-		if c == 'e' then
+		if c == "e" then
 			o.expr = true
-		elseif c == 'n' then
+		elseif c == "n" then
 			o.noremap = true
-		elseif c == 's' then
+		elseif c == "s" then
 			o.silent = true
-		elseif c == 'w' then
+		elseif c == "w" then
 			o.nowait = true
 		end
 	end

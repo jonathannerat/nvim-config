@@ -1,5 +1,5 @@
-local ls = require'luasnip'
-local u = require 'my.util.snippets'
+local ls = require "luasnip"
+local u = require "my.util.snippets"
 local S = ls.snippet
 local c = ls.choice_node
 local d = ls.dynamic_node
@@ -17,9 +17,9 @@ rec_list = function(_, _, indent)
 
 	return s(nil, {
 		c(1, {
-			t '',
-			s(nil, { t {'', (indent and '\t' or '') .. '\\item '}, i(1), d(2, rec_list, {}) })
-		})
+			t "",
+			s(nil, { t { "", (indent and "\t" or "") .. "\\item " }, i(1), d(2, rec_list, {}) }),
+		}),
 	})
 end
 
@@ -28,9 +28,9 @@ end
 ---@return SnippetNode
 local function text_faces(_, _, type)
 	local choices = {
-		t '\\textbf{',
-		t '\\textit{',
-		t '\\texttt{',
+		t "\\textbf{",
+		t "\\textit{",
+		t "\\texttt{",
 	}
 
 	print(vim.inspect(type))
@@ -48,7 +48,7 @@ local function text_faces(_, _, type)
 		choices[swap] = tmp
 	end
 
-	return s(nil, { c(2, choices), i(1), t '}' })
+	return s(nil, { c(2, choices), i(1), t "}" })
 end
 
 local tex_snippets = {
@@ -77,48 +77,69 @@ $0
 }
 
 local snippets = {
-	S('begin', {
-		t '\\begin{',
+	S("begin", {
+		t "\\begin{",
 		i(1),
-		t { '}', '\t' },
+		t { "}", "\t" },
 		i(0),
-		t { '', '\\end{' },
+		t { "", "\\end{" },
 		f(u.copy, 1),
-		t '}'
+		t "}",
 	}),
-	S('list', {
-		t '\\begin{', c(1, { t 'enumerate', t 'itemize' }), t { '}',
-			'\t\\item ' }, i(2), d(3, rec_list, {}), t { '',
-			'\\end{' }, f(u.copy, 1), t '}'
+	S("list", {
+		t "\\begin{",
+		c(1, { t "enumerate", t "itemize" }),
+		t { "}", "\t\\item " },
+		i(2),
+		d(3, rec_list, {}),
+		t { "", "\\end{" },
+		f(u.copy, 1),
+		t "}",
 	}),
-	S('-', {
-		t '\\item ', i(1), d(2, rec_list, {}, false)
+	S("-", {
+		t "\\item ",
+		i(1),
+		d(2, rec_list, {}, false),
 	}),
-	S({ trig='sec', wordTrig=true }, {
-		t {'\\section{' }, i(1, 'Section'), t '}'
+	S({ trig = "sec", wordTrig = true }, {
+		t { "\\section{" },
+		i(1, "Section"),
+		t "}",
 	}),
-	S({ trig='ssec', wordTrig=true }, {
-		t {'\\subsection{' }, i(1, 'Subsection'), t '}'
+	S({ trig = "ssec", wordTrig = true }, {
+		t { "\\subsection{" },
+		i(1, "Subsection"),
+		t "}",
 	}),
-	S({ trig='b', wordTrig=true }, {
-		t('\\textbf{'), i(1), t('}')
+	S({ trig = "b", wordTrig = true }, {
+		t "\\textbf{",
+		i(1),
+		t "}",
 	}),
-	S({ trig='i', wordTrig=true }, {
-		t('\\textit{'), i(1), t('}')
+	S({ trig = "i", wordTrig = true }, {
+		t "\\textit{",
+		i(1),
+		t "}",
 	}),
-	S({ trig='tt', wordTrig=true }, {
-		t('\\texttt{'), i(1), t('}')
+	S({ trig = "tt", wordTrig = true }, {
+		t "\\texttt{",
+		i(1),
+		t "}",
 	}),
-	S({ trig='mi', wordTrig=true, description='Inline math' }, {
-		t '$', i(1), t'$'
+	S({ trig = "mi", wordTrig = true, description = "Inline math" }, {
+		t "$",
+		i(1),
+		t "$",
 	}),
-	S({ trig='mb', wordTrig=true, description='Math block' }, {
-		t { '\\[', '\t' }, i(1), t { '', '\\]' }
+	S({ trig = "mb", wordTrig = true, description = "Math block" }, {
+		t { "\\[", "\t" },
+		i(1),
+		t { "", "\\]" },
 	}),
 }
 
 for trigger, snippet_def in pairs(tex_snippets) do
-	snippets[#snippets+1] = ls.parser.parse_snippet(trigger, snippet_def)
+	snippets[#snippets + 1] = ls.parser.parse_snippet(trigger, snippet_def)
 end
 
 return snippets

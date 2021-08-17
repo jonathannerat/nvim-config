@@ -5,13 +5,13 @@ M.setup_config = {
 	autocomplete = true,
 	documentation = true,
 	min_length = 1,
-	preselect = 'enable',
+	preselect = "enable",
 	throttle_time = 80,
 	source_timeout = 200,
 	incomplete_delay = 400,
-	max_abbr_width   = 100,
-	max_kind_width   = 100,
-	max_menu_width   = 100,
+	max_abbr_width = 100,
+	max_kind_width = 100,
+	max_menu_width = 100,
 	source = {
 		luasnip = {
 			enable = true,
@@ -27,11 +27,11 @@ M.setup_config = {
 		},
 		spell = {
 			enable = true,
-			filetypes = { 'text', 'tex', 'mail', 'gitcommit' },
+			filetypes = { "text", "tex", "mail", "gitcommit" },
 		},
 		path = true,
 		neorg = true,
-	}
+	},
 }
 
 M.completion_item_kind = {
@@ -59,13 +59,13 @@ M.completion_item_kind = {
 	" ﳤ  (Struct)",
 	"   (Event)",
 	"   (Operator)",
-	"   (TypeParameter)"
+	"   (TypeParameter)",
 }
 
 M.config = function()
 	vim.lsp.protocol.CompletionItemKind = M.completion_item_kind
 
-	require'compe'.setup(M.setup_config)
+	require("compe").setup(M.setup_config)
 end
 
 return M

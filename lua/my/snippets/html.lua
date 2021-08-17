@@ -1,5 +1,5 @@
-local ls = require'luasnip'
-local u = require'my.util.snippets'
+local ls = require "luasnip"
+local u = require "my.util.snippets"
 local S = ls.snippet
 local c = ls.choice_node
 local d = ls.dynamic_node
@@ -18,31 +18,31 @@ local html_snippets = {
 </head>
 <body>
 	${0:}
-</body>]]
+</body>]],
 }
 
 local snippets = {
-	S('script', {
-		t '<script',
-		c (1, {
+	S("script", {
+		t "<script",
+		c(1, {
 			s(nil, {
 				t ' src="',
-				i(1, 'path/to/file.js'),
+				i(1, "path/to/file.js"),
 				t '">',
 			}),
 			s(nil, {
-				t { '>', '\t' },
-				i(1, '// code'),
-				t { '', '' },
-			})
+				t { ">", "\t" },
+				i(1, "// code"),
+				t { "", "" },
+			}),
 		}),
 		i(0),
-		t '</script>',
+		t "</script>",
 	}),
 }
 
 for trigger, snippet_def in ipairs(html_snippets) do
-	snippets[#snippets+1] = ls.parser.parse_snippet(trigger, snippet_def)
+	snippets[#snippets + 1] = ls.parser.parse_snippet(trigger, snippet_def)
 end
 
 return snippets
