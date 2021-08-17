@@ -3,6 +3,8 @@ local tp = require "telescope.previewers"
 
 local M = {}
 
+M.extensions = { "fzf", "projects" }
+
 --- opens the selected file on your system's default file opener
 local function action_open(prompt_bufnr)
 	local action_state = require "telescope.actions.state"
@@ -56,7 +58,9 @@ function M.config()
 		},
 	}
 
-	t.load_extension "fzf"
+	for _, e in ipairs(M.extensions) do
+		t.load_extension(e)
+	end
 end
 
 return M
