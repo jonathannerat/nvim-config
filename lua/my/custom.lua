@@ -1,5 +1,4 @@
-local M = {}
-
-M.lualine_theme = 'gruvbox-flat'
-
-return M
+return {
+	theme = "gruvbox-flat",
+	lualine_theme = "gruvbox-flat",
+}
