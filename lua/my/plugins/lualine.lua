@@ -20,7 +20,7 @@ M.setup_config = {
 	options = {
 		theme = require("my.custom").lualine_theme,
 	},
-	extensions = { "fzf", "fugitive" },
+	extensions = { "nvim-tree", "fugitive", "toggleterm" },
 }
 
 M.config = function()
