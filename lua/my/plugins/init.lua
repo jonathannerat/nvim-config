@@ -9,6 +9,7 @@ M.packages = {
 	"folke/tokyonight.nvim",
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	"ray-x/lsp_signature.nvim",
+	"stsewd/gx-extended.vim",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
 
@@ -40,6 +41,7 @@ M.packages = {
 	},
 
 	["andweeb/presence.nvim"] = {
+		opt = true,
 		config = function()
 			require("presence"):setup()
 		end,
@@ -69,7 +71,8 @@ M.packages = {
 		user = {
 			m = {
 				["n|ns|<leader>tR"] = cmd "TroubleRefresh",
-				["n|ns|<leader>td"] = cmd "Trouble lsp_document_diagnostics",
+				["n|ns|<leader>tD"] = cmd "Trouble lsp_document_diagnostics",
+				["n|ns|<leader>td"] = cmd "Trouble lsp_definitions",
 				["n|ns|<leader>tr"] = cmd "Trouble lsp_references",
 				["n|ns|<leader>tt"] = cmd "TroubleToggle",
 			},
@@ -150,8 +153,8 @@ M.packages = {
 	["vim-pandoc/vim-pandoc"] = {
 		user = {
 			g = {
-				["pandoc#formattings#mode"] = "h",
-				["pandoc#formattings#textwidth"] = 100,
+				["pandoc#formatting#mode"] = "h",
+				["pandoc#formatting#textwidth"] = 120,
 			},
 		},
 	},
@@ -223,6 +226,7 @@ M.packages = {
 			},
 		},
 	},
+
 	["lambdalisue/suda.vim"] = {
 		user = {
 			m = {
@@ -240,6 +244,23 @@ M.packages = {
 				["n|ns|<leader>tp"] = cmd "TSPlaygroundToggle",
 			},
 		},
+	},
+
+	["~/projects/nvim-toggleterm.lua"] = {
+		config = function()
+			require("toggleterm").setup {
+				open_mapping = [[<c-\>]],
+				persist_size = false,
+				direction = "auto",
+				size = function(term)
+					if term:get_direction() == "horizontal" then
+						return 15
+					elseif term:get_direction() == "vertical" then
+						return vim.o.columns * 0.3
+					end
+				end,
+			}
+		end,
 	},
 }
 
