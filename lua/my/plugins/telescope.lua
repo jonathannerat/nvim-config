@@ -45,7 +45,7 @@ M.mappings = {
 	["n|ns|<leader>ff"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-H",
 	["n|ns|<leader>fg"] = cmd "Telescope git_files show_untracked=false",
 	["n|ns|<leader>fh"] = cmd "Telescope help_tags",
-	["n|ns|<leader>fl"] = lua "require'telescope.builtin'.live_grep{ layout_strategy='vertical' }",
+	["n|ns|<leader>fl"] = cmd "Telescope live_grep layout_strategy=vertical",
 	["n|ns|<leader>fm"] = cmd "Telescope man_pages",
 	["n|ns|<leader>fp"] = cmd "Telescope projects",
 	["n|ns|<leader>ft"] = cmd "Telescope treesitter",
