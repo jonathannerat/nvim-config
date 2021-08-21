@@ -1,5 +1,3 @@
-local custom = require "my.custom"
-
 local M = {}
 
 M.options = {
@@ -12,6 +10,7 @@ M.options = {
 	cursorline = true,
 	expandtab = false,
 	fillchars = "eob:~",
+	hidden = true,
 	ignorecase = true,
 	inccommand = "split",
 	lazyredraw = true,
@@ -34,8 +33,6 @@ M.options = {
 	tabstop = 2,
 	termguicolors = true,
 	timeoutlen = 300,
-	-- t_8f = [[\<Esc>[38;2;%lu;%lu;%lum]],
-	-- t_8b = [[\<Esc>[48;2;%lu;%lu;%lum]],
 	undofile = true,
 	wrap = true,
 	writebackup = false,
