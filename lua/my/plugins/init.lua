@@ -20,6 +20,7 @@ M.packages = {
 	"stsewd/gx-extended.vim",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
+	'RRethy/nvim-treesitter-textsubjects',
 
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
