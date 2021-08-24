@@ -29,19 +29,20 @@ local default_mappings = {
 local M = {}
 
 M.lsp_servers = {
-	bashls = {},
-	ccls = {},
-	cssls = {},
+	"bashls",
+	"ccls",
+	"cssls",
+	"pyright",
+	"rust_analyzer",
+	"solargraph",
+	"texlab",
+	"tsserver",
+	"vimls",
+	"gopls",
 	jsonls = {
-		cmd = { "json-languageserver", "--stdio" },
+	cmd = { "json-languageserver", "--stdio" },
 	},
-	pyright = {},
-	rust_analyzer = {},
-	solargraph = {},
 	sumneko_lua = luadev,
-	texlab = {},
-	tsserver = {},
-	vimls = {},
 }
 
 M.lsp_signature_config = {
@@ -87,7 +88,10 @@ M.capabilities.textDocument.completion.completionItem.resolveSupport = {
 M.config = function()
 	local lspconfig = require "lspconfig"
 
-	for lsp, config in pairs(M.lsp_servers) do
+	for k, v in pairs(M.lsp_servers) do
+		local lsp = type(k) == "number" and v or k
+		local config = type(k) == "number" and {} or v
+
 		if not config.on_attach then
 			config.on_attach = M.on_attach
 		end
