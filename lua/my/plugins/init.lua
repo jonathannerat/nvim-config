@@ -37,6 +37,7 @@ M.packages = {
 	["vim-pandoc/vim-pandoc-syntax"] = { ft = "pandoc" },
 
 	["neovim/nvim-lspconfig"] = {
+		requires = { 'onsails/lspkind-nvim' },
 		config = function()
 			require("my.plugins.lspconfig").config()
 		end,
@@ -105,13 +106,16 @@ M.packages = {
 		},
 	},
 
-	["hrsh7th/nvim-compe"] = {
-		config = function()
-			require("my.plugins.compe").config()
-		end,
-		user = {
-			m = require("my.plugins.compe").mappings,
+	["hrsh7th/nvim-cmp"] = {
+		requires = {
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-nvim-lsp",
+			"saadparwaiz1/cmp_luasnip",
+			"hrsh7th/cmp-path",
 		},
+		config = function()
+			require("my.plugins.cmp").config()
+		end,
 	},
 
 	["nvim-treesitter/nvim-treesitter"] = {

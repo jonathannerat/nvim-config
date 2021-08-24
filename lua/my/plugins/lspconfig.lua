@@ -73,17 +73,26 @@ M.on_attach = function(client, bufnr)
 	bind(mappings, bufnr)
 
 	require("lsp_signature").on_attach(M.lsp_signature_config)
+	require("lspkind").init()
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {
-		"documentation",
-		"detail",
-		"additionalTextEdits",
+vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
+	snippetSupport = true,
+	preselectSupport = true,
+	insertReplaceSupport = true,
+	labelDetailsSupport = true,
+	deprecatedSupport = true,
+	commitCharactersSupport = true,
+	tagSupport = { valueSet = { 1 } },
+	resolveSupport = {
+		properties = {
+			"documentation",
+			"detail",
+			"additionalTextEdits",
+		},
 	},
-}
+})
 
 M.config = function()
 	local lspconfig = require "lspconfig"
