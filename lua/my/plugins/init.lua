@@ -269,6 +269,12 @@ M.packages = {
 				end,
 			}
 		end,
+		user = {
+			m = {
+				["n|ns|<leader>gp"] = cmd 'TermExec cmd="git pull"',
+				["n|ns|<leader>gP"] = cmd 'TermExec cmd="git push"'
+			}
+		}
 	},
 }
 
