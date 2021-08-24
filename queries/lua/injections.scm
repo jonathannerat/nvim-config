@@ -27,3 +27,9 @@
 	(string) @vim
 	(#eq? @_identifier "vim_cmds")
 ))
+
+((function_call
+	(field_expression) @_caller
+	(arguments (string) @vim)
+	(#eq? @_caller "vim.cmd")
+))
