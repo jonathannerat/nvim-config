@@ -25,7 +25,7 @@
 ((local_variable_declaration
 	(variable_declarator (identifier) @_identifier)
 	(string) @vim
-	(#eq? @_identifier "vim_cmds")
+	(#match? @_identifier "vim_cmds_(pre|post)")
 ))
 
 ((function_call

@@ -1,5 +1,7 @@
 local M = {}
 
+function M.nop() end
+
 function M.shallowcopy(orig)
 	local dup = {}
 
