@@ -147,7 +147,7 @@ M.packages = {
 		config = function()
 			require("project_nvim").setup {
 				silent_chdir = false,
-				datapath = vim.fn.stdpath "data" .. "/projects",
+				patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "README*"},
 			}
 		end,
 		user = {
