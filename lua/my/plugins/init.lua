@@ -1,5 +1,13 @@
 local m = require "my.util.mapper"
+local custom = require "my.custom"
 local bind, cmd, lua = m.bind, m.cmd, m.lua
+
+-- if true, replace the package list with local clones that
+-- should be in ~/projects
+local DEBUG_PACKAGES = custom.DEBUG
+local DEBUG_PACKAGES_LIST = {
+	"nvim-telescope/telescope.nvim"
+}
 
 local M = {}
 
@@ -263,6 +271,14 @@ M.packages = {
 		end,
 	},
 }
+
+if DEBUG_PACKAGES then
+	for _, p in ipairs(DEBUG_PACKAGES_LIST) do
+		local local_path = string.gsub(p, ".*/", "~/projects/")
+		M.packages[local_path] = M.packages[p]
+		M.packages[p] = nil
+	end
+end
 
 local function packer_setup(use)
 	local useropts = {}
