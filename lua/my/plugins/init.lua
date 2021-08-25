@@ -41,6 +41,13 @@ M.packages = {
 		config = function()
 			require("my.plugins.lspconfig").config()
 		end,
+		user = {
+			m = {
+				["n|ns|<leader>zi"] = lua 'require("my.plugins.zk").index()',
+				["n|ns|<leader>zn"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: " }',
+				["n|ns|<leader>zN"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: ", dir = vim.fn.input "Dir: " }'
+			}
+		}
 	},
 
 	["folke/todo-comments.nvim"] = {
