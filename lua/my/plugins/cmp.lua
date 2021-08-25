@@ -23,11 +23,9 @@ M.setup_config = {
 		{ name = "buffer" },
 		{ name = "path" },
 	},
-	completion = {
-		documentation = {
-			border = "single",
-			maxheight = 10,
-		}
+	documentation = {
+		border = "rounded",
+		maxheight = 10,
 	},
 	snippet = {
 		expand = function(args)
