@@ -7,8 +7,6 @@ local mappings = {
 	["c|n|<c-j>"] = "<down>",
 	["c|n|<c-k>"] = "<up>",
 
-	["i|es|<s-tab>"] = "v:lua.require'my.functions'.s_tab_complete()",
-	["i|es|<tab>"] = "v:lua.require'my.functions'.tab_complete()",
 	["i|ns|<m-j>"] = "<esc>:m .+1<CR>==gi",
 	["i|ns|<m-k>"] = "<esc>:m .-2<CR>==gi",
 	["i|n|jj"] = "<esc>",
@@ -36,8 +34,6 @@ local mappings = {
 	["n|n|<space>"] = "",
 	["n|n|Q"] = "",
 
-	["s|es|<s-tab>"] = "v:lua.require('my.functions').s_tab_complete()",
-	["s|es|<tab>"] = "v:lua.require('my.functions').tab_complete()",
 	["t|ns|<c-m-q>"] = [[<c-\><c-n>]],
 
 	["v|ns|<m-j>"] = ":m '>+1<cr>gv=gv",
