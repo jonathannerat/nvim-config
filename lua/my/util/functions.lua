@@ -1,7 +1,6 @@
 local M = {}
 
-function M.nop()
-end
+function M.nop() end
 
 function M.shallowcopy(orig)
 	local dup = {}
@@ -24,7 +23,9 @@ end
 
 function M.partial(func, ...)
 	local args = { ... }
-	return function() return func(unpack(args)) end
+	return function()
+		return func(unpack(args))
+	end
 end
 
 return M
