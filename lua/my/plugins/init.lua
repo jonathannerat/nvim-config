@@ -21,6 +21,8 @@ M.packages = {
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
 	'RRethy/nvim-treesitter-textsubjects',
+	'nvim-telescope/telescope-media-files.nvim',
+	'iosmanthus/vim-nasm',
 
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
@@ -44,8 +46,7 @@ M.packages = {
 		user = {
 			m = {
 				["n|ns|<leader>zi"] = lua 'require("my.plugins.zk").index()',
-				["n|ns|<leader>zn"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: " }',
-				["n|ns|<leader>zN"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: ", dir = vim.fn.input "Dir: " }'
+				["n|ns|<leader>zn"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: ", dir = vim.fn.input "Dir: " }'
 			}
 		}
 	},
