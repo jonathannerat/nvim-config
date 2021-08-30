@@ -139,7 +139,6 @@ M.packages = {
 		config = function()
 			require("project_nvim").setup {
 				silent_chdir = false,
-				datapath = vim.fn.stdpath "data" .. "/projects",
 			}
 		end,
 		user = {
