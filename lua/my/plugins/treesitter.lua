@@ -30,7 +30,34 @@ M.setup_config = {
 				["if"] = "@function.inner",
 			},
 		},
+		move = {
+			enable = true,
+			set_jumps = true,
+			goto_next_start = {
+				["]m"] = "@function.outer",
+				["]i"] = "@conditional.outer"
+			},
+			goto_next_end = {
+				["]M"] = "@function.outer",
+				["]I"] = "@conditional.outer"
+			},
+			goto_previous_start = {
+				["[m"] = "@function.outer",
+				["[i"] = "@conditional.outer"
+			},
+			goto_previous_end = {
+				["[M"] = "@function.outer",
+				["[I"] = "@conditional.outer"
+			},
+		}
 	},
+	textsubjects = {
+		enable = true,
+		keymaps = {
+			["."] = "textsubjects-smart",
+			[";"] = "textsubjects-container-outer"
+		}
+	}
 }
 
 M.config = function()

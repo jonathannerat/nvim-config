@@ -1,5 +1,13 @@
 local m = require "my.util.mapper"
+local custom = require "my.custom"
 local bind, cmd, lua = m.bind, m.cmd, m.lua
+
+-- if true, replace the package list with local clones that
+-- should be in ~/projects
+local DEBUG_PACKAGES = custom.DEBUG
+local DEBUG_PACKAGES_LIST = {
+	"nvim-telescope/telescope.nvim"
+}
 
 local M = {}
 
@@ -12,6 +20,7 @@ M.packages = {
 	"stsewd/gx-extended.vim",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
+	'RRethy/nvim-treesitter-textsubjects',
 
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
@@ -28,9 +37,17 @@ M.packages = {
 	["vim-pandoc/vim-pandoc-syntax"] = { ft = "pandoc" },
 
 	["neovim/nvim-lspconfig"] = {
+		requires = { 'onsails/lspkind-nvim' },
 		config = function()
 			require("my.plugins.lspconfig").config()
 		end,
+		user = {
+			m = {
+				["n|ns|<leader>zi"] = lua 'require("my.plugins.zk").index()',
+				["n|ns|<leader>zn"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: " }',
+				["n|ns|<leader>zN"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: ", dir = vim.fn.input "Dir: " }'
+			}
+		}
 	},
 
 	["folke/todo-comments.nvim"] = {
@@ -96,13 +113,16 @@ M.packages = {
 		},
 	},
 
-	["hrsh7th/nvim-compe"] = {
-		config = function()
-			require("my.plugins.compe").config()
-		end,
-		user = {
-			m = require("my.plugins.compe").mappings,
+	["hrsh7th/nvim-cmp"] = {
+		requires = {
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-nvim-lsp",
+			"saadparwaiz1/cmp_luasnip",
+			"hrsh7th/cmp-path",
 		},
+		config = function()
+			require("my.plugins.cmp").config()
+		end,
 	},
 
 	["nvim-treesitter/nvim-treesitter"] = {
@@ -139,6 +159,7 @@ M.packages = {
 		config = function()
 			require("project_nvim").setup {
 				silent_chdir = false,
+				patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "README*"},
 			}
 		end,
 		user = {
@@ -260,8 +281,22 @@ M.packages = {
 				end,
 			}
 		end,
+		user = {
+			m = {
+				["n|ns|<leader>gp"] = cmd 'TermExec cmd="git pull"',
+				["n|ns|<leader>gP"] = cmd 'TermExec cmd="git push"'
+			}
+		}
 	},
 }
+
+if DEBUG_PACKAGES then
+	for _, p in ipairs(DEBUG_PACKAGES_LIST) do
+		local local_path = string.gsub(p, ".*/", "~/projects/")
+		M.packages[local_path] = M.packages[p]
+		M.packages[p] = nil
+	end
+end
 
 local function packer_setup(use)
 	local useropts = {}

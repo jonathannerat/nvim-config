@@ -1,5 +1,6 @@
 local m = require "my.util.mapper"
 local cmd, bind = m.cmd, m.bind
+local util = require "lspconfig.util"
 
 local lualsp_path = os.getenv "HOME" .. "/.local/src/lua-language-server/"
 
@@ -39,6 +40,7 @@ M.lsp_servers = {
 	"tsserver",
 	"vimls",
 	"gopls",
+	"zk",
 	jsonls = {
 		cmd = { "json-languageserver", "--stdio" },
 	},
@@ -73,20 +75,49 @@ M.on_attach = function(client, bufnr)
 	bind(mappings, bufnr)
 
 	require("lsp_signature").on_attach(M.lsp_signature_config)
+	require("lspkind").init()
 end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {
-		"documentation",
-		"detail",
-		"additionalTextEdits",
+M.extra_configs = {
+	zk = {
+		default_config = {
+			cmd = { 'zk', 'lsp' },
+			filetypes = { 'markdown' },
+			root_dir = util.root_pattern(".zk"),
+			settings = {},
+		},
 	},
 }
 
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
+	snippetSupport = true,
+	preselectSupport = true,
+	insertReplaceSupport = true,
+	labelDetailsSupport = true,
+	deprecatedSupport = true,
+	commitCharactersSupport = true,
+	tagSupport = { valueSet = { 1 } },
+	resolveSupport = {
+		properties = {
+			"documentation",
+			"detail",
+			"additionalTextEdits",
+		},
+	},
+})
+
 M.config = function()
 	local lspconfig = require "lspconfig"
+	local configs = require "lspconfig/configs"
+
+	for name, config in pairs(M.extra_configs) do
+		configs[name] = config
+	end
+
+	for k, v in pairs(M.lsp_servers) do
+		local lsp = type(k) == "number" and v or k
+		local config = type(k) == "number" and {} or v
 
 	for k, v in pairs(M.lsp_servers) do
 		local lsp = type(k) == "number" and v or k
