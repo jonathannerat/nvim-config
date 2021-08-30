@@ -1,5 +1,8 @@
 local M = {}
 
+function M.nop()
+end
+
 function M.shallowcopy(orig)
 	local dup = {}
 
@@ -17,6 +20,11 @@ function M.expand(text, dict)
 	return text:gsub("$(%b{})", function(m)
 		return dict[m:sub(2, -2)]
 	end)
+end
+
+function M.partial(func, ...)
+	local args = { ... }
+	return function() return func(unpack(args)) end
 end
 
 return M

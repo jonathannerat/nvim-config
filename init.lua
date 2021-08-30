@@ -7,8 +7,12 @@ end
 add_to_path "./lua/?.lua"
 add_to_path "./lua/?/init.lua"
 
+local custom = require "my.custom"
+
+if custom.pre then custom.pre() end
+
 require("my.options").setup()
 require("my.plugins").setup()
 require("my.mappings").setup()
 
-require("my.custom").setup()
+if custom.post then custom.post() end
