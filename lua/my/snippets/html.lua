@@ -17,7 +17,7 @@ local html_snippets = {
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrint-to-fit=no"/>
 </head>
 <body>
-	${0:}
+	$0
 </body>]],
 }
 

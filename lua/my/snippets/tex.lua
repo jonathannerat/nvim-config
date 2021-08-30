@@ -52,28 +52,28 @@ local function text_faces(_, _, type)
 end
 
 local tex_snippets = {
-	skel = [[\documentclass[a4paper,10pt]{article}
+	skel = [[\documentclass[a4paper,10pt]{article\}
 
-\usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc\}
+\usepackage[spanish]{babel\}
 
-\usepackage{float}
-\usepackage{graphicx}
-\usepackage{subcaption}
+\usepackage{float\}
+\usepackage{graphicx\}
+\usepackage{subcaption\}
 
-\author{${1:Jonathan Teran}}
-\title{${2:Document Title}}
-\date{}
+\author{${1:Jonathan Teran}\}
+\title{${2:Document Title}\}
+\date{\}
 
-\begin{document}
+\begin{document\}
 $0
-\end{document}]],
-	fig = [[\begin{figure}
+\end{document\}]],
+	fig = [[\begin{figure\}
 	\centering
-	\includegraphics[width=${2:\textwidth}]{${1:path/to/image.png}}
-	\caption{${3:Caption}}
-	\label{fig:${4:label}}
-\end{figure}]],
+	\includegraphics[width=${2:\textwidth}]{${1:path/to/image.png}\}
+	\caption{${3:Caption}\}
+	\label{fig:${4:label}\}
+\end{figure\}]],
 }
 
 local snippets = {
