@@ -119,10 +119,6 @@ M.config = function()
 		local lsp = type(k) == "number" and v or k
 		local config = type(k) == "number" and {} or v
 
-	for k, v in pairs(M.lsp_servers) do
-		local lsp = type(k) == "number" and v or k
-		local config = type(k) == "number" and {} or v
-
 		if not config.on_attach then
 			config.on_attach = M.on_attach
 		end
