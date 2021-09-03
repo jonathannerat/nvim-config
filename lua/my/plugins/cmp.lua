@@ -34,7 +34,7 @@ M.setup_config = {
 	},
 	mapping = {
 		['<Tab>'] = cmp.mapping(keyremap "<C-n>", { 'i', 's' }),
-		['<S-Tab>'] = cmp.mapping(keyremap "<C-n>", { 'i', 's' }),
+		['<S-Tab>'] = cmp.mapping(keyremap "<C-p>", { 'i', 's' }),
 		['<C-p>'] = cmp.mapping.select_prev_item(),
 		['<C-n>'] = cmp.mapping.select_next_item(),
 		['<C-b>'] = cmp.mapping.scroll_docs(-4),
