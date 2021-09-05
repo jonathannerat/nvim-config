@@ -32,10 +32,10 @@ local c_snippets = {
 int main(int argc, char** arv) {
 	${1:printf("Hello world!\n");}
 	return 0;
-}]],
+\}]],
 	["while"] = [[while (${1:condition}) {
 	${2:// code}
-}]],
+\}]],
 }
 
 local snippets = {

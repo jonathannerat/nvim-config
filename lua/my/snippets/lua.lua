@@ -14,7 +14,7 @@ local function get_repo_from_clipboard()
 end
 
 local lua_snippets = {
-	mod = [[local ${1:M} = {}
+	mod = [[local ${1:M} = {\}
 
 $1.${2:key} = ${3:value}
 
