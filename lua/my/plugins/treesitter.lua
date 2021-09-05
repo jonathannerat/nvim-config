@@ -57,6 +57,9 @@ M.setup_config = {
 			["."] = "textsubjects-smart",
 			[";"] = "textsubjects-container-outer"
 		}
+	},
+	context_commentstring = {
+		enable = true
 	}
 }
 
