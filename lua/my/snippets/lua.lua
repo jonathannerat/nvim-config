@@ -78,6 +78,12 @@ local snippets = {
 		}),
 		t ")",
 	}),
+	S("key", {
+		c(1, {
+			s(nil, { i(1, "key"), t " = ", i(2, '"value"'), t "," }),
+			s(nil, { i(1, '["key"]'), t " = ", i(2, '"value"'), t "," }),
+		})
+	})
 }
 
 for trigger, snippet_def in pairs(lua_snippets) do
