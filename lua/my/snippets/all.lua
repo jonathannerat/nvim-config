@@ -8,17 +8,18 @@ local S, c, s, t, i = ls.s, ls.c, ls.sn, ls.t, ls.i
 local function pairs(p, opts)
 	local l = type(p) == "table" and p[1] or p
 	local r = type(p) == "table" and p[2] or p
+	opts = opts or { "empty", "spaced", "newline" }
 
-	local choices = {
-		s(nil, { t(l), i(1), t(r) }),
-	}
+	local choices = {}
 
-	if opts and opts.spaced then
-		choices[#choices + 1] = s(nil, { t(l .. " "), i(1), t(" " .. r) })
-	end
-
-	if opts and opts.newline then
-		choices[#choices + 1] = s(nil, { t { l, "\t" }, i(1), t { "", r } })
+	for _, opt in ipairs(opts) do
+		if opt == "empty" then
+			choices[#choices+1] = s(nil, { t(l), i(1), t(r) })
+		elseif opt == "spaced" then
+			choices[#choices + 1] = s(nil, { t(l .. " "), i(1), t(" " .. r) })
+		elseif opt == "newline" then
+			choices[#choices + 1] = s(nil, { t { l, "\t" }, i(1), t { "", r } })
+		end
 	end
 
 	return S({ trig = l, wordTrig = false }, {
@@ -27,11 +28,11 @@ local function pairs(p, opts)
 end
 
 return {
-	pairs({ "(", ")" }, { spaced = true, newline = true }),
-	pairs({ "{", "}" }, { spaced = true, newline = true }),
-	pairs({ "[", "]" }, { spaced = true, newline = true }),
-	pairs { "[[", "]]" },
-	pairs "`",
-	pairs "'",
-	pairs '"',
+	pairs {  "(", ")" },
+	pairs {  "[", "]" },
+	pairs({  "{", "}" }, { "newline", "spaced" }),
+	pairs({ "[[", "]]" }, { "empty", "newline" }),
+	pairs("`", { "empty" }),
+	pairs("'", { "empty" }),
+	pairs('"', { "empty" }),
 }
