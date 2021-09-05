@@ -21,4 +21,11 @@ function M.expand(text, dict)
 	end)
 end
 
+function M.partial(func, ...)
+	local args = { ... }
+	return function()
+		return func(unpack(args))
+	end
+end
+
 return M

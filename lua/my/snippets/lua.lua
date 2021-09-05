@@ -19,15 +19,33 @@ local lua_snippets = {
 $1.${2:key} = ${3:value}
 
 return $1]],
+	class = [[local ${1:Class}
+$1 = {
+	__index = $1
+\}
+
+function $1:new(o)
+	o = o or {\}
+	setmetatable(o, self)
+	o.__index = o
+
+	$2
+
+	return o
+end
+
+$0
+
+return $1]],
 }
 
 local snippets = {
 	S("pplug", {
 		c(1, {
 			s(nil, {
-				t "'",
+				t '"',
 				d(1, get_repo_from_clipboard, {}),
-				t "',",
+				t '",',
 			}),
 			s(nil, {
 				t { "{", "\t'" },
@@ -35,9 +53,9 @@ local snippets = {
 				t { "'", "}," },
 			}),
 			s(nil, {
-				t "['",
+				t '["',
 				d(1, get_repo_from_clipboard, {}),
-				t "'] = {",
+				t '"] = {',
 				t { "", "\t" },
 				i(2),
 				t { "", "}," },
@@ -48,7 +66,7 @@ local snippets = {
 		t "S(",
 		c(1, {
 			s(nil, { t "'", i(1, "trigger"), t { "', {", "\t" }, i(2), t { "", "}" } }),
-			s(nil, { t "{ trig='", i(1, "trigger"), t "', ", t { "wordTrig=true }, {", "\t" }, i(2), t "}" }),
+			s(nil, { t "{ trig='", i(1, "trigger"), t "', ", t { "wordTrig=false }, {", "\t" }, i(2), t "}" }),
 			s(nil, {
 				t "{ trig='",
 				i(1, "trigger"),
