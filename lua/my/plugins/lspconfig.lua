@@ -40,6 +40,7 @@ M.lsp_servers = {
 	"tsserver",
 	"vimls",
 	"gopls",
+	"phpactor",
 	"zk",
 	jsonls = {
 		cmd = { "json-languageserver", "--stdio" },
