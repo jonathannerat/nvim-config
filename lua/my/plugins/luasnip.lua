@@ -15,6 +15,7 @@ M.config = function()
 		html = require "my.snippets.html",
 		lua = require "my.snippets.lua",
 		norg = require "my.snippets.norg",
+		pandoc = require "my.snippets.pandoc",
 		tex = require "my.snippets.tex",
 	}
 end

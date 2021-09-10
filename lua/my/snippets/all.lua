@@ -30,7 +30,7 @@ end
 return {
 	pairs {  "(", ")" },
 	pairs {  "[", "]" },
-	pairs({  "{", "}" }, { "newline", "spaced" }),
+	pairs({  "{", "}" }, { "newline", "spaced", "empty" }),
 	pairs({ "[[", "]]" }, { "empty", "newline" }),
 	pairs("`", { "empty" }),
 	pairs("'", { "empty" }),
