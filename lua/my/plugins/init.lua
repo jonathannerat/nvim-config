@@ -29,7 +29,7 @@ M.packages = {
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
 	["cakebaker/scss-syntax.vim"] = { ft = "scss" },
-	["cespare/vim-toml"] = { ft = "toml" },
+	["cespare/vim-toml"] = { ft = "toml", branch = "main" },
 	["embark-theme/vim"] = { as = "embark-theme" },
 	["gkz/vim-ls"] = { as = "livescript-syntax", ft = "ls" },
 	["leafo/moonscript-vim"] = { ft = "moon" },
