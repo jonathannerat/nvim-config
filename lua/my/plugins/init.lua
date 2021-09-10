@@ -157,21 +157,6 @@ M.packages = {
 		ft = "norg",
 	},
 
-	["ahmedkhalf/project.nvim"] = {
-		config = function()
-			require("project_nvim").setup {
-				silent_chdir = false,
-				patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "README*"},
-			}
-		end,
-		user = {
-			g = {
-				nvim_tree_update_cwd = 1,
-				nvim_tree_respect_buf_cwd = 1,
-			},
-		},
-	},
-
 	["vim-pandoc/vim-pandoc"] = {
 		user = {
 			g = {

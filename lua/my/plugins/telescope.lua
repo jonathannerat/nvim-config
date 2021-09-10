@@ -37,7 +37,7 @@ local function action_open(prompt_bufnr)
 	os.execute(string.format("%s %s", opener, filename))
 end
 
-M.extensions = { "fzf", "projects", "media_files" }
+M.extensions = { "fzf", "media_files" }
 
 M.mappings = {
 	["n|ns|<leader>fF"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-HI",
@@ -50,7 +50,6 @@ M.mappings = {
 	["n|ns|<leader>fl"] = cmd "Telescope live_grep layout_strategy=vertical",
 	["n|ns|<leader>fm"] = cmd "Telescope man_pages",
 	["n|ns|<leader>fM"] = cmd "Telescope media_files",
-	["n|ns|<leader>fp"] = cmd "Telescope projects",
 	["n|ns|<leader>ft"] = cmd "Telescope treesitter",
 }
 
