@@ -22,6 +22,7 @@ M.setup_config = {
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "path" },
+		{ name = "neorg" },
 	},
 	documentation = {
 		border = "rounded",
