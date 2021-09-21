@@ -157,6 +157,12 @@ M.packages = {
 		ft = "norg",
 	},
 
+	["steelsojka/pears.nvim"] = {
+		config = function()
+			require("pears").setup()
+		end
+	},
+
 	["vim-pandoc/vim-pandoc"] = {
 		user = {
 			g = {
