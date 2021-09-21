@@ -60,6 +60,10 @@ M.setup_config = {
 	},
 	context_commentstring = {
 		enable = true
+	},
+	autotag = {
+		enable = true,
+		filetypes = { "html", "xml", "php" }
 	}
 }
 

@@ -20,10 +20,10 @@ M.packages = {
 	"stsewd/gx-extended.vim",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
+	"windwp/nvim-ts-autotag",
 	'JoosepAlviste/nvim-ts-context-commentstring',
 	'RRethy/nvim-treesitter-textsubjects',
 	'iosmanthus/vim-nasm',
-	'lewis6991/impatient.nvim',
 	'nvim-telescope/telescope-media-files.nvim',
 
 	["arrufat/vala.vim"] = { ft = "vala" },
