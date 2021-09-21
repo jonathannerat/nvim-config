@@ -1,6 +1,5 @@
 local m = require "my.util.mapper"
 local cmd, bind = m.cmd, m.bind
-local util = require "lspconfig.util"
 
 local lualsp_path = os.getenv "HOME" .. "/.local/src/lua-language-server/"
 
@@ -33,18 +32,16 @@ M.lsp_servers = {
 	"bashls",
 	"ccls",
 	"cssls",
+	"gopls",
+	"jsonls",
+	"phpactor",
 	"pyright",
 	"rust_analyzer",
 	"solargraph",
 	"texlab",
 	"tsserver",
 	"vimls",
-	"gopls",
-	"phpactor",
 	"zk",
-	jsonls = {
-		cmd = { "json-languageserver", "--stdio" },
-	},
 	sumneko_lua = luadev,
 }
 
@@ -75,20 +72,9 @@ M.on_attach = function(client, bufnr)
 
 	bind(mappings, bufnr)
 
-	require("lsp_signature").on_attach(M.lsp_signature_config)
+	-- require("lsp_signature").on_attach(M.lsp_signature_config)
 	require("lspkind").init()
 end
-
-M.extra_configs = {
-	zk = {
-		default_config = {
-			cmd = { 'zk', 'lsp' },
-			filetypes = { 'markdown' },
-			root_dir = util.root_pattern(".zk"),
-			settings = {},
-		},
-	},
-}
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
@@ -110,11 +96,6 @@ vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
 
 M.config = function()
 	local lspconfig = require "lspconfig"
-	local configs = require "lspconfig/configs"
-
-	for name, config in pairs(M.extra_configs) do
-		configs[name] = config
-	end
 
 	for k, v in pairs(M.lsp_servers) do
 		local lsp = type(k) == "number" and v or k
