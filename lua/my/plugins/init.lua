@@ -38,6 +38,7 @@ M.packages = {
 	["tridactyl/vim-tridactyl"] = { ft = "tridactyl" },
 	["vhyrro/tree-sitter-norg"] = { ft = "norg" },
 	["vim-pandoc/vim-pandoc-syntax"] = { ft = "pandoc" },
+	["jidn/vim-dbml"] = { ft = "dbml" },
 
 	["neovim/nvim-lspconfig"] = {
 		requires = { 'onsails/lspkind-nvim' },
