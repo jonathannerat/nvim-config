@@ -81,7 +81,11 @@ local snippets = {
 	S("key", {
 		c(1, {
 			s(nil, { i(1, "key"), t " = ", i(2, '"value"'), t "," }),
-			s(nil, { i(1, '["key"]'), t " = ", i(2, '"value"'), t "," }),
+			s(nil, { t '["', i(1, "key"), t '"] = ', c(2, {
+				s(nil, { t '"', i(1, "value"), t '"' }),
+				s(nil, { t { "{", "\t" }, i(1), t { "", "}" } }),
+				s(nil, { i(1, "value") }),
+			}), t "," }),
 		})
 	})
 }

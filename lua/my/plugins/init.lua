@@ -20,23 +20,25 @@ M.packages = {
 	"stsewd/gx-extended.vim",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
+	"windwp/nvim-ts-autotag",
+	'JoosepAlviste/nvim-ts-context-commentstring',
 	'RRethy/nvim-treesitter-textsubjects',
-	'nvim-telescope/telescope-media-files.nvim',
 	'iosmanthus/vim-nasm',
+	'nvim-telescope/telescope-media-files.nvim',
 
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
 	["cakebaker/scss-syntax.vim"] = { ft = "scss" },
-	["cespare/vim-toml"] = { ft = "toml" },
+	["cespare/vim-toml"] = { ft = "toml", branch = "main" },
 	["embark-theme/vim"] = { as = "embark-theme" },
 	["gkz/vim-ls"] = { as = "livescript-syntax", ft = "ls" },
 	["leafo/moonscript-vim"] = { ft = "moon" },
 	["neomutt/neomutt.vim"] = { ft = { "mutt", "neomutt" } },
 	["nvim-telescope/telescope-fzf-native.nvim"] = { run = "make" },
-	["tbastos/vim-lua"] = { ft = "lua" },
 	["tridactyl/vim-tridactyl"] = { ft = "tridactyl" },
 	["vhyrro/tree-sitter-norg"] = { ft = "norg" },
 	["vim-pandoc/vim-pandoc-syntax"] = { ft = "pandoc" },
+	["jidn/vim-dbml"] = { ft = "dbml" },
 
 	["neovim/nvim-lspconfig"] = {
 		requires = { 'onsails/lspkind-nvim' },
@@ -116,10 +118,10 @@ M.packages = {
 
 	["hrsh7th/nvim-cmp"] = {
 		requires = {
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-nvim-lsp",
-			"saadparwaiz1/cmp_luasnip",
-			"hrsh7th/cmp-path",
+			{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+			{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-path", after = "nvim-cmp" },
 		},
 		config = function()
 			require("my.plugins.cmp").config()
@@ -154,6 +156,12 @@ M.packages = {
 			require("my.plugins.neorg").config()
 		end,
 		ft = "norg",
+	},
+
+	["windwp/nvim-autopairs"] = {
+		config = function()
+			require("my.plugins.autopairs").setup()
+		end
 	},
 
 	["vim-pandoc/vim-pandoc"] = {

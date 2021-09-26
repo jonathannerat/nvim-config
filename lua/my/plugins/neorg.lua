@@ -9,7 +9,12 @@ M.config = function()
 			},
 			["core.norg.concealer"] = {},
 			["core.norg.dirman"] = {
-				config = { workspaces = { notes = "~/docs/notes" } },
+				config = { workspaces = { notes = "~/documents/notes" } },
+			},
+			["core.norg.completion"] = {
+				config = {
+					engine = "nvim-cmp"
+				}
 			},
 		},
 	}

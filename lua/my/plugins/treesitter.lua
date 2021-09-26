@@ -4,7 +4,7 @@ M.parsers = {
 	norg = {
 		install_info = {
 			url = "https://github.com/vhyrro/tree-sitter-norg",
-			files = { "src/parser.c" },
+			files = { "src/parser.c", "src/scanner.cc" },
 			branch = "main",
 		},
 	},
@@ -57,6 +57,13 @@ M.setup_config = {
 			["."] = "textsubjects-smart",
 			[";"] = "textsubjects-container-outer"
 		}
+	},
+	context_commentstring = {
+		enable = true
+	},
+	autotag = {
+		enable = true,
+		filetypes = { "html", "xml", "php" }
 	}
 }
 

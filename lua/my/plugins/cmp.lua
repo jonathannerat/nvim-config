@@ -18,13 +18,15 @@ end
 
 M.setup_config = {
 	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "buffer" },
-		{ name = "path" },
+		{ name = "nvim_lsp", max_item_count = 10 },
+		{ name = "luasnip", max_item_count = 10 },
+		{ name = "buffer", max_item_count = 10 },
+		{ name = "path", max_item_count = 10 },
+		{ name = "neorg", max_item_count = 10 },
 	},
 	documentation = {
 		border = "rounded",
+		maxwidth = 80,
 		maxheight = 10,
 	},
 	snippet = {
@@ -37,12 +39,7 @@ M.setup_config = {
 		['<S-Tab>'] = cmp.mapping(keyremap "<C-p>", { 'i', 's' }),
 		['<C-p>'] = cmp.mapping.select_prev_item(),
 		['<C-n>'] = cmp.mapping.select_next_item(),
-		['<C-b>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
 		['<C-e>'] = cmp.mapping.close(),
-		['<CR>'] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-		})
 	},
 }
 

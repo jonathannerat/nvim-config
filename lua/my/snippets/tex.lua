@@ -33,8 +33,6 @@ local function text_faces(_, _, type)
 		t "\\texttt{",
 	}
 
-	print(vim.inspect(type))
-
 	local swap = false
 	if type == "i" then
 		swap = 2
@@ -101,37 +99,37 @@ local snippets = {
 		i(1),
 		d(2, rec_list, {}, false),
 	}),
-	S({ trig = "sec", wordTrig = true }, {
+	S("sec", {
 		t { "\\section{" },
 		i(1, "Section"),
 		t "}",
 	}),
-	S({ trig = "ssec", wordTrig = true }, {
+	S("ssec", {
 		t { "\\subsection{" },
 		i(1, "Subsection"),
 		t "}",
 	}),
-	S({ trig = "b", wordTrig = true }, {
+	S("b", {
 		t "\\textbf{",
 		i(1),
 		t "}",
 	}),
-	S({ trig = "i", wordTrig = true }, {
+	S("i", {
 		t "\\textit{",
 		i(1),
 		t "}",
 	}),
-	S({ trig = "tt", wordTrig = true }, {
+	S("tt", {
 		t "\\texttt{",
 		i(1),
 		t "}",
 	}),
-	S({ trig = "mi", wordTrig = true, description = "Inline math" }, {
+	S("mi", {
 		t "$",
 		i(1),
 		t "$",
 	}),
-	S({ trig = "mb", wordTrig = true, description = "Math block" }, {
+	S("mb", {
 		t { "\\[", "\t" },
 		i(1),
 		t { "", "\\]" },
