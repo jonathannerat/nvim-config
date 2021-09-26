@@ -33,8 +33,6 @@ local function text_faces(_, _, type)
 		t "\\texttt{",
 	}
 
-	print(vim.inspect(type))
-
 	local swap = false
 	if type == "i" then
 		swap = 2
