@@ -27,9 +27,3 @@
 	(string) @vim
 	(#match? @_identifier "vim_cmds_(pre|post)")
 ))
-
-((function_call
-	(field_expression) @_caller
-	(arguments (string) @vim)
-	(#eq? @_caller "vim.cmd")
-))
