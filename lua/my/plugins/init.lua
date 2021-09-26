@@ -158,9 +158,9 @@ M.packages = {
 		ft = "norg",
 	},
 
-	["steelsojka/pears.nvim"] = {
+	["windwp/nvim-autopairs"] = {
 		config = function()
-			require("pears").setup()
+			require("my.plugins.autopairs").setup()
 		end
 	},
 
