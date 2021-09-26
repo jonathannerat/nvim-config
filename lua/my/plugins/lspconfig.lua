@@ -74,7 +74,8 @@ M.on_attach = function(client, bufnr)
 
 	bind(mappings, bufnr)
 
-	require("lsp_signature").on_attach(M.lsp_signature_config)
+	-- annoying bug: https://github.com/ray-x/lsp_signature.nvim/issues/76
+	-- require("lsp_signature").on_attach(M.lsp_signature_config)
 	require("lspkind").init()
 end
 
