@@ -291,6 +291,19 @@ M.packages = {
 			require("my.plugins.tabby").config()
 		end
 	},
+
+	["lukas-reineke/format.nvim"] = {
+		config = function ()
+			require("format").setup {
+				["*"] = {
+					{cmd = {"sed -i 's/[ \t]*$//'"}} -- remove trailing whitespace
+				},
+				php = {
+					cmd = { "php-formatter formatter:use:sort"}
+				}
+			}
+		end,
+	},
 }
 
 if DEBUG_PACKAGES then
