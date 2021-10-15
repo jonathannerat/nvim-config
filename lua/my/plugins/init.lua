@@ -285,6 +285,12 @@ M.packages = {
 			}
 		}
 	},
+
+	["nanozuki/tabby.nvim"] = {
+		config = function ()
+			require("my.plugins.tabby").config()
+		end
+	},
 }
 
 if DEBUG_PACKAGES then
