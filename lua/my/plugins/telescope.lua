@@ -51,6 +51,7 @@ M.mappings = {
 	["n|ns|<leader>fm"] = cmd "Telescope man_pages",
 	["n|ns|<leader>fM"] = cmd "Telescope media_files",
 	["n|ns|<leader>ft"] = cmd "Telescope treesitter",
+	["n|ns|<leader>fs"] = cmd "Telescope session-lens search_session",
 }
 
 M.config = function()

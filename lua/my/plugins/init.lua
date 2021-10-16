@@ -304,6 +304,26 @@ M.packages = {
 			}
 		end,
 	},
+
+	["rmagatti/auto-session"] = {
+		config = function ()
+			require("auto-session").setup {
+				auto_save_enabled = false,
+				auto_restore_enabled = true,
+				auto_session_allowed_dirs = { "~/projects" },
+			}
+		end,
+	},
+
+	["rmagatti/session-lens"] = {
+		after = "auto-session",
+		config = function ()
+			require("session-lens").setup {
+				path_display = { 'tail' },
+				preview = false,
+			}
+		end
+	},
 }
 
 if DEBUG_PACKAGES then

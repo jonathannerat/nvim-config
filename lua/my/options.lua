@@ -36,6 +36,9 @@ M.options = {
 	undofile = true,
 	wrap = true,
 	writebackup = false,
+	["+"] = {
+		sessionoptions = { "options", "resize", "winpos", "terminal" },
+	},
 }
 
 M.globals = {
@@ -43,6 +46,14 @@ M.globals = {
 }
 
 M.setup = function()
+	local appendopts = M.options["+"]
+	M.options["+"] = nil
+	if appendopts then
+		for aopt, avalue in pairs(appendopts) do
+			vim.opt[aopt]:append(avalue)
+		end
+	end
+
 	for opt, value in pairs(M.options) do
 		vim.o[opt] = value
 	end
