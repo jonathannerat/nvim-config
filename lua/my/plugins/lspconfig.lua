@@ -1,18 +1,6 @@
 local m = require "my.util.mapper"
 local cmd, bind = m.cmd, m.bind
 
-local lualsp_path = os.getenv "HOME" .. "/.local/src/lua-language-server/"
-
-local luadev = require("lua-dev").setup {
-	lspconfig = {
-		cmd = {
-			lualsp_path .. "bin/Linux/lua-language-server",
-			"-E",
-			lualsp_path .. "main.lua",
-		},
-	},
-}
-
 local default_mappings = {
 	["n|ns|<C-k>"] = cmd "lua vim.lsp.buf.signature_help()",
 	["n|ns|<leader>A"] = cmd "lua vim.lsp.buf.code_action()",
@@ -27,23 +15,6 @@ local default_mappings = {
 }
 
 local M = {}
-
-M.lsp_servers = {
-	"bashls",
-	"ccls",
-	"cssls",
-	"gopls",
-	"jsonls",
-	"phpactor",
-	"pyright",
-	"rust_analyzer",
-	"solargraph",
-	"texlab",
-	"tsserver",
-	"vimls",
-	"zk",
-	sumneko_lua = luadev,
-}
 
 M.lsp_signature_config = {
 	bind = true,
@@ -96,21 +67,21 @@ vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
 })
 
 M.config = function()
-	local lspconfig = require "lspconfig"
+	local lspinstaller = require "nvim-lsp-installer"
 
-	for k, v in pairs(M.lsp_servers) do
-		local lsp = type(k) == "number" and v or k
-		local config = type(k) == "number" and {} or v
+	lspinstaller.on_server_ready(function (server)
+		local opts = {}
 
-		if not config.on_attach then
-			config.on_attach = M.on_attach
-		end
-		if not config.capabilities then
-			config.capabilities = M.capabilities
+		if server.name == "sumneko_lua" then
+			opts = require("lua-dev").setup()
 		end
 
-		lspconfig[lsp].setup(config)
-	end
+		if not opts.on_attach then opts.on_attach = M.on_attach end
+		if not opts.capabilities then opts.capabilities = M.capabilities end
+
+		server:setup(opts)
+		vim.cmd [[ do User LspAttachBuffers ]]
+	end)
 end
 
 return M

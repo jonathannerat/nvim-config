@@ -41,7 +41,7 @@ M.packages = {
 	["jidn/vim-dbml"] = { ft = "dbml" },
 
 	["neovim/nvim-lspconfig"] = {
-		requires = { 'onsails/lspkind-nvim' },
+		requires = { 'onsails/lspkind-nvim', 'williamboman/nvim-lsp-installer' },
 		config = function()
 			require("my.plugins.lspconfig").config()
 		end,
