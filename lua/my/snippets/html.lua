@@ -41,7 +41,7 @@ local snippets = {
 	}),
 }
 
-for trigger, snippet_def in ipairs(html_snippets) do
+for trigger, snippet_def in pairs(html_snippets) do
 	snippets[#snippets + 1] = ls.parser.parse_snippet(trigger, snippet_def)
 end
 
