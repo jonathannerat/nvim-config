@@ -2,7 +2,7 @@ local M = {}
 
 local cmp = require("cmp")
 
-M.setup_config = {
+M.config = {
 	sources = {
 		{ name = "nvim_lsp", max_item_count = 10 },
 		{ name = "luasnip", max_item_count = 10 },
@@ -29,8 +29,8 @@ M.setup_config = {
 	},
 }
 
-M.config = function()
-	cmp.setup(M.setup_config)
+M.setup = function()
+	cmp.setup(M.config)
 
 	local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 	cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))

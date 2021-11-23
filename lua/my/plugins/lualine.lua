@@ -1,6 +1,6 @@
 local M = {}
 
-M.setup_config = {
+M.config = {
 	sections = {
 		lualine_a = { "mode" },
 		lualine_b = { "branch", "diff" },
@@ -23,8 +23,8 @@ M.setup_config = {
 	extensions = { "nvim-tree", "fugitive", "toggleterm" },
 }
 
-M.config = function()
-	require("lualine").setup(M.setup_config)
+M.setup = function()
+	require("lualine").setup(M.config)
 end
 
 return M

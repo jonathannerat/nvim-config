@@ -42,7 +42,29 @@ M.options = {
 }
 
 M.globals = {
+	["pandoc#formatting#mode"] = "h",
+	["pandoc#formatting#textwidth"] = 120,
+
+	gruvbox_flat_style = "hard",
 	mapleader = " ",
+	mkdp_echo_preview_url = 1,
+	mkdp_open_to_the_world = 1,
+	mkdp_port = 8007,
+	tex_conceal = "adbmg",
+	tex_flavor = "latex",
+
+	firenvim_config = {
+		localSettings = {
+			[".*"] = { cmdline = "neovim", takeover = "never" },
+		},
+	},
+	vimtex_compiler_latexmk = {
+		build_dir = "build",
+		callback = 1,
+		continuous = 1,
+		executable = "latexmk",
+		options = { "-verbose", "-file-line-error", "-synctex=1", "-interaction=nonstopmode" },
+	},
 }
 
 M.setup = function()

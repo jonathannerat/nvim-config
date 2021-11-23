@@ -10,7 +10,7 @@ M.parsers = {
 	},
 }
 
-M.setup_config = {
+M.config = {
 	ensure_installed = "maintained",
 	highlight = {
 		enable = true,
@@ -67,14 +67,14 @@ M.setup_config = {
 	}
 }
 
-M.config = function()
+M.setup = function()
 	local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
-	for parser, config in pairs(M.parsers) do
-		parser_configs[parser] = config
+	for parser, parser_config in pairs(M.parsers) do
+		parser_configs[parser] = parser_config
 	end
 
-	require("nvim-treesitter.configs").setup(M.setup_config)
+	require("nvim-treesitter.configs").setup(M.config)
 end
 
 return M

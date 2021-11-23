@@ -4,7 +4,7 @@ local cond = require("nvim-autopairs.conds")
 
 local M = {}
 
-M.setup_config = {
+M.config = {
 	fast_wrap = {},
 	disable_filetype = { "TelescopePrompt" }
 }
@@ -20,7 +20,7 @@ M.rules = {
 }
 
 M.setup = function ()
-	npairs.setup(M.setup_config)
+	npairs.setup(M.config)
 
 	npairs.add_rules(M.rules)
 end

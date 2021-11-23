@@ -39,22 +39,7 @@ end
 
 M.extensions = { "fzf", "media_files" }
 
-M.mappings = {
-	["n|ns|<leader>fF"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-HI",
-	["n|ns|<leader>fb"] = cmd "Telescope buffers",
-	["n|ns|<leader>fd"] = cmd "Telescope find_files find_command=fd,-t,d cwd=~",
-	["n|ns|<leader>ff"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-H",
-	["n|ns|<leader>fg"] = cmd "Telescope git_files show_untracked=false",
-	["n|ns|<leader>fG"] = cmd "Telescope git_files git_dir=~/.local/src/dotrepo show_untracked=false",
-	["n|ns|<leader>fh"] = cmd "Telescope help_tags",
-	["n|ns|<leader>fl"] = cmd "Telescope live_grep layout_strategy=vertical",
-	["n|ns|<leader>fm"] = cmd "Telescope man_pages",
-	["n|ns|<leader>fM"] = cmd "Telescope media_files",
-	["n|ns|<leader>ft"] = cmd "Telescope treesitter",
-	["n|ns|<leader>fs"] = cmd "Telescope session-lens search_session",
-}
-
-M.config = function()
+M.setup = function()
 	t.setup {
 		defaults = {
 			file_previewer = tp.vim_buffer_cat.new,

@@ -66,7 +66,7 @@ vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
 	},
 })
 
-M.config = function()
+M.setup = function()
 	local lspinstaller = require "nvim-lsp-installer"
 
 	lspinstaller.on_server_ready(function (server)

@@ -48,7 +48,7 @@ M.tabline = {
 	},
 }
 
-M.config = function ()
+M.setup = function ()
 	require('tabby').setup({
 		tabline = M.tabline,
 	})
