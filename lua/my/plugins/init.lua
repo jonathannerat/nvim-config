@@ -188,9 +188,10 @@ local packages = {
 		}
 	},
 }
+_G.Autosetup = {}
 
 local function packer_setup(use)
-	local autosetup_list = {}
+	local i = 1
 
 	-- setup packages
 	for k, package in pairs(packages) do
@@ -201,33 +202,25 @@ local function packer_setup(use)
 		end
 
 		local autosetup = package.autosetup
+
 		if autosetup then
+			Autosetup[i] = {}
+
 			if type(autosetup) == "string" then
-				autosetup_list[#autosetup_list+1] = autosetup
+			Autosetup[i].package = autosetup
 			elseif type(autosetup) == "table" then
-				local as = autosetup.as or string.match(package[1], '.*/(.*)')
-				autosetup_list[as] = autosetup.opts
+				Autosetup[i].package = autosetup.as or string.match(package[1], '.*/(.*)')
+				Autosetup[i].config = autosetup.opts
 			end
+
+			local istr = tostring(i)
+			package.config = "require(Autosetup[" .. istr .. "].package).setup(Autosetup[" .. istr .. "].config)"
+			i = i + 1
 		end
 
 		package.autosetup = nil
 
 		use(package)
-	end
-
-	-- auto setup packages
-	for k, opts in pairs(autosetup_list) do
-		local package = k
-
-		if type(k) == "number" then
-			package = opts
-			opts = nil
-		end
-
-		local status, err = pcall(function() require(package).setup(opts) end)
-		if not status then
-			print(err)
-		end
 	end
 end
 
