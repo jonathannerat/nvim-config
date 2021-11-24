@@ -25,6 +25,10 @@ M.lsp_signature_config = {
 	},
 }
 
+M.lsp_servers = {
+	ccls = {}
+}
+
 M.on_attach = function(client, bufnr)
 	-- share this instance for all buffers
 	local mappings = default_mappings
@@ -70,6 +74,11 @@ M.setup = function()
 	local lspinstaller = require "nvim-lsp-installer"
 
 	lspinstaller.on_server_ready(function(server)
+		-- skip local servers
+		if M.lsp_servers[server.name] then
+			return
+		end
+
 		local opts = {}
 
 		if server.name == "sumneko_lua" then
@@ -86,6 +95,15 @@ M.setup = function()
 		server:setup(opts)
 		vim.cmd [[ do User LspAttachBuffers ]]
 	end)
+
+	local lspconfig = require "lspconfig"
+
+	for name, opts in pairs(M.lsp_servers) do
+		if not opts.on_attach then opts.on_attach = M.on_attach end
+		if not opts.capabilities then opts.capabilities = M.capabilities end
+
+		lspconfig[name].setup(opts)
+	end
 end
 
 return M
