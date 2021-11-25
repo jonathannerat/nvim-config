@@ -7,10 +7,6 @@ local mappings = {
 	["c|n|<c-j>"] = "<down>",
 	["c|n|<c-k>"] = "<up>",
 
-	["i|es|<c-e>"] = "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<c-e>'",
-	["i|es|<c-space>"] = "luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-space>'",
-	["i|ns|<c-b>"] = cmd "lua require'luasnip'.jump(-1)",
-	["i|ns|<c-f>"] = cmd "lua require'luasnip'.jump(1)",
 	["i|ns|<m-j>"] = "<esc>:m .+1<CR>==gi",
 	["i|ns|<m-k>"] = "<esc>:m .-2<CR>==gi",
 	["i|n|jj"] = "<esc>",
@@ -77,9 +73,6 @@ local mappings = {
 	["n|n|Q"] = "",
 
 	["s|es|<c-e>"] = "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<c-e>'",
-	["s|ns|<c-b>"] = cmd "lua require'luasnip'.jump(-1)",
-	["s|ns|<c-f>"] = cmd "lua require'luasnip'.jump(1)",
-	["s|ns|<c-space>"] = cmd "lua require'luasnip'.expand_or_jump()",
 
 	["t|ns|<c-m-q>"] = [[<c-\><c-n>]],
 
