@@ -14,12 +14,13 @@ rec_case = function()
 	return s(nil, {
 		c(1, {
 			t "",
-			s(nil, { t { "", "\t\tbreak;", "\tdefault:", "\t\t" }, i(1, "// code") }),
+			s(nil, { t { "", "\tdefault:", "\t\t" }, i(1, "// code") }),
 			s(nil, {
-				t { "", "\t\tbreak;", "\tcase " },
+				t { "", "\tcase " },
 				i(1, "value"),
 				t { ":", "\t\t" },
 				i(2, "// code"),
+				t { "", "\t\tbreak;" },
 				d(3, rec_case, {}),
 			}),
 		}),
@@ -44,8 +45,7 @@ local snippets = {
 		d(1, get_defguard, {}),
 		t { "", "#define " },
 		f(u.copy, 1),
-		t { "", "" },
-		t { "", "" },
+		t { "", "", "" },
 		i(2, "// code"),
 		t { "", "", "#endif // " },
 		f(u.copy, 1),
@@ -57,6 +57,7 @@ local snippets = {
 		i(2, "value"),
 		t { ":", "\t\t" },
 		i(3, "// code"),
+		t { "", "\t\tbreak;" },
 		d(4, rec_case, {}),
 		t { "", "}" },
 	}),
@@ -65,6 +66,7 @@ local snippets = {
 		i(2, "value"),
 		t { ":", "\t\t" },
 		i(3, "// code"),
+		t { "", "\t\tbreak;" },
 		d(4, rec_case, {}),
 	}),
 	S("printf", {
