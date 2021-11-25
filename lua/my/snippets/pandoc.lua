@@ -1,4 +1,3 @@
-
 local snippets = {}
 
 -- cpp inherits snippets from c

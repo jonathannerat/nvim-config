@@ -9,10 +9,14 @@ add_to_path "./lua/?/init.lua"
 
 local custom = require "my.custom"
 
-if custom.pre then custom.pre() end
+if custom.pre then
+	custom.pre()
+end
 
 require("my.options").setup()
-require("my.plugins")
+require "my.plugins"
 require("my.mappings").setup()
 
-if custom.post then custom.post() end
+if custom.post then
+	custom.post()
+end

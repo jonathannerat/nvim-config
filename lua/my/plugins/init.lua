@@ -1,29 +1,28 @@
 -- ensure packer.nvim is installed
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+	vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
 end
 
 local packages = {
 	"editorconfig/editorconfig-vim",
-	"wbthomason/packer.nvim",
 	"folke/lua-dev.nvim",
 	"folke/tokyonight.nvim",
+	"lambdalisue/suda.vim",
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	"ray-x/lsp_signature.nvim",
 	"stsewd/gx-extended.vim",
 	"tpope/vim-commentary",
-	"tpope/vim-surround",
-	"windwp/nvim-ts-autotag",
-	'JoosepAlviste/nvim-ts-context-commentstring',
-	'RRethy/nvim-treesitter-textsubjects',
-	'iosmanthus/vim-nasm',
-	'norcalli/nvim-colorizer.lua',
-	'nvim-telescope/telescope-media-files.nvim',
-	"lambdalisue/suda.vim",
-	'eddyekofo94/gruvbox-flat.nvim',
-	'lervag/vimtex',
 	"tpope/vim-fugitive",
+	"tpope/vim-surround",
+	"wbthomason/packer.nvim",
+	"windwp/nvim-ts-autotag",
+	"JoosepAlviste/nvim-ts-context-commentstring",
+	"RRethy/nvim-treesitter-textsubjects",
+	"eddyekofo94/gruvbox-flat.nvim",
+	"iosmanthus/vim-nasm",
+	"lervag/vimtex",
+	"nvim-telescope/telescope-media-files.nvim",
 
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
@@ -31,40 +30,42 @@ local packages = {
 	["cespare/vim-toml"] = { ft = "toml", branch = "main" },
 	["embark-theme/vim"] = { as = "embark-theme" },
 	["gkz/vim-ls"] = { as = "livescript-syntax", ft = "ls" },
+	["jidn/vim-dbml"] = { ft = "dbml" },
 	["leafo/moonscript-vim"] = { ft = "moon" },
-	["neomutt/neomutt.vim"] = { ft = { "mutt", "neomutt" } },
-	["nvim-telescope/telescope-fzf-native.nvim"] = { run = "make" },
+	["neomutt/neomutt.vim"] = { ft = { "mutt", "neomutt" }, branch = "main" },
 	["tridactyl/vim-tridactyl"] = { ft = "tridactyl" },
 	["vhyrro/tree-sitter-norg"] = { ft = "norg" },
-	["vim-pandoc/vim-pandoc"] = { ft = 'pandoc' },
+	["vim-pandoc/vim-pandoc"] = { ft = "pandoc" },
 	["vim-pandoc/vim-pandoc-syntax"] = { ft = "pandoc" },
-	["jidn/vim-dbml"] = { ft = "dbml" },
 
-	['neovim/nvim-lspconfig'] = {
-		requires = { 'onsails/lspkind-nvim', 'williamboman/nvim-lsp-installer' },
-		autosetup = 'my.plugins.lspconfig',
+	["nvim-telescope/telescope-fzf-native.nvim"] = { run = "make" },
+	["nvim-treesitter/playground"] = { run = ":TSUpdate query" },
+
+	["kyazdani42/nvim-tree.lua"] = { _auto = "nvim-tree" },
+	["nanozuki/tabby.nvim"] = { _auto = "my.plugins.tabby" },
+	["windwp/nvim-autopairs"] = { _auto = "my.plugins.autopairs" },
+	["hoob3rt/lualine.nvim"] = { _auto = "my.plugins.lualine" },
+
+	["neovim/nvim-lspconfig"] = {
+		requires = { "onsails/lspkind-nvim", "williamboman/nvim-lsp-installer" },
+		_auto = "my.plugins.lspconfig",
 	},
 
-	['folke/todo-comments.nvim'] = {
-		requires = 'nvim-lua/plenary.nvim',
-		autosetup = 'todo-comments',
+	["folke/todo-comments.nvim"] = {
+		requires = "nvim-lua/plenary.nvim",
+		_auto = "todo-comments",
 	},
 
-	['L3MON4D3/LuaSnip'] = {
-		autosetup = 'my.plugins.luasnip',
+	["L3MON4D3/LuaSnip"] = { _auto = "my.plugins.luasnip" },
+
+	["folke/trouble.nvim"] = {
+		_auto = { "trouble", opts = { icons = false } },
 	},
 
-
-	['folke/trouble.nvim'] = {
-		autosetup = {
-			as = 'trouble',
-			opts = { icons = false }
-		}
-	},
-
-	['nvim-neorg/neorg'] = {
-		config = function()
-			require("neorg").setup {
+	["nvim-neorg/neorg"] = {
+		ft = "norg",
+		_auto = {
+			opts = {
 				load = {
 					["core.defaults"] = {},
 					["core.keybinds"] = {
@@ -75,20 +76,17 @@ local packages = {
 						config = { workspaces = { notes = "~/documents/notes" } },
 					},
 					["core.norg.completion"] = {
-						config = {
-							engine = "nvim-cmp"
-						}
+						config = { engine = "nvim-cmp" },
 					},
 				},
-			}
-		end,
-		ft = "norg",
+			},
+		},
 	},
 
-	['iamcco/markdown-preview.nvim'] = {
-		run = 'cd app && yarn install',
-		cmd = 'MarkdownPreview',
-		ft = { 'markdown', 'pandoc.markdown', 'rmd' },
+	["iamcco/markdown-preview.nvim"] = {
+		run = "cd app && yarn install",
+		cmd = "MarkdownPreview",
+		ft = { "markdown", "pandoc.markdown", "rmd" },
 	},
 
 	["hrsh7th/nvim-cmp"] = {
@@ -98,67 +96,26 @@ local packages = {
 			{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
 			{ "hrsh7th/cmp-path", after = "nvim-cmp" },
 		},
-		autosetup = 'my.plugins.cmp'
+		_auto = "my.plugins.cmp",
 	},
 
-
-	['nvim-treesitter/nvim-treesitter'] = {
-		run = ':TSUpdate',
-		autosetup = 'my.plugins.treesitter',
+	["nvim-treesitter/nvim-treesitter"] = {
+		run = ":TSUpdate",
+		_auto = "my.plugins.treesitter",
 	},
 
-	['hoob3rt/lualine.nvim'] = {
-		autosetup = 'my.plugins.lualine',
+	["nvim-telescope/telescope.nvim"] = {
+		requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
+		_auto = "my.plugins.telescope",
 	},
 
-	['rmagatti/session-lens'] = {
-		after = 'auto-session',
-		config = function()
-			require('auto-session').setup {
-				path_display = { 'tail' },
-				preview = false,
-			}
-		end,
+	["glacambre/firenvim"] = {
+		run = ":call firenvim#install(0)",
 	},
 
-	['rmagatti/auto-session'] = {
-		autosetup = {
-			opts = {
-				auto_save_enabled = false,
-				auto_restore_enabled = true,
-				auto_session_allowed_dirs = { '~/projects' },
-			}
-		}
-	},
-
-	['nvim-telescope/telescope.nvim'] = {
-		requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' },
-		autosetup = 'my.plugins.telescope',
-	},
-
-	['windwp/nvim-autopairs'] = {
-		autosetup = 'my.plugins.autopairs',
-	},
-
-	['glacambre/firenvim'] = {
-		run = ':call firenvim#install(0)',
-	},
-
-	['kyazdani42/nvim-tree.lua'] = {
-		autosetup = 'nvim-tree'
-	},
-
-	['nvim-treesitter/playground'] = {
-		run = ':TSUpdate query',
-	},
-
-	['nanozuki/tabby.nvim'] = {
-		autosetup = 'my.plugins.tabby',
-	},
-
-	['~/projects/nvim-toggleterm.lua'] = {
-		autosetup = {
-			as = 'toggleterm',
+	["~/projects/nvim-toggleterm.lua"] = {
+		_auto = {
+			"toggleterm",
 			opts = {
 				open_mapping = [[<c-\>]],
 				persist_size = false,
@@ -170,24 +127,29 @@ local packages = {
 						return vim.o.columns * 0.3
 					end
 				end,
-			}
-		}
+			},
+		},
 	},
 
-	['lukas-reineke/format.nvim'] = {
-		autosetup = {
-			as = 'format',
+	["lukas-reineke/format.nvim"] = {
+		_auto = {
+			"format",
 			opts = {
-				['*'] = {
-					{ cmd = {"sed -i 's/[ \t]*$//'"} } -- remove trailing whitespace
+				["*"] = {
+					{ cmd = { "sed -i 's/[ \t]*$//'" } }, -- remove trailing whitespace
 				},
 				php = {
-					cmd = { 'php-formatter formatter:use:sort'}
-				}
-			}
-		}
+					cmd = { "php-formatter formatter:use:sort" },
+				},
+			},
+		},
+	},
+
+	["norcalli/nvim-colorizer.lua"] = {
+		_auto = { "colorizer", unpack = true, opts = { nil, { css = true } } },
 	},
 }
+
 _G.Autosetup = {}
 
 local function packer_setup(use)
@@ -201,24 +163,29 @@ local function packer_setup(use)
 			package[1] = k
 		end
 
-		local autosetup = package.autosetup
+		local auto = package._auto
 
-		if autosetup then
+		if auto then
 			Autosetup[i] = {}
 
-			if type(autosetup) == "string" then
-			Autosetup[i].package = autosetup
-			elseif type(autosetup) == "table" then
-				Autosetup[i].package = autosetup.as or string.match(package[1], '.*/(.*)')
-				Autosetup[i].config = autosetup.opts
+			if type(auto) == "string" then
+				Autosetup[i].package = auto
+			elseif type(auto) == "table" then
+				Autosetup[i].package = auto[1] or string.match(package[1], ".*/(.*)")
+				Autosetup[i].options = auto.opts
 			end
 
-			local istr = tostring(i)
-			package.config = "require(Autosetup[" .. istr .. "].package).setup(Autosetup[" .. istr .. "].config)"
+			local confstr = "require(Autosetup[%d].package).setup(Autosetup[%d].options)"
+
+			if auto.unpack then
+				confstr = "require(Autosetup[%d].package).setup(unpack(Autosetup[%d].options))"
+			end
+
+			package.config = string.format(confstr, i, i)
 			i = i + 1
 		end
 
-		package.autosetup = nil
+		package._auto = nil
 
 		use(package)
 	end
@@ -240,5 +207,3 @@ require("packer").startup {
 	packer_setup,
 	config = packer_config,
 }
-
-require('colorizer').setup(nil, { css = true })

@@ -35,36 +35,36 @@ M.config = {
 			set_jumps = true,
 			goto_next_start = {
 				["]m"] = "@function.outer",
-				["]i"] = "@conditional.outer"
+				["]i"] = "@conditional.outer",
 			},
 			goto_next_end = {
 				["]M"] = "@function.outer",
-				["]I"] = "@conditional.outer"
+				["]I"] = "@conditional.outer",
 			},
 			goto_previous_start = {
 				["[m"] = "@function.outer",
-				["[i"] = "@conditional.outer"
+				["[i"] = "@conditional.outer",
 			},
 			goto_previous_end = {
 				["[M"] = "@function.outer",
-				["[I"] = "@conditional.outer"
+				["[I"] = "@conditional.outer",
 			},
-		}
+		},
 	},
 	textsubjects = {
 		enable = true,
 		keymaps = {
 			["."] = "textsubjects-smart",
-			[";"] = "textsubjects-container-outer"
-		}
+			[";"] = "textsubjects-container-outer",
+		},
 	},
 	context_commentstring = {
-		enable = true
+		enable = true,
 	},
 	autotag = {
 		enable = true,
-		filetypes = { "html", "xml", "php" }
-	}
+		filetypes = { "html", "xml", "php" },
+	},
 }
 
 M.setup = function()

@@ -69,15 +69,19 @@ vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
 M.setup = function()
 	local lspinstaller = require "nvim-lsp-installer"
 
-	lspinstaller.on_server_ready(function (server)
+	lspinstaller.on_server_ready(function(server)
 		local opts = {}
 
 		if server.name == "sumneko_lua" then
 			opts = require("lua-dev").setup()
 		end
 
-		if not opts.on_attach then opts.on_attach = M.on_attach end
-		if not opts.capabilities then opts.capabilities = M.capabilities end
+		if not opts.on_attach then
+			opts.on_attach = M.on_attach
+		end
+		if not opts.capabilities then
+			opts.capabilities = M.capabilities
+		end
 
 		server:setup(opts)
 		vim.cmd [[ do User LspAttachBuffers ]]
