@@ -7,16 +7,15 @@ end
 add_to_path "./lua/?.lua"
 add_to_path "./lua/?/init.lua"
 
-local custom = require "my.custom"
-
-if custom.pre then
-	custom.pre()
-end
+local custom = require("my.functions").custom
+local f = require "my.util.functions"
 
 require("my.options").setup()
 require "my.plugins"
 require("my.mappings").setup()
 
-if custom.post then
-	custom.post()
-end
+f.vimexec([[
+colorscheme ${theme}
+]], {
+	theme = custom("theme")
+})

@@ -26,7 +26,7 @@ M.lsp_signature_config = {
 }
 
 M.lsp_servers = {
-	ccls = {}
+	ccls = {},
 }
 
 M.on_attach = function(client, bufnr)
@@ -99,8 +99,12 @@ M.setup = function()
 	local lspconfig = require "lspconfig"
 
 	for name, opts in pairs(M.lsp_servers) do
-		if not opts.on_attach then opts.on_attach = M.on_attach end
-		if not opts.capabilities then opts.capabilities = M.capabilities end
+		if not opts.on_attach then
+			opts.on_attach = M.on_attach
+		end
+		if not opts.capabilities then
+			opts.capabilities = M.capabilities
+		end
 
 		lspconfig[name].setup(opts)
 	end

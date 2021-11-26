@@ -1,3 +1,5 @@
+local custom = require("my.functions").custom
+
 local M = {}
 
 M.config = {
@@ -18,7 +20,7 @@ M.config = {
 		lualine_z = {},
 	},
 	options = {
-		theme = require("my.custom").lualine_theme,
+		theme = custom("lualine_theme"),
 	},
 	extensions = { "nvim-tree", "fugitive", "toggleterm" },
 }

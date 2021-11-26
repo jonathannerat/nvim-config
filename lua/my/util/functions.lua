@@ -21,6 +21,10 @@ function M.expand(text, dict)
 	end)
 end
 
+function M.vimexec(vimcode, dict)
+	vim.api.nvim_exec(M.expand(vimcode, dict), false)
+end
+
 function M.partial(func, ...)
 	local args = { ... }
 	return function()
