@@ -32,7 +32,6 @@ local mappings = {
 	["n|ns|<leader>fh"] = cmd "Telescope help_tags",
 	["n|ns|<leader>fl"] = cmd "Telescope live_grep layout_strategy=vertical",
 	["n|ns|<leader>fm"] = cmd "Telescope man_pages",
-	["n|ns|<leader>fs"] = cmd "Telescope session-lens search_session",
 	["n|ns|<leader>ft"] = cmd "Telescope treesitter",
 	["n|ns|<leader>g"] = cmd "G",
 	["n|ns|<leader>gP"] = cmd 'TermExec cmd="git push"',
