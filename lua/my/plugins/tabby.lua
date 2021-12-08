@@ -1,56 +1,21 @@
-local filename = require "tabby.filename"
-local util = require "tabby.util"
-
-local hl_tabline = util.extract_nvim_hl "TabLine"
-local hl_tabline_sel = util.extract_nvim_hl "TabLineSel"
-
 local M = {}
 
----@type TabbyTablineOpt
-M.tabline = {
-	hl = "TabLineFill",
-	layout = "active_wins_at_tail",
-	active_tab = {
-		label = function(tabid)
-			return {
-				"  " .. vim.api.nvim_tabpage_get_number(tabid) .. "  ",
-				hl = { fg = hl_tabline_sel.fg, bg = hl_tabline_sel.bg, style = "bold" },
-			}
-		end,
-		right_sep = { " ", hl = "TabLineFill" },
-	},
-	inactive_tab = {
-		label = function(tabid)
-			return {
-				"  " .. vim.api.nvim_tabpage_get_number(tabid) .. "  ",
-				hl = { fg = hl_tabline.fg, bg = hl_tabline.bg, style = "bold" },
-			}
-		end,
-		right_sep = { " ", hl = "TabLineFill" },
-	},
-	top_win = {
-		label = function(winid)
-			return {
-				" > " .. filename.unique(winid) .. " ",
-				hl = "TabLine",
-			}
-		end,
-		left_sep = { " ", hl = "TabLineFill" },
-	},
-	win = {
-		label = function(winid)
-			return {
-				" - " .. filename.unique(winid) .. " ",
-				hl = "TabLine",
-			}
-		end,
-		left_sep = { " ", hl = "TabLineFill" },
-	},
-}
-
 M.setup = function()
+	local layout = require "tabby.presets".active_wins_at_tail
+	layout.head[1][1] =  '   '
+	layout.head[2][1] = ''
+	layout.active_tab.left_sep[1] = ''
+	layout.active_tab.right_sep[1] = ''
+	layout.inactive_tab.left_sep[1] = ''
+	layout.inactive_tab.right_sep[1] = ''
+	layout.top_win.left_sep[1] = ''
+	layout.top_win.right_sep[1] = ''
+	layout.win.left_sep[1] = ''
+	layout.win.right_sep[1] = ''
+	layout.tail[1][1] = ''
+
 	require("tabby").setup {
-		tabline = M.tabline,
+		tabline = layout,
 	}
 end
 
