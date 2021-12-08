@@ -22,7 +22,7 @@ local mappings = {
 	["n|ns|<leader>cm"] = cmd "exe 'e ' .. stdpath('config') .. '/lua/my/mappings.lua'",
 	["n|ns|<leader>co"] = cmd "exe 'e ' .. stdpath('config') .. '/lua/my/options.lua'",
 	["n|ns|<leader>cp"] = cmd "exe 'e ' .. stdpath('config') .. '/lua/my/plugins/init.lua'",
-	["n|ns|<leader>fF"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-HI",
+	["n|ns|<leader>fF"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-LH,--no-ignore-vcs",
 	["n|ns|<leader>fG"] = cmd "Telescope git_files git_dir=~/.local/src/dotrepo show_untracked=false",
 	["n|ns|<leader>fM"] = cmd "Telescope media_files",
 	["n|ns|<leader>fb"] = cmd "Telescope buffers",
