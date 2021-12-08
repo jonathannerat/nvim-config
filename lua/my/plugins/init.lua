@@ -136,6 +136,7 @@ local packages = {
 		_auto = { "colorizer", unpack = true, opts = { nil, { css = true } } },
 	},
 
+
 	["marioortizmanero/adoc-pdf-live.nvim"] = {
 		ft = { "adoc", "asciidoc" },
 		_auto = { "adoc_pdf_live",
@@ -144,6 +145,15 @@ local packages = {
 				params = '-r asciidoctor-mathematical'
 			}
 		},
+	},
+
+	["~/projects/nvim-treesitter-context"] = {
+		_auto = { "treesitter-context",
+			opts = {
+				enabled = true,
+				max_lines = 3,
+			}
+		}
 	},
 }
 
