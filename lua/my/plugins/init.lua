@@ -44,7 +44,7 @@ local packages = {
 	["kyazdani42/nvim-tree.lua"] = { _auto = "nvim-tree" },
 	["nanozuki/tabby.nvim"] = { _auto = "my.plugins.tabby" },
 	["windwp/nvim-autopairs"] = { _auto = "my.plugins.autopairs" },
-	["hoob3rt/lualine.nvim"] = { _auto = "my.plugins.lualine" },
+	["nvim-lualine/lualine.nvim"] = { _auto = "my.plugins.lualine" },
 	["mhartington/formatter.nvim"] = { _auto = "my.plugins.formatter" },
 
 	["neovim/nvim-lspconfig"] = {
