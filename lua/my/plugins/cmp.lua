@@ -57,7 +57,7 @@ M.config = {
 		["<C-y>"] = cmp.config.disable,
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-		["<CR>"] = cmp.mapping.confirm { select = true },
+		["<CR>"] = cmp.mapping.confirm { select = false },
 	},
 }
 
