@@ -135,6 +135,16 @@ local packages = {
 	["norcalli/nvim-colorizer.lua"] = {
 		_auto = { "colorizer", unpack = true, opts = { nil, { css = true } } },
 	},
+
+	["marioortizmanero/adoc-pdf-live.nvim"] = {
+		ft = { "adoc", "asciidoc" },
+		_auto = { "adoc_pdf_live",
+			opts = {
+				binary = 'asciidoctor-pdf',
+				params = '-r asciidoctor-mathematical'
+			}
+		},
+	},
 }
 
 _G.Autosetup = {}
