@@ -45,6 +45,7 @@ local packages = {
 	["nanozuki/tabby.nvim"] = { _auto = "my.plugins.tabby" },
 	["windwp/nvim-autopairs"] = { _auto = "my.plugins.autopairs" },
 	["hoob3rt/lualine.nvim"] = { _auto = "my.plugins.lualine" },
+	["mhartington/formatter.nvim"] = { _auto = "my.plugins.formatter" },
 
 	["neovim/nvim-lspconfig"] = {
 		requires = { "onsails/lspkind-nvim", "williamboman/nvim-lsp-installer" },
@@ -127,20 +128,6 @@ local packages = {
 						return vim.o.columns * 0.3
 					end
 				end,
-			},
-		},
-	},
-
-	["lukas-reineke/format.nvim"] = {
-		_auto = {
-			"format",
-			opts = {
-				["*"] = {
-					{ cmd = { "sed -i 's/[ \t]*$//'" } }, -- remove trailing whitespace
-				},
-				php = {
-					cmd = { "php-formatter formatter:use:sort" },
-				},
 			},
 		},
 	},
