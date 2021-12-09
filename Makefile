@@ -1,9 +1,8 @@
 TARGET = $(HOME)
-IGNORE = (Makefile|md)
-OPTS = --dotfiles -v -t $(TARGET) --ignore="$(IGNORE)"
+OPTS = --dotfiles -v -t $(TARGET)
 
 install:
-	stow $(OPTS) .
+	stow $(OPTS) stow/
 
 uninstall: OPTS += -D
 uninstall: install
