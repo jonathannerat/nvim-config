@@ -18,6 +18,9 @@ M.setup = function()
 		pandoc = require "my.snippets.pandoc",
 		tex = require "my.snippets.tex",
 	}
+
+	require("luasnip.loaders.from_vscode").lazy_load()
+
 end
 
 return M

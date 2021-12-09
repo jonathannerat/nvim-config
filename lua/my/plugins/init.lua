@@ -23,6 +23,7 @@ local packages = {
 	"iosmanthus/vim-nasm",
 	"lervag/vimtex",
 	"nvim-telescope/telescope-media-files.nvim",
+	"rafamadriz/friendly-snippets",
 
 	["arrufat/vala.vim"] = { ft = "vala" },
 	["asciidoc/vim-asciidoc"] = { ft = { "adoc", "asciidoc" } },
