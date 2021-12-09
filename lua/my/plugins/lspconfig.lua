@@ -18,10 +18,12 @@ local M = {}
 
 M.lsp_signature_config = {
 	bind = true,
-	doc_lines = 2,
-	hint_enable = false,
+	doc_lines = 10,
+	floating_window = false,
+	hint_enable = true,
+	hint_prefix = "  ",
 	handler_opts = {
-		border = "single",
+		border = "rounded",
 	},
 }
 
@@ -48,7 +50,7 @@ M.on_attach = function(client, bufnr)
 	bind(mappings, bufnr)
 
 	-- annoying bug: https://github.com/ray-x/lsp_signature.nvim/issues/76
-	-- require("lsp_signature").on_attach(M.lsp_signature_config)
+	require("lsp_signature").on_attach(M.lsp_signature_config)
 	require("lspkind").init()
 end
 
