@@ -11,11 +11,9 @@ local custom = require("my.functions").custom
 local f = require "my.util.functions"
 
 require("my.options").setup()
-require "my.plugins"
+require("my.plugins").setup()
 require("my.mappings").setup()
 
-f.vimexec([[
-colorscheme ${theme}
-]], {
-	theme = custom("theme")
+f.vimexec([[colorscheme ${theme}]], {
+	theme = custom "theme",
 })
