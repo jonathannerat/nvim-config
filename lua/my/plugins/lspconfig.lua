@@ -3,11 +3,12 @@ local cmd, bind = m.cmd, m.bind
 
 local default_mappings = {
 	["n|ns|<C-k>"] = cmd "lua vim.lsp.buf.signature_help()",
-	["n|ns|<leader>A"] = cmd "lua vim.lsp.buf.code_action()",
-	["n|ns|<leader>R"] = cmd "lua vim.lsp.buf.rename()",
+	["n|ns|gA"] = cmd "lua vim.lsp.buf.code_action()",
+	["n|ns|gR"] = cmd "lua vim.lsp.buf.rename()",
 	["n|ns|K"] = cmd "lua vim.lsp.buf.hover()",
-	["n|ns|[d"] = cmd "lua vim.lsp.diagnostic.goto_prev()",
-	["n|ns|]d"] = cmd "lua vim.lsp.diagnostic.goto_next()",
+	["n|ns|[D"] = cmd "lua vim.diagnostic.show()",
+	["n|ns|[d"] = cmd "lua vim.diagnostic.goto_prev()",
+	["n|ns|]d"] = cmd "lua vim.diagnostic.goto_next()",
 	["n|ns|gD"] = cmd "lua vim.lsp.buf.declaration()",
 	["n|ns|gd"] = cmd "lua vim.lsp.buf.definition()",
 	["n|ns|gi"] = cmd "lua vim.lsp.buf.implementation()",
