@@ -1,2 +1,2 @@
 indent_width = 3
-no_call_parentheses = true
+call_parentheses = None
