@@ -63,11 +63,11 @@ local snippets = {
 	}),
 	S("case", {
 		t { "case " },
-		i(2, "value"),
+		i(1, "value"),
 		t { ":", "\t\t" },
-		i(3, "// code"),
+		i(2, "// code"),
 		t { "", "\t\tbreak;" },
-		d(4, rec_case, {}),
+		d(3, rec_case, {}),
 	}),
 	S("printf", {
 		t "printf(",
