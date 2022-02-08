@@ -1,11 +1,9 @@
-local packer = require "packer"
-local use = packer.use
-local fn = vim.fn
-
 local M = {}
 
 -- ensure packer.nvim is installed
+local fn = vim.fn
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+local packer_bootstrap = false
 if fn.empty(fn.glob(install_path)) > 0 then
 	packer_bootstrap = fn.system {
 		"git",
@@ -17,18 +15,51 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	}
 end
 
-local function use_syntax(plugin, syntax)
-	use { plugin, as = (type(syntax) == "string" and syntax or syntax[1]) .. "-syntax", ft = syntax }
+local packer = require "packer"
+local use = packer.use
+
+-- Use plugin only for specified filetypes, using apropiate folder name
+local function use_syntax(plugin, filetypes)
+	local alias
+	if type(filetypes) == "string" then
+		alias = filetypes
+	else
+		for k, _ in pairs(filetypes) do
+			if type(k) == "string" then
+				alias = k
+				break
+			end
+		end
+
+		if alias then
+			local filetype = filetypes[alias]
+			filetypes[alias] = nil
+			filetypes[#filetypes + 1] = filetype
+		else
+			alias = filetypes[1]
+		end
+	end
+
+	use {
+		plugin,
+		as = "syntax-" .. alias,
+		ft = filetypes,
+	}
 end
 
-local function use_setup(plugin, module)
-	use { plugin, config = "require('" .. module .. "').setup()" }
+-- Use plugin generating a trivial config call
+local function use_setup(plugin_spec, module)
+	plugin_spec = type(plugin_spec) == "string" and { plugin_spec } or plugin_spec
+	plugin_spec.config = "require('" .. module .. "').setup()"
+
+	use(plugin_spec)
 end
 
+-- Try to use local clone of plugin if available, fallback to original
 local function use_local(plugin_spec)
 	local plugin = type(plugin_spec) == "string" and plugin_spec or plugin_spec[1]
 	local plugin_name = string.match(plugin, ".*/(.*)")
-	local plugins_dir = "~/projects/"
+	local plugins_dir = "~/projects/nvim-plugins/"
 
 	if fn.isdirectory(fn.expand(plugins_dir .. plugin_name)) == 1 then
 		plugin_spec[1] = plugins_dir .. plugin_name
@@ -38,62 +69,177 @@ local function use_local(plugin_spec)
 end
 
 M.packer_setup = function()
-	use "editorconfig/editorconfig-vim"
-	use "folke/lua-dev.nvim"
-	use "nvim-treesitter/nvim-treesitter-textobjects"
-	use "ray-x/lsp_signature.nvim"
-	use "tpope/vim-fugitive"
 	use "wbthomason/packer.nvim"
-	use "JoosepAlviste/nvim-ts-context-commentstring"
-	use "RRethy/nvim-treesitter-textsubjects"
-	use "eddyekofo94/gruvbox-flat.nvim"
-	use "lervag/vimtex"
-	use "nvim-telescope/telescope-media-files.nvim"
-	use "rafamadriz/friendly-snippets"
 
+	-- === Language Specific ===
 	use_syntax("arrufat/vala.vim", "vala")
 	use_syntax("asciidoc/vim-asciidoc", { "asciidoc", "adoc" })
 	use_syntax("cakebaker/scss-syntax.vim", "scss")
 	use_syntax("cespare/vim-toml", "toml")
-	use_syntax("gkz/vim-ls", "ls")
+	use_syntax("gkz/vim-ls", { livescript = "ls" })
 	use_syntax("jidn/vim-dbml", "dbml")
 	use_syntax("leafo/moonscript-vim", "moon")
 	use_syntax("neomutt/neomutt.vim", { "mutt", "neomutt" })
 	use_syntax("tridactyl/vim-tridactyl", "tridactyl")
-	use_syntax("vim-pandoc/vim-pandoc", "pandoc")
-	use_syntax("vim-pandoc/vim-pandoc-syntax", "pandoc")
 	use_syntax("iosmanthus/vim-nasm", "nasm")
+	use_syntax("vim-pandoc/vim-pandoc-syntax", "pandoc")
+	use { "vim-pandoc/vim-pandoc", ft = "pandoc" } -- Pandoc integration & utilities
+	use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 
-	use { "vhyrro/tree-sitter-norg", ft = "norg" }
-	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
-	use { "nvim-treesitter/playground", run = ":TSUpdate query" }
-	use { "glacambre/firenvim", run = ":call firenvim#install(0)" }
+	-- === Colorschemes ===
+	use "eddyekofo94/gruvbox-flat.nvim"
 
+	-- === UI ===
 	use_setup("nanozuki/tabby.nvim", "my.plugins.tabby")
-	use_setup("windwp/nvim-autopairs", "my.plugins.autopairs")
-	use_setup("nvim-lualine/lualine.nvim", "my.plugins.lualine")
-	use_setup("mhartington/formatter.nvim", "my.plugins.formatter")
-	use_setup("j-hui/fidget.nvim", "fidget")
-	use_setup("goolord/alpha-nvim", "my.plugins.alpha")
-	use_setup("numToStr/Comment.nvim", "Comment")
-	use_setup("L3MON4D3/LuaSnip", "my.plugins.luasnip")
+	use_setup("nvim-lualine/lualine.nvim", "my.plugins.lualine") -- Statusline
+	use_setup("j-hui/fidget.nvim", "fidget") -- LSP Progress
+	use_setup("goolord/alpha-nvim", "my.plugins.alpha") -- Dashboard
 
-	use {
-		"neovim/nvim-lspconfig",
-		requires = { "onsails/lspkind-nvim", "williamboman/nvim-lsp-installer" },
-		_auto = "my.plugins.lspconfig",
-	}
-
-	use { "folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim", _auto = "todo-comments" }
-
-	use {
+	use { -- Pretty list for diagnostics, references, quickfix, etc.
 		"folke/trouble.nvim",
+		cmd = { "Trouble", "TroubleToggle" },
 		config = function()
 			require("trouble").setup { icons = true }
 		end,
 	}
 
+	use { -- Sidebar File Explorer
+		"kyazdani42/nvim-tree.lua",
+		cmd = { "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFocus" },
+		config = function()
+			require("nvim-tree").setup {
+				auto_close = true,
+				update_cwd = true,
+				trash = { cmd = "trash-rm" },
+			}
+		end,
+	}
+
+	use_setup({ -- Todo Highlighting
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+	}, "todo-comments")
+
+	use_local {
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("toggleterm").setup {
+				open_mapping = [[<c-\>]],
+				persist_size = false,
+				direction = "auto",
+				size = function(term)
+					if term:get_direction() == "horizontal" then
+						return 15
+					elseif term:get_direction() == "vertical" then
+						return vim.o.columns * 0.3
+					end
+				end,
+			}
+		end,
+	}
+
+	-- === Treesitter ===
+	use_setup({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+	}, "my.plugins.treesitter")
+
+	use { -- Syntax aware text-objects
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		after = "nvim-treesitter",
+	}
+
+	use { -- Smarter text-objects
+		"RRethy/nvim-treesitter-textsubjects",
+		after = "nvim-treesitter",
+	}
+
+	use { -- Context aware comment string (injections)
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		after = "nvim-treesitter",
+	}
+
+	use { -- TreeSitter node viewer
+		"nvim-treesitter/playground",
+		after = "nvim-treesitter",
+		cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
+		run = ":TSUpdate query",
+	}
+
+	use_local { -- Show cursor context block (class / function / if / for / etc.)
+		"romgrk/nvim-treesitter-context",
+		after = "nvim-treesitter",
+		config = function()
+			require("treesitter-context").setup {
+				enabled = true,
+				max_lines = 3,
+			}
+		end,
+	}
+
 	use {
+		"nvim-neorg/tree-sitter-norg",
+		after = "nvim-treesitter",
+		ft = "norg",
+	}
+
+	-- === Telescope ===
+	use_setup({
+		"nvim-telescope/telescope.nvim",
+		after = { "telescope-fzf-native.nvim", "telescope-media-files.nvim" },
+		cmd = "Telescope",
+		requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
+	}, "my.plugins.telescope")
+
+	use "nvim-telescope/telescope-media-files.nvim"
+	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+
+	-- === LSP ===
+	use_setup({
+		"neovim/nvim-lspconfig",
+		requires = {
+			"williamboman/nvim-lsp-installer",
+			"onsails/lspkind-nvim", -- LSP Completion symbols
+			"folke/lua-dev.nvim", -- sumneko_lua lsp + nvim integration
+			"ray-x/lsp_signature.nvim", -- LSP signature viewer
+		},
+	}, "my.plugins.lspconfig")
+
+	use_setup({ -- Completion engine for LSPs
+		"hrsh7th/nvim-cmp",
+		requires = {
+			{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+			{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-path", after = "nvim-cmp" },
+		},
+	}, "my.plugins.cmp")
+
+	-- === Editing ===
+	use "editorconfig/editorconfig-vim"
+	use_setup("windwp/nvim-autopairs", "my.plugins.autopairs")
+	use_setup("numToStr/Comment.nvim", "Comment")
+
+	use {
+		"blackCauldron7/surround.nvim",
+		config = function()
+			require("surround").setup { mappings_style = "surround" }
+		end,
+	}
+
+	use_setup({ -- File formatting
+		"mhartington/formatter.nvim",
+		cmd = "Format",
+	}, "my.plugins.formatter")
+
+	-- Utilities
+	use "tpope/vim-fugitive" -- Git integration
+	use "rafamadriz/friendly-snippets" -- Collection of snippets
+	use_setup("L3MON4D3/LuaSnip", "my.plugins.luasnip") -- Snippets engine
+
+	use { "glacambre/firenvim", run = ":call firenvim#install(0)" } -- Browser integration
+
+	use { -- Organization tool (note taking / todo lists / etc.)
 		"nvim-neorg/neorg",
 		ft = "norg",
 		config = function()
@@ -118,80 +264,17 @@ M.packer_setup = function()
 	use {
 		"iamcco/markdown-preview.nvim",
 		run = "cd app && yarn install",
-		cmd = "MarkdownPreview",
+		cmd = { "MarkdownPreview", "MarkdownPreviewToggle" },
 		ft = { "markdown", "pandoc.markdown", "rmd" },
 	}
 
-	use {
-		"hrsh7th/nvim-cmp",
-		requires = {
-			{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
-			{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
-			{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
-			{ "hrsh7th/cmp-path", after = "nvim-cmp" },
-		},
-		config = "require('my.plugins.cmp').setup()",
-	}
-
-	use {
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-		config = "require('my.plugins.treesitter').setup()",
-	}
-
-	use {
-		"nvim-telescope/telescope.nvim",
-		requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
-		config = "require('my.plugins.telescope').setup()",
-	}
-
-	-- local
-	use_local {
-		"akinsho/toggleterm.nvim",
-		config = function()
-			require("toggleterm").setup {
-				open_mapping = [[<c-\>]],
-				persist_size = false,
-				direction = "auto",
-				size = function(term)
-					if term:get_direction() == "horizontal" then
-						return 15
-					elseif term:get_direction() == "vertical" then
-						return vim.o.columns * 0.3
-					end
-				end,
-			}
-		end,
-	}
-
-	use {
+	use { -- Preview color #aaaaaa
 		"norcalli/nvim-colorizer.lua",
+		cmd = "ColorizerToggle",
 		config = function()
-			require("colorizer").setup(nil, { css = true })
-		end,
-	}
-
-	use_local {
-		"romgrk/nvim-treesitter-context",
-		config = function()
-			require("treesitter-context").setup {
-				enabled = true,
-				max_lines = 3,
-			}
-		end,
-	}
-
-	use {
-		"blackCauldron7/surround.nvim",
-		config = function()
-			require("surround").setup { mapping_style = "surround" }
-		end,
-	}
-
-	use {
-		"kyazdani42/nvim-tree.lua",
-		config = function()
-			require("nvim-tree").setup { auto_close = true }
+			require("colorizer").setup(nil, {
+				RRGGBB = true,
+			})
 		end,
 	}
 
