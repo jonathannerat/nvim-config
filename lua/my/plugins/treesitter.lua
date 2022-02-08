@@ -53,17 +53,15 @@ M.config = {
 	},
 	textsubjects = {
 		enable = true,
+		prev_selection = ",",
 		keymaps = {
 			["."] = "textsubjects-smart",
 			[";"] = "textsubjects-container-outer",
+			["i;"] = "textsubjects-container-inner",
 		},
 	},
 	context_commentstring = {
 		enable = true,
-	},
-	autotag = {
-		enable = true,
-		filetypes = { "html", "xml", "php" },
 	},
 }
 
