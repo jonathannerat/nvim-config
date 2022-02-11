@@ -229,7 +229,7 @@ M.packer_setup = function()
 
 	use_setup({ -- File formatting
 		"mhartington/formatter.nvim",
-		cmd = "Format",
+		cmd = { "Format", "FormatWrite" },
 	}, "my.plugins.formatter")
 
 	-- Utilities
