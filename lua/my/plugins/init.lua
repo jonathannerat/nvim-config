@@ -50,6 +50,7 @@ end
 -- Use plugin generating a trivial config call
 local function use_setup(plugin_spec, module)
 	plugin_spec = type(plugin_spec) == "string" and { plugin_spec } or plugin_spec
+	module = module and module or string.match(plugin_spec[1], ".*/(.*)")
 	plugin_spec.config = "require('" .. module .. "').setup()"
 
 	use(plugin_spec)
@@ -232,7 +233,9 @@ M.packer_setup = function()
 		cmd = { "Format", "FormatWrite" },
 	}, "my.plugins.formatter")
 
-	-- Utilities
+	use_setup "danymat/neogen"
+
+	-- === Utilities ===
 	use "tpope/vim-fugitive" -- Git integration
 	use "rafamadriz/friendly-snippets" -- Collection of snippets
 	use_setup("L3MON4D3/LuaSnip", "my.plugins.luasnip") -- Snippets engine
