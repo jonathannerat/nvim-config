@@ -25,10 +25,7 @@ M.config = {
 			function()
 				return {
 					exe = "stylua",
-					args = {
-						"--config-path " .. os.getenv "XDG_CONFIG_HOME" .. "/stylua/stylua.toml",
-						"-",
-					},
+					args = { "-" },
 					stdin = true,
 				}
 			end,
