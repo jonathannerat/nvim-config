@@ -116,6 +116,8 @@ M.packer_setup = function()
 		end,
 	}
 
+	use_setup("stevearc/dressing.nvim", "dressing")
+
 	use_setup({ -- Todo Highlighting
 		"folke/todo-comments.nvim",
 		requires = "nvim-lua/plenary.nvim",
@@ -233,7 +235,10 @@ M.packer_setup = function()
 		cmd = { "Format", "FormatWrite" },
 	}, "my.plugins.formatter")
 
-	use_setup "danymat/neogen"
+	use_setup { -- Annotation generation
+		"danymat/neogen",
+		cmd = "Neogen",
+	}
 
 	-- === Utilities ===
 	use "tpope/vim-fugitive" -- Git integration
