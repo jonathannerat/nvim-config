@@ -224,7 +224,7 @@ M.packer_setup = function()
 	use_setup("numToStr/Comment.nvim", "Comment")
 
 	use {
-		"blackCauldron7/surround.nvim",
+		"ur4ltz/surround.nvim",
 		config = function()
 			require("surround").setup { mappings_style = "surround" }
 		end,
