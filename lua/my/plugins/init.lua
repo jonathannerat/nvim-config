@@ -285,6 +285,16 @@ M.packer_setup = function()
 		end,
 	}
 
+	-- === External Integrations ===
+	use {
+		"andweeb/presence.nvim",
+		config = function()
+			require("presence").setup {
+				auto_update = false,
+			}
+		end,
+	}
+
 	if packer_bootstrap then
 		packer.sync()
 	end
