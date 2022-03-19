@@ -90,7 +90,7 @@ local snippets = {
 	s("-", {
 		t "\\item ",
 		i(1),
-		d(2, rec_list, {}, false),
+		d(2, rec_list, {}, {user_args = {false}}),
 	}),
 	s("sec", {
 		t { "\\section{" },
