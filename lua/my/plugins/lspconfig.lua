@@ -30,6 +30,7 @@ M.lsp_signature_config = {
 
 M.lsp_servers = {
 	clangd = {},
+	pylsp = {},
 }
 
 M.on_attach = function(client, bufnr)
