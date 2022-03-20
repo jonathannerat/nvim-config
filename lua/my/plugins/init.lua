@@ -123,7 +123,7 @@ M.packer_setup = function()
 		requires = "nvim-lua/plenary.nvim",
 	}, "todo-comments")
 
-	use_local {
+	use {
 		"akinsho/toggleterm.nvim",
 		config = function()
 			require("toggleterm").setup {
@@ -169,7 +169,7 @@ M.packer_setup = function()
 		run = ":TSUpdate query",
 	}
 
-	use_local { -- Show cursor context block (class / function / if / for / etc.)
+	use { -- Show cursor context block (class / function / if / for / etc.)
 		"romgrk/nvim-treesitter-context",
 		after = "nvim-treesitter",
 		config = function()
