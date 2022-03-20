@@ -89,6 +89,7 @@ M.packer_setup = function()
 
 	-- === Colorschemes ===
 	use "eddyekofo94/gruvbox-flat.nvim"
+	use "rebelot/kanagawa.nvim"
 
 	-- === UI ===
 	use_setup("nanozuki/tabby.nvim", "my.plugins.tabby")
