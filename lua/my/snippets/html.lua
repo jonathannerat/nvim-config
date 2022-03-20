@@ -1,12 +1,4 @@
 local ls = require "luasnip"
-local u = require "my.util.snippets"
-local S = ls.snippet
-local c = ls.choice_node
-local d = ls.dynamic_node
-local f = ls.function_node
-local i = ls.insert_node
-local s = ls.snippet_node
-local t = ls.text_node
 
 local html_snippets = {
 	skel = [[<!DOCTYPE html>
@@ -22,15 +14,15 @@ local html_snippets = {
 }
 
 local snippets = {
-	S("script", {
+	s("script", {
 		t "<script",
 		c(1, {
-			s(nil, {
+			sn(nil, {
 				t ' src="',
 				i(1, "path/to/file.js"),
 				t '">',
 			}),
-			s(nil, {
+			sn(nil, {
 				t { ">", "\t" },
 				i(1, "// code"),
 				t { "", "" },

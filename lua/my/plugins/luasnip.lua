@@ -1,26 +1,21 @@
 local ls = require "luasnip"
-local cmd = require("my.util.mapper").cmd
 
 local M = {}
 
 M.setup = function()
 	ls.config.set_config {
 		history = true,
+		ft_func = require("luasnip.extras.filetype_functions").from_filetype,
 	}
 
-	ls.snippets = {
-		all = require "my.snippets.all",
-		c = require "my.snippets.c",
-		cpp = require "my.snippets.cpp",
-		html = require "my.snippets.html",
-		lua = require "my.snippets.lua",
-		norg = require "my.snippets.norg",
-		pandoc = require "my.snippets.pandoc",
-		tex = require "my.snippets.tex",
+	require("luasnip.loaders.from_lua").load {
+		paths = "./lua/my/snippets",
 	}
+
+	ls.filetype_extend("cpp", {"c"})
+	ls.filetype_extend("pandoc", {"html", "tex"})
 
 	require("luasnip.loaders.from_vscode").lazy_load()
-
 end
 
 return M

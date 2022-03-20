@@ -1,12 +1,5 @@
 local ls = require "luasnip"
 local u = require "my.util.snippets"
-local S = ls.snippet
-local c = ls.choice_node
-local d = ls.dynamic_node
-local f = ls.function_node
-local s = ls.snippet_node
-local t = ls.text_node
-local i = ls.insert_node
 
 local rec_list
 ---recursively add `\item`s to a latex list (enumerate, itemize, etc)
@@ -15,10 +8,10 @@ local rec_list
 rec_list = function(_, _, indent)
 	indent = indent == nil and true or indent
 
-	return s(nil, {
+	return sn(nil, {
 		c(1, {
 			t "",
-			s(nil, { t { "", (indent and "\t" or "") .. "\\item " }, i(1), d(2, rec_list, {}) }),
+			sn(nil, { t { "", (indent and "\t" or "") .. "\\item " }, i(1), d(2, rec_list, {}) }),
 		}),
 	})
 end
@@ -46,7 +39,7 @@ local function text_faces(_, _, type)
 		choices[swap] = tmp
 	end
 
-	return s(nil, { c(2, choices), i(1), t "}" })
+	return sn(nil, { c(2, choices), i(1), t "}" })
 end
 
 local tex_snippets = {
@@ -75,7 +68,7 @@ $0
 }
 
 local snippets = {
-	S("begin", {
+	s("begin", {
 		t "\\begin{",
 		i(1),
 		t { "}", "\t" },
@@ -84,7 +77,7 @@ local snippets = {
 		f(u.copy, 1),
 		t "}",
 	}),
-	S("list", {
+	s("list", {
 		t "\\begin{",
 		c(1, { t "enumerate", t "itemize" }),
 		t { "}", "\t\\item " },
@@ -94,42 +87,42 @@ local snippets = {
 		f(u.copy, 1),
 		t "}",
 	}),
-	S("-", {
+	s("-", {
 		t "\\item ",
 		i(1),
 		d(2, rec_list, {}, false),
 	}),
-	S("sec", {
+	s("sec", {
 		t { "\\section{" },
 		i(1, "Section"),
 		t "}",
 	}),
-	S("ssec", {
+	s("ssec", {
 		t { "\\subsection{" },
 		i(1, "Subsection"),
 		t "}",
 	}),
-	S("b", {
+	s("b", {
 		t "\\textbf{",
 		i(1),
 		t "}",
 	}),
-	S("i", {
+	s("i", {
 		t "\\textit{",
 		i(1),
 		t "}",
 	}),
-	S("tt", {
+	s("tt", {
 		t "\\texttt{",
 		i(1),
 		t "}",
 	}),
-	S("mi", {
+	s("mi", {
 		t "$",
 		i(1),
 		t "$",
 	}),
-	S("mb", {
+	s("mb", {
 		t { "\\[", "\t" },
 		i(1),
 		t { "", "\\]" },

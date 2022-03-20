@@ -1,21 +1,20 @@
-local u = require "my.util.snippets"
 local ls = require "luasnip"
-local S, c, d, f, i, s, t = ls.s, ls.c, ls.d, ls.f, ls.i, ls.sn, ls.t
+local u = require "my.util.snippets"
 
 local function get_defguard()
 	local filename = vim.fn.expand "%:t"
 	filename = filename:gsub("-", "_"):gsub("%.(%w+)$", "_%1"):upper()
 
-	return s(nil, { i(1), i(2, filename) })
+	return sn(nil, { i(1), i(2, filename) })
 end
 
 local rec_case
 rec_case = function()
-	return s(nil, {
+	return sn(nil, {
 		c(1, {
 			t "",
-			s(nil, { t { "", "\tdefault:", "\t\t" }, i(1, "// code") }),
-			s(nil, {
+			sn(nil, { t { "", "\tdefault:", "\t\t" }, i(1, "// code") }),
+			sn(nil, {
 				t { "", "\tcase " },
 				i(1, "value"),
 				t { ":", "\t\t" },
@@ -34,13 +33,10 @@ int main(int argc, char** arv) {
 	${1:printf("Hello world!\n");}
 	return 0;
 \}]],
-	["while"] = [[while (${1:condition}) {
-	${2:// code}
-\}]],
 }
 
 local snippets = {
-	S("pragma", {
+	s("pragma", {
 		t { "#ifndef " },
 		d(1, get_defguard, {}),
 		t { "", "#define " },
@@ -50,7 +46,7 @@ local snippets = {
 		t { "", "", "#endif // " },
 		f(u.copy, 1),
 	}),
-	S("sw", {
+	s("sw", {
 		t "switch (",
 		i(1, "condition"),
 		t { ") {", "\tcase " },
@@ -61,7 +57,7 @@ local snippets = {
 		d(4, rec_case, {}),
 		t { "", "}" },
 	}),
-	S("case", {
+	s("case", {
 		t { "case " },
 		i(1, "value"),
 		t { ":", "\t\t" },
@@ -69,12 +65,12 @@ local snippets = {
 		t { "", "\t\tbreak;" },
 		d(3, rec_case, {}),
 	}),
-	S("printf", {
+	s("printf", {
 		t "printf(",
 		c(1, {
-			s(nil, { t '"', i(1), t '\\n", ', i(2) }),
-			s(nil, { t '"', i(1), t '\\n"' }),
-			s(nil, { t '"', i(1), t '"' }),
+			sn(nil, { t '"', i(1), t '\\n", ', i(2) }),
+			sn(nil, { t '"', i(1), t '\\n"' }),
+			sn(nil, { t '"', i(1), t '"' }),
 		}),
 		t ");",
 	}),
