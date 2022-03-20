@@ -218,6 +218,10 @@ M.packer_setup = function()
 		},
 	}, "my.plugins.cmp")
 
+	-- === Debuggers ===
+	use_setup("mfussenegger/nvim-dap", "my.plugins.dap")
+	use_setup({ "rcarriga/nvim-dap-ui", requires = "mfussenegger/nvim-dap" }, "dapui")
+
 	-- === Editing ===
 	use "editorconfig/editorconfig-vim"
 	use_setup("windwp/nvim-autopairs", "my.plugins.autopairs")
