@@ -294,7 +294,7 @@ M.packer_setup = function()
 	use {
 		"andweeb/presence.nvim",
 		config = function()
-			require("presence").setup {
+			require("presence"):setup {
 				auto_update = false,
 			}
 		end,
