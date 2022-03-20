@@ -14,7 +14,7 @@ M.config = {
 	ensure_installed = "maintained",
 	highlight = {
 		enable = true,
-		disable = { "tex", "latex", "html" }, -- conflicts with vimtex's concela
+		disable = { "tex", "latex", "html", "php" }, -- conflicts with vimtex's concela
 	},
 	incremental_selection = { enable = true },
 	indent = { enable = true },
