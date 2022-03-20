@@ -21,6 +21,7 @@ M.config = {
 	},
 	options = {
 		theme = custom("lualine_theme"),
+		globalstatus = true,
 	},
 	extensions = { "nvim-tree", "fugitive", "toggleterm" },
 }
