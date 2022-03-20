@@ -92,7 +92,7 @@ M.packer_setup = function()
 	use "rebelot/kanagawa.nvim"
 
 	-- === UI ===
-	use_setup("nanozuki/tabby.nvim", "my.plugins.tabby")
+	use_setup("nanozuki/tabby.nvim", "tabby")
 	use_setup("nvim-lualine/lualine.nvim", "my.plugins.lualine") -- Statusline
 	use_setup("j-hui/fidget.nvim", "fidget") -- LSP Progress
 	use_setup("goolord/alpha-nvim", "my.plugins.alpha") -- Dashboard
