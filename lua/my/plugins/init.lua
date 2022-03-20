@@ -129,11 +129,10 @@ M.packer_setup = function()
 			require("toggleterm").setup {
 				open_mapping = [[<c-\>]],
 				persist_size = false,
-				direction = "auto",
 				size = function(term)
-					if term:get_direction() == "horizontal" then
+					if term.direction == "horizontal" then
 						return 15
-					elseif term:get_direction() == "vertical" then
+					elseif term.direction == "vertical" then
 						return vim.o.columns * 0.3
 					end
 				end,
