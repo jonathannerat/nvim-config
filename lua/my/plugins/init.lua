@@ -107,7 +107,7 @@ M.packer_setup = function()
 
 	use { -- Sidebar File Explorer
 		"kyazdani42/nvim-tree.lua",
-		cmd = { "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFocus" },
+		cmd = { "NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFocus" },
 		config = function()
 			require("nvim-tree").setup {
 				auto_close = true,
@@ -191,6 +191,7 @@ M.packer_setup = function()
 		"nvim-telescope/telescope.nvim",
 		after = { "telescope-fzf-native.nvim", "telescope-media-files.nvim" },
 		cmd = "Telescope",
+		module = "telescope",
 		requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
 	}, "my.plugins.telescope")
 
