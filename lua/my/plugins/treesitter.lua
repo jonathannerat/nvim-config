@@ -11,7 +11,18 @@ M.parsers = {
 }
 
 M.config = {
-	ensure_installed = "maintained",
+	ensure_installed = {
+		"lua",
+		"c",
+		"cpp",
+		"html",
+		"css",
+		"haskell",
+		"javascript",
+		"php",
+		"vim",
+		"vue",
+	},
 	highlight = {
 		enable = true,
 		disable = { "tex", "latex", "html", "php" }, -- conflicts with vimtex's concela
