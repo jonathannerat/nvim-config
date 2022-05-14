@@ -50,6 +50,7 @@ M.globals = {
 	mkdp_echo_preview_url = 1,
 	mkdp_open_to_the_world = 1,
 	mkdp_port = 8007,
+	onedark_config = { style = "warmer" },
 	tex_conceal = "adbmg",
 	tex_flavor = "latex",
 

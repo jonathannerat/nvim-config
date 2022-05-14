@@ -90,6 +90,12 @@ M.packer_setup = function()
 	-- === Colorschemes ===
 	use "eddyekofo94/gruvbox-flat.nvim"
 	use "rebelot/kanagawa.nvim"
+	use {
+		"navarasu/onedark.nvim",
+		config = function()
+			require("onedark").setup { style = "warmer" }
+		end,
+	}
 
 	-- === UI ===
 	use_setup("nanozuki/tabby.nvim", "my.plugins.tabby")
