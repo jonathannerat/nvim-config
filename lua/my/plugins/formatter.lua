@@ -53,6 +53,14 @@ M.config = {
 		},
 		sh = { shell_format },
 		zsh = { shell_format },
+		haskell = {
+			function ()
+				return {
+					exe = "ormolu",
+					stdin = true,
+				}
+			end
+		}
 	},
 }
 

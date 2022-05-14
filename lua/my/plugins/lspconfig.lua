@@ -31,6 +31,9 @@ M.lsp_signature_config = {
 M.lsp_servers = {
 	clangd = {},
 	pylsp = {},
+	hls = {
+		cmd = { "haskell-language-server", "--lsp" },
+	},
 }
 
 M.on_attach = function(client, bufnr)
