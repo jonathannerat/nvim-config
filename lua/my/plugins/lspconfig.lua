@@ -40,13 +40,13 @@ M.on_attach = function(client, bufnr)
 	-- share this instance for all buffers
 	local mappings = default_mappings
 
-	if client.resolved_capabilities.document_formatting then
+	if client.server_capabilities.documentFormatting then
 		-- create a copy for a specific buffer if it has more capabilities
 		mappings = vim.fn.copy(default_mappings)
 		mappings["n|ns|<leader>sf"] = cmd "lua vim.lsp.buf.formatting()"
 	end
 
-	if client.resolved_capabilities.document_range_formatting then
+	if client.server_capabilities.documentRangeFormatting then
 		-- only create one copy
 		mappings = mappings == default_mappings and vim.fn.copy(default_mappings) or mappings
 		mappings["v|ns|<leader>sf"] = cmd "lua vim.lsp.buf.range_formatting()"
