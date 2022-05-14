@@ -176,7 +176,7 @@ M.packer_setup = function()
 	}
 
 	use { -- Show cursor context block (class / function / if / for / etc.)
-		"romgrk/nvim-treesitter-context",
+		"nvim-treesitter/nvim-treesitter-context",
 		after = "nvim-treesitter",
 		config = function()
 			require("treesitter-context").setup {
