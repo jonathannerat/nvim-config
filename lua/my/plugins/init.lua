@@ -239,6 +239,7 @@ M.packer_setup = function()
 			{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
 			{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
 			{ "hrsh7th/cmp-path", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
 		},
 	}, "my.plugins.cmp")
 
