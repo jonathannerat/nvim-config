@@ -17,6 +17,8 @@ local shell_format = function()
 	}
 end
 
+local prettier_format = require("formatter.defaults.prettier")
+
 M.config = {
 	filetype = {
 		c = { clike_format },
@@ -58,6 +60,24 @@ M.config = {
 				return {
 					exe = "ormolu",
 					stdin = true,
+				}
+			end
+		},
+		javascript = {
+			prettier_format,
+		},
+		vue = {
+			prettier_format,
+		},
+		php = {
+			function ()
+				return {
+					exe = "prettier",
+					args = {
+						"--config-precedence", "prefer-file", "--stdin-filepath", vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),
+					},
+					stdin = true,
+					try_node_modules = true,
 				}
 			end
 		}
