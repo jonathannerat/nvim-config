@@ -1,7 +1,5 @@
 local t = require "telescope"
 local tp = require "telescope.previewers"
-local m = require "my.util.mapper"
-local cmd, lua = m.cmd, m.lua
 
 local M = {}
 
@@ -44,6 +42,10 @@ M.setup = function()
 		defaults = {
 			file_previewer = tp.vim_buffer_cat.new,
 			grep_previewer = tp.vim_buffer_vimgrep.new,
+			path_display = function(_, path)
+				local tail = require("telescope.utils").path_tail(path)
+				return string.format("%s (%s)", tail, path)
+			end,
 			mappings = {
 				i = {
 					["<c-o>"] = action_open,
