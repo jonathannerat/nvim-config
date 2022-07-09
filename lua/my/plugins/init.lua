@@ -85,6 +85,8 @@ M.packer_setup = function()
 	use_syntax("iosmanthus/vim-nasm", "nasm")
 	use_syntax("vim-pandoc/vim-pandoc-syntax", "pandoc")
 	use_syntax("mechatroner/rainbow_csv", "csv")
+	use_syntax("baskerville/vim-sxhkdrc", "sxhkdrc")
+	use_syntax("adimit/prolog.vim", "prolog")
 	use { "vim-pandoc/vim-pandoc", ft = "pandoc" } -- Pandoc integration & utilities
 	use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 
