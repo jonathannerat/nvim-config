@@ -91,13 +91,17 @@ M.packer_setup = function()
 	use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 
 	-- === Colorschemes ===
-	use "eddyekofo94/gruvbox-flat.nvim"
-	use "rebelot/kanagawa.nvim"
 	use {
-		"navarasu/onedark.nvim",
-		config = function()
-			require("onedark").setup { style = "warmer" }
-		end,
+		"catppuccin/nvim",
+		as = "catppuccin",
+		config = function ()
+			require("catppuccin").setup {
+				term_colors = true,
+				styles = {
+					conditionals = "NONE",
+				}
+			}
+		end
 	}
 
 	--{{{ UI

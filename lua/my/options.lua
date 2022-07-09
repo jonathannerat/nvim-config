@@ -45,7 +45,7 @@ M.globals = {
 	["pandoc#formatting#mode"] = "h",
 	["pandoc#formatting#textwidth"] = 120,
 
-	gruvbox_flat_style = "hard",
+	catppuccin_flavour = "mocha",
 	mapleader = " ",
 	mkdp_echo_preview_url = 1,
 	mkdp_open_to_the_world = 1,
