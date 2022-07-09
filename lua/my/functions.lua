@@ -30,7 +30,7 @@ function M.find_projects(folder)
 
 	pickers.new(opts, {
 		prompt_title = "Projects",
-		finder = finders.new_oneshot_job({ "fd", "-d", "1", "-t", "d" }, {
+		finder = finders.new_oneshot_job({ "find", ".", "-mindepth", "1", "-maxdepth", "1", "-type", "d", "-printf", "%f\\n" }, {
 			cwd = projects_folder,
 			entry_maker = make_entry.gen_from_file { path_display = { "tail" } },
 		}),
