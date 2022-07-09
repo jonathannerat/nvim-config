@@ -154,6 +154,9 @@ M.packer_setup = function()
 		end,
 	}
 
+	use_setup('anuvyklack/pretty-fold.nvim', 'pretty-fold')
+
+	use "kyazdani42/nvim-web-devicons"
 	--}}}
 
 	-- === Treesitter ===
