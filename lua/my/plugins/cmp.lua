@@ -2,6 +2,7 @@ local M = {}
 
 local cmp = require "cmp"
 local luasnip = require "luasnip"
+local lspkind = require "lspkind"
 
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -59,6 +60,10 @@ M.config = {
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
 		["<CR>"] = cmp.mapping.confirm { select = false },
 	},
+	format = lspkind.cmp_format {
+		mode = 'symbol',
+		maxwidth = 40,
+	}
 }
 
 M.setup = function()
