@@ -123,14 +123,11 @@ M.packer_setup = function()
 		cmd = { "NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFocus" },
 		config = function()
 			require("nvim-tree").setup {
-				auto_close = true,
 				update_cwd = true,
 				trash = { cmd = "trash-rm" },
 			}
 		end,
 	}
-
-	use_setup("stevearc/dressing.nvim", "dressing")
 
 	use_setup({ -- Todo Highlighting
 		"folke/todo-comments.nvim",
