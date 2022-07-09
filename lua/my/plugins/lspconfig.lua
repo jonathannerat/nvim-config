@@ -17,25 +17,6 @@ local default_mappings = {
 
 local M = {}
 
-M.lsp_signature_config = {
-	bind = true,
-	doc_lines = 10,
-	floating_window = false,
-	hint_enable = true,
-	hint_prefix = "  ",
-	handler_opts = {
-		border = "rounded",
-	},
-}
-
-M.lsp_servers = {
-	clangd = {},
-	pylsp = {},
-	hls = {
-		cmd = { "haskell-language-server", "--lsp" },
-	},
-}
-
 M.on_attach = function(client, bufnr)
 	-- share this instance for all buffers
 	local mappings = default_mappings
@@ -54,8 +35,6 @@ M.on_attach = function(client, bufnr)
 
 	bind(mappings, bufnr)
 
-	-- annoying bug: https://github.com/ray-x/lsp_signature.nvim/issues/76
-	require("lsp_signature").on_attach(M.lsp_signature_config)
 	require("lspkind").init()
 end
 
@@ -77,31 +56,23 @@ vim.tbl_extend("force", M.capabilities.textDocument.completion.completionItem, {
 	},
 })
 
+M.lsp_servers = {
+	clangd = {},
+	intelephense = {
+		init_options = {
+			globalStoragePath = os.getenv('HOME') .. '/.local/share/intelephense',
+			licenceKey = "EducationalCode",
+		},
+	},
+	pylsp = {},
+	pyright = {},
+	sumneko_lua = require("lua-dev").setup(),
+	tsserver = {},
+	volar = {},
+}
+
 M.setup = function()
-	local lspinstaller = require "nvim-lsp-installer"
-
-	lspinstaller.on_server_ready(function(server)
-		-- skip local servers
-		if M.lsp_servers[server.name] then
-			return
-		end
-
-		local opts = {}
-
-		if server.name == "sumneko_lua" then
-			opts = require("lua-dev").setup()
-		end
-
-		if not opts.on_attach then
-			opts.on_attach = M.on_attach
-		end
-		if not opts.capabilities then
-			opts.capabilities = M.capabilities
-		end
-
-		server:setup(opts)
-		vim.cmd [[ do User LspAttachBuffers ]]
-	end)
+	require("nvim-lsp-installer").setup {}
 
 	local lspconfig = require "lspconfig"
 

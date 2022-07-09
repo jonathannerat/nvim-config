@@ -228,7 +228,6 @@ M.packer_setup = function()
 			"williamboman/nvim-lsp-installer",
 			"onsails/lspkind-nvim", -- LSP Completion symbols
 			"folke/lua-dev.nvim", -- sumneko_lua lsp + nvim integration
-			"ray-x/lsp_signature.nvim", -- LSP signature viewer
 		},
 	}, "my.plugins.lspconfig")
 
