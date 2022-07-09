@@ -98,8 +98,8 @@ M.packer_setup = function()
 		end,
 	}
 
-	-- === UI ===
-	use_setup("nanozuki/tabby.nvim", "my.plugins.tabby")
+	--{{{ UI
+	use_setup("nanozuki/tabby.nvim", "my.plugins.tabby") -- Tabline
 	use_setup("nvim-lualine/lualine.nvim", "my.plugins.lualine") -- Statusline
 	use_setup("j-hui/fidget.nvim", "fidget") -- LSP Progress
 	use_setup("goolord/alpha-nvim", "my.plugins.alpha") -- Dashboard
@@ -147,6 +147,8 @@ M.packer_setup = function()
 			}
 		end,
 	}
+
+	--}}}
 
 	-- === Treesitter ===
 	use_setup({
