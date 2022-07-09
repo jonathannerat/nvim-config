@@ -74,6 +74,10 @@ M.config = {
 	context_commentstring = {
 		enable = true,
 	},
+	autotag = {
+		enable = true,
+		filetypes = { "html", "xml", "vue", "php" },
+	},
 }
 
 M.setup = function()

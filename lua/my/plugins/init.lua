@@ -195,6 +195,11 @@ M.packer_setup = function()
 		ft = "norg",
 	}
 
+	use {
+		"windwp/nvim-ts-autotag",
+		after = "nvim-treesitter",
+	}
+
 	-- === Telescope ===
 	use_setup({
 		"nvim-telescope/telescope.nvim",
