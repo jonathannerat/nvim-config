@@ -87,6 +87,7 @@ M.packer_setup = function()
 	use_syntax("mechatroner/rainbow_csv", "csv")
 	use_syntax("baskerville/vim-sxhkdrc", "sxhkdrc")
 	use_syntax("adimit/prolog.vim", "prolog")
+	use_syntax("jwalton512/vim-blade", "blade")
 	use { "vim-pandoc/vim-pandoc", ft = "pandoc" } -- Pandoc integration & utilities
 	use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 
