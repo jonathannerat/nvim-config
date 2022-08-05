@@ -34,11 +34,12 @@ end
 ---@type TabbyTablineOpt
 M.tabline = {
    hl = "TabLineFill",
-   layout = "active_wins_at_tail",
+   layout = "tab_only",
    active_tab = {
       label = function(tabid)
+         local wins = #tabwins(tabid)
          return {
-            string.format(" #%d %s (%d) ", tabno(tabid), tabname(tabid), #tabwins(tabid)),
+            string.format(" #%d %s %s", tabno(tabid), tabname(tabid), wins > 0 and string.format("(%d) ", wins) or ""),
             hl = { fg = hl_tabline_sel.fg, bg = hl_tabline_sel.bg, style = "bold" },
          }
       end,
@@ -46,40 +47,13 @@ M.tabline = {
    },
    inactive_tab = {
       label = function(tabid)
+         local wins = #tabwins(tabid)
          return {
-            string.format(" #%d %s (%d) ", tabno(tabid), tabname(tabid), #tabwins(tabid)),
+            string.format(" #%d %s %s", tabno(tabid), tabname(tabid), wins > 0 and string.format("(%d) ", wins) or ""),
             hl = { fg = hl_tabline.fg, bg = hl_tabline.bg, style = "bold" },
          }
       end,
       right_sep = { " ", hl = "TabLineFill" },
-   },
-   top_win = {
-      label = function(winid)
-         return {
-            string.format(
-               " > %s: %s %s ",
-               vim.api.nvim_win_get_buf(winid),
-               filename.unique(winid),
-               mod_indicator(winid)
-            ),
-            hl = { fg = hl_tabline_sel.fg, bg = hl_tabline_sel.bg, style = "bold" },
-         }
-      end,
-      left_sep = { " ", hl = "TabLineFill" },
-   },
-   win = {
-      label = function(winid)
-         return {
-            string.format(
-               " - %s: %s %s",
-               vim.api.nvim_win_get_buf(winid),
-               filename.unique(winid),
-               mod_indicator(winid)
-            ),
-            hl = { fg = hl_tabline.fg, bg = hl_tabline.bg },
-         }
-      end,
-      left_sep = { " ", hl = "TabLineFill" },
    },
 }
 
