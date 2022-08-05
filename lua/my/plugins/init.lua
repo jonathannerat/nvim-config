@@ -234,6 +234,18 @@ M.packer_setup = function()
 		},
 	}, "my.plugins.cmp")
 
+	use {
+		"glepnir/lspsaga.nvim",
+		config = function ()
+			require("lspsaga").init_lsp_saga {
+				code_action_keys = {
+					quit = "<ESC>",
+					exec = "<CR>",
+				},
+			}
+		end
+	}
+
 
 	-- === Editing ===
 	use "editorconfig/editorconfig-vim"
