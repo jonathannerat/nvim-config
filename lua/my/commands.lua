@@ -1,5 +1,5 @@
 local function command(name, rhs)
-   vim.api.nvim_create_user_command(name, rhs, nil)
+   vim.api.nvim_create_user_command(name, rhs, {})
 end
 
 local function lua_command(name, lua_expr)
