@@ -93,7 +93,30 @@ local function packer_setup()
    use_setup("nanozuki/tabby.nvim", "my.plugins.tabby") -- Tabline
    use_setup("nvim-lualine/lualine.nvim", "my.plugins.lualine") -- Statusline
    use_setup("goolord/alpha-nvim", "my.plugins.alpha") -- Dashboard
-   use_setup("luukvbaal/nnn.nvim", "my.plugins.nnn") -- File explorer
+   use {
+      "nvim-neo-tree/neo-tree.nvim", -- File explorer
+      requires = {
+         "nvim-lua/plenary.nvim",
+         "kyazdani42/nvim-web-devicons",
+         "MunifTanjim/nui.nvim",
+      },
+      config = function()
+         -- If you want icons for diagnostic errors, you'll need to define them somewhere:
+         vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+         vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+         vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+         vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+         require("neo-tree").setup {
+            enable_git_status = false,
+            enable_diagnostics = false,
+            default_component_configs = {
+               container = {
+                  enable_character_fade = false,
+               },
+            },
+         }
+      end,
+   }
 
    use {
       "akinsho/toggleterm.nvim",
