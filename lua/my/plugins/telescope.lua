@@ -35,7 +35,7 @@ local function action_open(prompt_bufnr)
 	os.execute(string.format("%s %s", opener, filename))
 end
 
-M.extensions = { "fzf", "media_files" }
+M.extensions = { "fzf" }
 
 M.setup = function()
 	t.setup {
