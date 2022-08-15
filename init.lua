@@ -4,17 +4,14 @@ local function add_to_path(path)
    end
 end
 
+local custom = require "my.utils".custom
+
 add_to_path "./lua/?.lua"
 add_to_path "./lua/?/init.lua"
-
-local custom = require("my.functions").custom
-local f = require "my.util.functions"
 
 require "my.options"
 require "my.plugins"
 require "my.commands"
 require "my.mappings"
 
-f.vimexec([[colorscheme ${theme}]], {
-   theme = custom "theme",
-})
+vim.cmd("colorscheme " .. custom "theme")

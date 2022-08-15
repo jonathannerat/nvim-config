@@ -1,19 +1,21 @@
 local Mapper = require "my.util.mapper"
+local luacmd = require("my.utils").luacmd
+
 local map = Mapper:new()
 
 local default_mappings = {
-   ["<C-k>"] = ":lua vim.lsp.buf.signature_help()<cr>",
-   ["gA"] = ":Lspsaga code_action<cr>",
-   ["gR"] = ":Lspsaga rename<cr>",
-   ["gh"] = ":Lspsaga lsp_finder<cr>",
-   ["K"] = ":lua vim.lsp.buf.hover()<cr>",
-   ["[D"] = ":Lspsaga show_line_diagnostics<cr>",
-   ["[d"] = ":Lspsaga diagnostic_jump_prev<cr>",
-   ["]d"] = ":Lspsaga diagnostic_jump_next<cr>",
-   ["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
-   ["gd"] = ":lua vim.lsp.buf.definition()<cr>",
-   ["gi"] = ":lua vim.lsp.buf.implementation()<cr>",
-   ["gr"] = ":lua vim.lsp.buf.references()<cr>",
+   ["<C-k>"] = luacmd "vim.lsp.buf.signature_help()",
+   ["gA"] = luacmd 'require("lspsaga.codeaction").code_action()',
+   ["gR"] = luacmd 'require("lspsaga.rename").lsp_rename()',
+   ["gh"] = luacmd 'require("lspsaga.finder").lsp_finder()',
+   ["K"] = luacmd "vim.lsp.buf.hover()",
+   ["[D"] = luacmd 'require("lspsaga.diagnostic").show_line_diagnostics()',
+   ["[d"] = luacmd 'require("lspsaga.diagnostic").goto_prev()',
+   ["]d"] = luacmd 'require("lspsaga.diagnostic").goto_next()',
+   ["gD"] = luacmd "vim.lsp.buf.declaration()",
+   ["gd"] = luacmd "vim.lsp.buf.definition()",
+   ["gi"] = luacmd "vim.lsp.buf.implementation()",
+   ["gr"] = luacmd "vim.lsp.buf.references()",
 }
 
 local M = {}
@@ -24,11 +26,11 @@ M.on_attach = function(client, bufnr)
          m:bind(default_mappings)
 
          if client.server_capabilities.documentFormatting then
-            m:bind("<leader>sf", ":lua vim.lsp.buf.formatting()<cr>")
+            m:bind("<leader>sf", luacmd "vim.lsp.buf.formatting()")
          end
 
          if client.server_capabilities.documentRangeFormatting then
-            m:mode("visual", "<leader>sf", ":lua vim.lsp.buf.range_formatting()<cr>")
+            m:mode("visual", "<leader>sf", luacmd "vim.lsp.buf.range_formatting()")
          end
       end)
    end)

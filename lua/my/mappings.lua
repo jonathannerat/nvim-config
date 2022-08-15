@@ -1,13 +1,7 @@
 local Mapper = require "my.util.mapper"
+local utils = require "my.utils"
 
-local function vimcmd(str)
-   return ":" .. str .. "<cr>"
-end
-
-local function luacmd(str)
-   return ":lua " .. str .. "<cr>"
-end
-
+local vimcmd, luacmd = utils.vimcmd, utils.luacmd
 local map = Mapper:new()
 
 map:mode("normal", function(m)
