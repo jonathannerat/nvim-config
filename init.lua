@@ -10,7 +10,7 @@ add_to_path "./lua/?/init.lua"
 local custom = require("my.functions").custom
 local f = require "my.util.functions"
 
-require("my.options").setup()
+require "my.options"
 require("my.plugins").setup()
 require("my.commands").setup()
 require("my.mappings").setup()
