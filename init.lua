@@ -13,7 +13,7 @@ local f = require "my.util.functions"
 require "my.options"
 require "my.plugins"
 require "my.commands"
-require("my.mappings").setup()
+require "my.mappings"
 
 f.vimexec([[colorscheme ${theme}]], {
    theme = custom "theme",

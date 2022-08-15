@@ -1,86 +1,109 @@
-local m = require "my.util.mapper"
-local lua, cmd, bind = m.lua, m.cmd, m.bind
+local Mapper = require "my.util.mapper"
 
-local M = {}
-
-local mappings = {
-	["c|n|<c-j>"] = "<down>",
-	["c|n|<c-k>"] = "<up>",
-
-	["i|ns|<m-j>"] = "<esc>:m .+1<CR>==gi",
-	["i|ns|<m-k>"] = "<esc>:m .-2<CR>==gi",
-	["i|n|jj"] = "<esc>",
-	["i|n|kk"] = "<esc>",
-
-	["n|ns|<c-n>"] = cmd "NvimTreeToggle",
-	["n|ns|<c-t>"] = cmd "tabnew",
-	["n|ns|<leader>A"] = cmd "Alpha",
-	["n|ns|<leader>C"] = cmd "ColorizerToggle",
-	["n|ns|<leader>F"] = cmd "FormatWrite",
-	["n|ns|<leader>Q"] = cmd "q!",
-	["n|ns|<leader>Qa"] = cmd "qa!",
-	["n|ns|<leader>cd"] = cmd "lcd %:h",
-	["n|ns|<leader>ci"] = cmd "exe 'e ' .. stdpath('config') .. '/init.lua'",
-	["n|ns|<leader>cm"] = cmd "exe 'e ' .. stdpath('config') .. '/lua/my/mappings.lua'",
-	["n|ns|<leader>co"] = cmd "exe 'e ' .. stdpath('config') .. '/lua/my/options.lua'",
-	["n|ns|<leader>cp"] = cmd "exe 'e ' .. stdpath('config') .. '/lua/my/plugins/init.lua'",
-	["n|ns|<leader>f"] = cmd "Format",
-	["n|ns|<leader>fF"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-H,--no-ignore-vcs",
-	["n|ns|<leader>fG"] = cmd "Telescope git_files git_dir=~/.local/src/dotrepo show_untracked=false",
-	["n|ns|<leader>fM"] = cmd "Telescope media_files",
-	["n|ns|<leader>fb"] = cmd "Telescope buffers",
-	["n|ns|<leader>fd"] = cmd "Telescope find_files find_command=fd,-t,d,-L cwd=~",
-	["n|ns|<leader>ff"] = cmd "Telescope find_files find_command=fd,-t,f,-t,l,-H previewer=false layout={width=0.6}",
-	["n|ns|<leader>fg"] = cmd "Telescope git_files show_untracked=false previewer=false layout={width=0.6}",
-	["n|ns|<leader>fh"] = cmd "Telescope help_tags",
-	["n|ns|<leader>fl"] = cmd "Telescope live_grep layout_strategy=vertical",
-	["n|ns|<leader>fm"] = cmd "Telescope man_pages",
-	["n|ns|<leader>ft"] = cmd "Telescope treesitter",
-	["n|ns|<leader>g"] = cmd "G",
-	["n|ns|<leader>gP"] = cmd 'TermExec cmd="git push"',
-	["n|ns|<leader>gT"] = cmd "tabmove-",
-	["n|ns|<leader>gc"] = cmd "Git commit",
-	["n|ns|<leader>gm"] = cmd "Git mergetool",
-	["n|ns|<leader>gp"] = cmd 'TermExec cmd="git pull"',
-	["n|ns|<leader>gt"] = cmd "tabmove+",
-	["n|ns|<leader>hh"] = cmd "noh",
-	["n|ns|<leader>ht"] = [[/\s\+$<cr>]],
-	["n|ns|<leader>mp"] = cmd "MarkdownPreviewToggle",
-	["n|ns|<leader>n"] = cmd "NvimTreeFindFile",
-	["n|ns|<leader>pc"] = cmd "PackerClean",
-	["n|ns|<leader>pi"] = cmd "PackerInstall",
-	["n|ns|<leader>pp"] = cmd "PackerCompile profile=true",
-	["n|ns|<leader>ps"] = cmd "PackerSync",
-	["n|ns|<leader>pu"] = cmd "PackerUpdate",
-	["n|ns|<leader>q"] = cmd "q",
-	["n|ns|<leader>qa"] = cmd "qa",
-	["n|ns|<leader>r"] = cmd "e %",
-	["n|ns|<leader>tD"] = cmd "Trouble lsp_document_diagnostics",
-	["n|ns|<leader>tR"] = cmd "TroubleRefresh",
-	["n|ns|<leader>td"] = cmd "Trouble lsp_definitions",
-	["n|ns|<leader>th"] = cmd "TSHighlightCapturesUnderCursor",
-	["n|ns|<leader>tp"] = cmd "TSPlaygroundToggle",
-	["n|ns|<leader>tr"] = cmd "Trouble lsp_references",
-	["n|ns|<leader>tt"] = cmd "TroubleToggle",
-	["n|ns|<leader>w"] = cmd "w",
-	["n|ns|<leader>zi"] = lua 'require("my.plugins.zk").index()',
-	["n|ns|<leader>zn"] = lua 'require("my.plugins.zk").new { title = vim.fn.input "Title: ", dir = vim.fn.input "Dir: " }',
-	["n|ns|<m-j>"] = ":m .+1<CR>==",
-	["n|ns|<m-k>"] = ":m .-2<CR>==",
-	["n|n|<leader>p"] = ":Packer",
-	["n|n|<space>"] = "",
-	["n|n|Q"] = "",
-
-	["s|es|<c-e>"] = "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<c-e>'",
-
-	["t|ns|<c-m-q>"] = [[<c-\><c-n>]],
-
-	["v|ns|<m-j>"] = ":m '>+1<cr>gv=gv",
-	["v|ns|<m-k>"] = ":m '<-2<cr>gv=gv",
-}
-
-function M.setup()
-	bind(mappings)
+local function vimcmd(str)
+   return ":" .. str .. "<cr>"
 end
 
-return M
+local function luacmd(str)
+   return ":lua " .. str .. "<cr>"
+end
+
+local map = Mapper:new()
+
+map:mode("normal", function(m)
+   m:with_options({ silent = true, noremap = true }, {
+      ["<c-n>"] = vimcmd "Neotree toggle",
+      ["<c-t>"] = vimcmd "tabnew",
+      ["<leader>A"] = vimcmd "Alpha",
+      ["<leader>C"] = vimcmd "ColorizerToggle",
+      ["<leader>F"] = vimcmd "FormatWrite",
+      ["<leader>Q"] = vimcmd "q!",
+      ["<leader>Qa"] = vimcmd "qa!",
+      ["<leader>cd"] = vimcmd "lcd %:h",
+      ["<leader>ci"] = vimcmd "exe 'e ' .. stdpath('config') .. '/init.lua'",
+      ["<leader>cm"] = vimcmd "exe 'e ' .. stdpath('config') .. '/lua/my/mappings.lua'",
+      ["<leader>co"] = vimcmd "exe 'e ' .. stdpath('config') .. '/lua/my/options.lua'",
+      ["<leader>cp"] = vimcmd "exe 'e ' .. stdpath('config') .. '/lua/my/plugins/init.lua'",
+      ["<leader>f"] = vimcmd "Format",
+      ["<leader>fF"] = vimcmd "Telescope find_files find_command=fd,-t,f,-t,l,-H,--no-ignore-vcs",
+      ["<leader>fG"] = vimcmd "Telescope git_files git_dir=~/.local/src/dotrepo show_untracked=false",
+      ["<leader>fM"] = vimcmd "Telescope media_files",
+      ["<leader>fb"] = vimcmd "Telescope buffers",
+      ["<leader>fd"] = vimcmd "Telescope find_files find_command=fd,-t,d,-L cwd=~",
+      ["<leader>ff"] = vimcmd "Telescope find_files find_command=fd,-t,f,-t,l,-H previewer=false layout={width=0.6}",
+      ["<leader>fg"] = vimcmd "Telescope git_files show_untracked=false previewer=false layout={width=0.6}",
+      ["<leader>fh"] = vimcmd "Telescope help_tags",
+      ["<leader>fl"] = vimcmd "Telescope live_grep layout_strategy=vertical",
+      ["<leader>fm"] = vimcmd "Telescope man_pages",
+      ["<leader>ft"] = vimcmd "Telescope treesitter",
+      ["<leader>g"] = vimcmd "G",
+      ["<leader>gP"] = vimcmd 'TermExec cmd="git push"',
+      ["<leader>gT"] = vimcmd "tabmove-",
+      ["<leader>gc"] = vimcmd "Git commit",
+      ["<leader>gm"] = vimcmd "Git mergetool",
+      ["<leader>gp"] = vimcmd 'TermExec cmd="git pull"',
+      ["<leader>gt"] = vimcmd "tabmove+",
+      ["<leader>hh"] = vimcmd "noh",
+      ["<leader>ht"] = [[/\s\+$<cr>]],
+      ["<leader>mp"] = vimcmd "MarkdownPreviewToggle",
+      ["<leader>pc"] = vimcmd "PackerClean",
+      ["<leader>pi"] = vimcmd "PackerInstall",
+      ["<leader>pp"] = vimcmd "PackerCompile profile=true",
+      ["<leader>ps"] = vimcmd "PackerSync",
+      ["<leader>pu"] = vimcmd "PackerUpdate",
+      ["<leader>q"] = vimcmd "q",
+      ["<leader>qa"] = vimcmd "qa",
+      ["<leader>r"] = vimcmd "e %",
+      ["<leader>tD"] = vimcmd "Trouble lsp_document_diagnostics",
+      ["<leader>tR"] = vimcmd "TroubleRefresh",
+      ["<leader>td"] = vimcmd "Trouble lsp_definitions",
+      ["<leader>th"] = vimcmd "TSHighlightCapturesUnderCursor",
+      ["<leader>tp"] = vimcmd "TSPlaygroundToggle",
+      ["<leader>tr"] = vimcmd "Trouble lsp_references",
+      ["<leader>tt"] = vimcmd "TroubleToggle",
+      ["<leader>w"] = vimcmd "w",
+      ["<leader>zi"] = luacmd 'require("my.plugins.zk").index()',
+      ["<leader>zn"] = luacmd 'require("my.plugins.zk").new { title = vim.fn.input "Title: ", dir = vim.fn.input "Dir: " }',
+      ["<m-j>"] = ":m .+1<CR>==",
+      ["<m-k>"] = ":m .-2<CR>==",
+   })
+
+   m:with_noremap {
+      ["<space>"] = "",
+      ["Q"] = "",
+   }
+end)
+
+map:mode("insert", function(m)
+   m:with_options({ silent = true, noremap = true }, {
+      ["<m-j>"] = "<esc>:m .+1<CR>==gi",
+      ["<m-k>"] = "<esc>:m .-2<CR>==gi",
+   })
+
+   m:with_noremap {
+      jj = "<esc>",
+      kk = "<esc>",
+   }
+end)
+
+map:mode("select", function(m)
+   m:with_options({ silent = true, expr = true }, {
+      ["<c-e>"] = "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<c-e>'",
+   })
+end)
+
+map:with_options({ silent = true, noremap = true }, function(m)
+   m:mode("command", {
+      ["<c-j>"] = "<down>",
+      ["<c-k>"] = "<up>",
+   })
+
+   m:mode("terminal", {
+      ["<c-m-q>"] = [[<c-\><c-n>]],
+   })
+
+   m:mode("visual", {
+      ["<m-j>"] = ":m '>+1<cr>gv=gv",
+      ["<m-k>"] = ":m '<-2<cr>gv=gv",
+   })
+end)
