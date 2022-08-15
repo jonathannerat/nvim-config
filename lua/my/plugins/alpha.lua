@@ -18,7 +18,7 @@ dashboard.section.header.val = {
 dashboard.section.buttons.val = {
 	dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
 	dashboard.button("f", "  > Find file here", ":cd . | :Telescope find_files previewer=false layout={width=0.6}<CR>"),
-	dashboard.button("p", "  > Find projects", ":lua require'my.functions'.find_projects()<CR>"),
+	dashboard.button("p", "  > Find projects", ":lua require'my.plugins.telescope'.pickers.projects()<CR>"),
 	dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
 	dashboard.button("s", "  > Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
 	dashboard.button("u", "ﮮ  > Update", ":PackerSync<CR>"),

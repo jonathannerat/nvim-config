@@ -160,7 +160,7 @@ local function packer_setup()
       "nvim-telescope/telescope.nvim",
       after = { "telescope-fzf-native.nvim" },
       cmd = "Telescope",
-      module = "telescope",
+      module = { "telescope", "my.plugins.telescope" },
       requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
    }, "my.plugins.telescope")
 

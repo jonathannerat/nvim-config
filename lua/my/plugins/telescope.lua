@@ -1,70 +1,107 @@
-local t = require "telescope"
-local tp = require "telescope.previewers"
+local telescope = require "telescope"
+local pickers = require "telescope.pickers"
+local previewers = require "telescope.previewers"
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local finders = require "telescope.finders"
+local conf = require "telescope.config".values
 
 local M = {}
 
 --- opens the selected file on your system's default file opener
 local function action_open(prompt_bufnr)
-	local action_state = require "telescope.actions.state"
-	local Path = require "plenary.path"
-	local entry = action_state.get_selected_entry()
+   local Path = require "plenary.path"
+   local entry = action_state.get_selected_entry()
 
-	if not entry then
-		print "[telescope] Nothing currently selected"
-		return
-	end
+   if not entry then
+      print "[telescope] Nothing currently selected"
+      return
+   end
 
-	local filename = Path.new(entry.path or entry.filename)
+   local filename = Path.new(entry.path or entry.filename)
 
-	if not filename then
-		print "[telescope] No filename in selected entry"
-	end
+   if not filename then
+      print "[telescope] No filename in selected entry"
+   end
 
-	filename:normalize(vim.loop.cwd())
+   filename:normalize(vim.loop.cwd())
 
-	local opener = "xdg-open"
+   local opener = "xdg-open"
 
-	if vim.fn.has "macunix" == 1 then
-		opener = "open"
-	elseif vim.fn.has "win32" == 1 then
-		opener = "start"
-	end
+   if vim.fn.has "macunix" == 1 then
+      opener = "open"
+   elseif vim.fn.has "win32" == 1 then
+      opener = "start"
+   end
 
-	require("telescope.actions").close(prompt_bufnr)
+   require("telescope.actions").close(prompt_bufnr)
 
-	os.execute(string.format("%s %s", opener, filename))
+   os.execute(string.format("%s %s", opener, filename))
 end
 
-M.extensions = { "fzf" }
+local extensions = {
+   fzf = {
+      fuzzy = true,
+      override_generic_sorter = false,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+   },
+}
+
+M.pickers = {}
+
+local simple_pickers = {
+   {
+      name = "projects",
+      title = "Projects",
+      command = "find ~/projects/ -mindepth 1 -maxdepth 1 -type d -printf '%f\\n'",
+      opts = {
+         attach_mappings = function(prompt_bufnr)
+            actions.select_default:replace(function()
+               actions.close(prompt_bufnr)
+               local selection = action_state.get_selected_entry()
+               vim.fn.chdir("~/projects/" .. selection[1])
+               vim.api.nvim_command "Neotree reveal"
+            end)
+            return true
+         end,
+      },
+   },
+}
+
+for _, picker_spec in ipairs(simple_pickers) do
+   local opts = picker_spec.opts
+
+   opts.prompt_title = picker_spec.title
+   opts.finder = finders.new_oneshot_job({ "sh", "-c", picker_spec.command }, {})
+   opts.sorter = conf.generic_sorter()
+
+   M.pickers[picker_spec.name] = function ()
+      pickers.new({}, opts):find()
+   end
+end
 
 M.setup = function()
-	t.setup {
-		defaults = {
-			file_previewer = tp.vim_buffer_cat.new,
-			grep_previewer = tp.vim_buffer_vimgrep.new,
-			path_display = function(_, path)
-				local tail = require("telescope.utils").path_tail(path)
-				return string.format("%s (%s)", tail, path)
-			end,
-			mappings = {
-				i = {
-					["<c-o>"] = action_open,
-				},
-			},
-		},
-		extensions = {
-			fzf = {
-				fuzzy = true,
-				override_generic_sorter = false,
-				override_file_sorter = true,
-				case_mode = "smart_case",
-			},
-		},
-	}
+   telescope.setup {
+      defaults = {
+         file_previewer = previewers.vim_buffer_cat.new,
+         grep_previewer = previewers.vim_buffer_vimgrep.new,
+         path_display = function(_, path)
+            local tail = require("telescope.utils").path_tail(path)
+            return string.format("%s (%s)", tail, path)
+         end,
+         mappings = {
+            i = {
+               ["<c-o>"] = action_open,
+            },
+         },
+      },
+      extensions = extensions,
+   }
 
-	for _, e in ipairs(M.extensions) do
-		t.load_extension(e)
-	end
+   for ext, _ in pairs(extensions) do
+      telescope.load_extension(ext)
+   end
 end
 
 return M
