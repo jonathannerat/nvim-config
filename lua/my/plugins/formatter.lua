@@ -80,6 +80,9 @@ M.config = {
 					try_node_modules = true,
 				}
 			end
+		},
+		json = {
+		   prettier_format
 		}
 	},
 }
