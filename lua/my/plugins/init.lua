@@ -239,6 +239,8 @@ local function packer_setup()
       cmd = "Neogen",
    }
 
+   use "mattn/emmet-vim"
+
    -- === Utilities ===
    use "tpope/vim-fugitive" -- Git integration
    use "rafamadriz/friendly-snippets" -- Collection of snippets

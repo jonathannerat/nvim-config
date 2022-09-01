@@ -80,4 +80,6 @@ setg("vimtex_compiler_latexmk", {
    executable = "latexmk",
    options = { "-verbose", "-file-line-error", "-synctex=1", "-interaction=nonstopmode" },
 })
+setg("user_emmet_mode", "in")
+setg("user_emmet_install_global", 0)
 -- }}}
