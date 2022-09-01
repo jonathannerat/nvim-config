@@ -215,6 +215,7 @@ local function packer_setup()
          "williamboman/nvim-lsp-installer",
          "onsails/lspkind-nvim", -- LSP Completion symbols
          "folke/lua-dev.nvim", -- sumneko_lua lsp + nvim integration
+         "ray-x/lsp_signature.nvim", -- function signature as you type
       },
    }, "my.plugins.lspconfig")
 
@@ -228,7 +229,20 @@ local function packer_setup()
       },
    }, "my.plugins.cmp")
 
-   use_setup("ray-x/lsp_signature.nvim", "lsp_signature")
+   use {
+      "ray-x/lsp_signature.nvim",
+      config = function()
+         require("lsp_signature").setup {
+            bind = true,
+            floating_window = false,
+            hint_enable = false,
+            hint_prefix = " ",
+            handler_opts = {
+               border = "rounded",
+            },
+         }
+      end,
+   }
 
    use {
       "glepnir/lspsaga.nvim",
