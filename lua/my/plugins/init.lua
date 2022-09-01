@@ -106,7 +106,8 @@ local function packer_setup()
          vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
          vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
          vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
-         require("neo-tree").setup {
+         local neotree = require "neo-tree"
+         neotree.setup {
             enable_git_status = false,
             enable_diagnostics = false,
             default_component_configs = {
@@ -114,6 +115,24 @@ local function packer_setup()
                   enable_character_fade = false,
                },
             },
+            window = {
+               mappings = {
+                  s = "open_split",
+                  v = "open_vsplit",
+                  o = {
+                     "toggle_node",
+                     nowait = false,
+                  },
+               }
+            },
+            event_handlers = {
+               {
+                  event = "file_opened",
+                  handler = function ()
+                     neotree.close "filesystem"
+                  end
+               }
+            }
          }
       end,
    }

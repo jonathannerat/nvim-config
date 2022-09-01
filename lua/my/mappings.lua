@@ -7,6 +7,7 @@ local map = Mapper:new()
 map:mode("normal", function(m)
    m:with_options({ silent = true, noremap = true }, {
       ["<c-n>"] = vimcmd "Neotree toggle",
+      ["<c-e>"] = vimcmd "Neotree reveal",
       ["<c-t>"] = vimcmd "tabnew",
       ["<leader>A"] = vimcmd "Alpha",
       ["<leader>C"] = vimcmd "ColorizerToggle",
