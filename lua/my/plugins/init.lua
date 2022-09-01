@@ -277,6 +277,7 @@ local function packer_setup()
    -- === Utilities ===
    use "tpope/vim-fugitive" -- Git integration
    use "rafamadriz/friendly-snippets" -- Collection of snippets
+   use "HiPhish/info.vim" -- Info files
    use_setup("L3MON4D3/LuaSnip", "my.plugins.luasnip") -- Snippets engine
 
    use { -- Organization tool (note taking / todo lists / etc.)
