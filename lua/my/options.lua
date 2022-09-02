@@ -60,7 +60,7 @@ vim.opt.sessionoptions:append { "options", "resize", "winpos", "terminal" }
 -- Globals {{{
 setg("pandoc#formatting#mode", "h")
 setg("pandoc#formatting#textwidth", textwidth)
-setg("catppuccin_flavour", "mocha")
+setg("tokyonight_style", "night")
 setg("mapleader", " ")
 setg("mkdp_echo_preview_url", 1)
 setg("mkdp_open_to_the_world", 1)

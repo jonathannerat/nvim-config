@@ -76,18 +76,7 @@ local function packer_setup()
    use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 
    -- === Colorschemes ===
-   use {
-      "catppuccin/nvim",
-      as = "catppuccin",
-      config = function()
-         require("catppuccin").setup {
-            term_colors = true,
-            styles = {
-               conditionals = "NONE",
-            },
-         }
-      end,
-   }
+   use "folke/tokyonight.nvim"
 
    -- === UI ===
    use_setup("nanozuki/tabby.nvim", "my.plugins.tabby") -- Tabline
