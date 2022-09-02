@@ -14,7 +14,7 @@ end
 
 -- Options {{{
 local tabwidth = 4
-local textwidth = 100
+local textwidth = 80
 
 set("background", "dark")
 set("completeopt", "menuone,noselect")
