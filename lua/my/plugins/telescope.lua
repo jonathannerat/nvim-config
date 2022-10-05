@@ -46,6 +46,7 @@ local extensions = {
       override_file_sorter = true,
       case_mode = "smart_case",
    },
+   "live_grep_args",
 }
 
 M.pickers = {}
@@ -82,6 +83,21 @@ for _, picker_spec in ipairs(simple_pickers) do
 end
 
 M.setup = function()
+   local extension_configs = {}
+   local extension_names = {}
+
+   for extk, extv in pairs(extensions) do
+      local name = extk
+
+      if type(extk) == "string" and type(extv) == "table" then
+         extension_configs[extk] = extv
+      elseif type(extv) == "string" then
+         name = extv
+      end
+
+      extension_names[#extension_names+1] = name
+   end
+
    telescope.setup {
       defaults = {
          file_previewer = previewers.vim_buffer_cat.new,
@@ -96,10 +112,10 @@ M.setup = function()
             },
          },
       },
-      extensions = extensions,
+      extensions = extension_configs,
    }
 
-   for ext, _ in pairs(extensions) do
+   for _, ext in pairs(extension_names) do
       telescope.load_extension(ext)
    end
 end

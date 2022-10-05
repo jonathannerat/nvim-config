@@ -28,7 +28,7 @@ map:mode("normal", function(m)
       ["<leader>ff"] = vimcmd "Telescope find_files find_command=fd,-t,f,-t,l,-H previewer=false layout={width=0.6}",
       ["<leader>fg"] = vimcmd "Telescope git_files show_untracked=false previewer=false layout={width=0.6}",
       ["<leader>fh"] = vimcmd "Telescope help_tags",
-      ["<leader>fl"] = vimcmd "Telescope live_grep layout_strategy=vertical",
+      ["<leader>fl"] = luacmd "require('telescope').extensions.live_grep_args.live_grep_args { layout_strategy='vertical', layout_config = {prompt_position='top', mirror=true} }",
       ["<leader>fm"] = vimcmd "Telescope man_pages",
       ["<leader>ft"] = vimcmd "Telescope treesitter",
       ["<leader>g"] = vimcmd "G",
