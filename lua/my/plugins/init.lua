@@ -76,14 +76,7 @@ local function packer_setup()
    use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 
    -- === Colorschemes ===
-   use {
-      "folke/tokyonight.nvim",
-      config = function ()
-         require("tokyonight").setup {
-            style = "night"
-         }
-      end
-   }
+   use_setup("folke/tokyonight.nvim", "tokyonight")
 
    -- === UI ===
    -- use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
@@ -252,6 +245,9 @@ local function packer_setup()
             code_action_keys = {
                quit = "<ESC>",
                exec = "<CR>",
+            },
+            code_action_lightbulb = {
+                enable = false,
             },
          }
       end,
