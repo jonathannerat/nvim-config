@@ -2,6 +2,7 @@
 local fn = vim.fn
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 local packer_bootstrap
+
 if fn.empty(fn.glob(install_path)) > 0 then
    packer_bootstrap = fn.system {
       "git",
@@ -82,55 +83,44 @@ local function packer_setup()
    -- use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
    use_setup({
       "nvim-lualine/lualine.nvim",
-      requires = {"WhoIsSethDaniel/lualine-lsp-progress.nvim"}
+      requires = {
+         "WhoIsSethDaniel/lualine-lsp-progress.nvim",
+         { "kyazdani42/nvim-web-devicons" },
+      },
    }, "my.plugins.lualine") -- Statusline
    use_setup("goolord/alpha-nvim", "my.plugins.alpha") -- Dashboard
-   use {
+   use_setup({
       "nvim-neo-tree/neo-tree.nvim", -- File explorer
+      branch = "v2.x",
       requires = {
          "nvim-lua/plenary.nvim",
          "kyazdani42/nvim-web-devicons",
          "MunifTanjim/nui.nvim",
-      },
-      config = function()
-         -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-         vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-         vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-         vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-         vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
-         local neotree = require "neo-tree"
-         neotree.setup {
-            enable_git_status = false,
-            enable_diagnostics = false,
-            default_component_configs = {
-               container = {
-                  enable_character_fade = false,
-               },
-            },
-            window = {
-               mappings = {
-                  s = "open_split",
-                  v = "open_vsplit",
-                  o = {
-                     "toggle_node",
-                     nowait = false,
+         {
+            "s1n7ax/nvim-window-picker",
+            tag = "v1.*",
+            config = function()
+               local colors = require("tokyonight.colors").setup()
+
+               require("window-picker").setup {
+                  autoselect_one = true,
+                  include_current = false,
+                  filter_rules = {
+                     bo = {
+                        filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
+                        buftype = { "terminal" },
+                     },
                   },
+                  other_win_hl_color = colors.orange,
                }
-            },
-            event_handlers = {
-               {
-                  event = "file_opened",
-                  handler = function ()
-                     neotree.close "filesystem"
-                  end
-               }
-            }
-         }
-      end,
-   }
+            end,
+         },
+      },
+   }, "my.plugins.neo-tree")
 
    use {
       "akinsho/toggleterm.nvim",
+      tag = "v2.*",
       config = function()
          require("toggleterm").setup {
             open_mapping = [[<c-\>]],
@@ -141,8 +131,6 @@ local function packer_setup()
    }
 
    use_setup("anuvyklack/pretty-fold.nvim", "pretty-fold")
-
-   use "kyazdani42/nvim-web-devicons"
 
    -- === Treesitter ===
    use_setup({
@@ -183,23 +171,17 @@ local function packer_setup()
       end,
    }
 
-   use {
-      "nvim-neorg/tree-sitter-norg",
-      after = "nvim-treesitter",
-      ft = "norg",
-   }
-
    -- === Telescope ===
    use_setup({
-       "nvim-telescope/telescope.nvim",
-       cmd = "Telescope",
-       module = { "telescope", "my.plugins.telescope" },
-       requires = {
-           "nvim-lua/popup.nvim",
-           "nvim-lua/plenary.nvim",
-           { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-           { "nvim-telescope/telescope-live-grep-args.nvim" },
-       },
+      "nvim-telescope/telescope.nvim",
+      cmd = "Telescope",
+      module = { "telescope", "my.plugins.telescope" },
+      requires = {
+         "nvim-lua/popup.nvim",
+         "nvim-lua/plenary.nvim",
+         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+         { "nvim-telescope/telescope-live-grep-args.nvim" },
+      },
    }, "my.plugins.telescope")
 
    -- === LSP ===
@@ -247,14 +229,14 @@ local function packer_setup()
                exec = "<CR>",
             },
             code_action_lightbulb = {
-                enable = false,
+               enable = false,
             },
          }
       end,
    }
 
    -- === Editing ===
-   use "editorconfig/editorconfig-vim"
+   use "gpanders/editorconfig.nvim"
    use_setup("windwp/nvim-autopairs", "my.plugins.autopairs")
    use_setup("numToStr/Comment.nvim", "Comment")
    use_setup "kylechui/nvim-surround"
@@ -275,21 +257,24 @@ local function packer_setup()
    use "tpope/vim-fugitive" -- Git integration
    use "rafamadriz/friendly-snippets" -- Collection of snippets
    use "HiPhish/info.vim" -- Info files
-   use_setup("L3MON4D3/LuaSnip", "my.plugins.luasnip") -- Snippets engine
+   use_setup({
+      "L3MON4D3/LuaSnip",
+      tag = "v1.*",
+   }, "my.plugins.luasnip") -- Snippets engine
 
    use { -- Organization tool (note taking / todo lists / etc.)
       "nvim-neorg/neorg",
       ft = "norg",
+      requires = { "nvim-lua/plenary.nvim" },
+      run = ":Neorg sync-parsers",
+      cmd = { "Neorg" },
       config = function()
          require("neorg").setup {
             load = {
                ["core.defaults"] = {},
-               ["core.keybinds"] = {
-                  config = { default_keybinds = true },
-               },
                ["core.norg.concealer"] = {},
                ["core.norg.dirman"] = {
-                  config = { workspaces = { notes = "~/documents/notes" } },
+                  config = { workspaces = { notes = "~/notebook/home/" }, autochdir = true },
                },
                ["core.norg.completion"] = {
                   config = { engine = "nvim-cmp" },
@@ -299,15 +284,10 @@ local function packer_setup()
       end,
    }
 
-   use { -- Preview color #aaaaaa
+   use_setup({ -- Preview color #aaaaaa
       "norcalli/nvim-colorizer.lua",
       cmd = "ColorizerToggle",
-      config = function()
-         require("colorizer").setup(nil, {
-            RRGGBB = true,
-         })
-      end,
-   }
+   }, "colorizer")
 
    if packer_bootstrap then
       packer.sync()

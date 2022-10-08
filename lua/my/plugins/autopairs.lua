@@ -11,7 +11,7 @@ M.config = {
 
 M.rules = {
 	Rule("$", "$", { "tex", "latex" })
-		:with_pair(cond.not_after_regex_check "%%")
+		:with_pair(cond.not_after_text "%%")
 		:with_move(cond.done())
 		:with_cr(cond.none()),
 	Rule("$", "$", { "pandoc" }):with_move(cond.done()):with_cr(cond.none()),

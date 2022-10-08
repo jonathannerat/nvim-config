@@ -81,4 +81,5 @@ setg("vimtex_compiler_latexmk", {
 })
 setg("user_emmet_mode", "in")
 setg("user_emmet_install_global", 0)
+setg("neo_tree_remove_legacy_commands", 1)
 -- }}}

@@ -9,7 +9,7 @@ M.setup = function()
 	}
 
 	require("luasnip.loaders.from_lua").load {
-		paths = "./lua/my/snippets",
+		paths = vim.fn.stdpath "config" .. "/lua/my/snippets",
 	}
 
 	ls.filetype_extend("cpp", {"c"})
