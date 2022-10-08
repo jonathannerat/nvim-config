@@ -53,7 +53,6 @@ set "nobackup"
 set "noshowmode"
 set "noswapfile"
 set "nowritebackup"
-set("winbar", "%m %f")
 
 vim.opt.sessionoptions:append { "options", "resize", "winpos", "terminal" }
 -- }}}

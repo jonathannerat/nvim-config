@@ -86,8 +86,11 @@ local function packer_setup()
    }
 
    -- === UI ===
-   use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
-   use_setup("nvim-lualine/lualine.nvim", "my.plugins.lualine") -- Statusline
+   -- use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
+   use_setup({
+      "nvim-lualine/lualine.nvim",
+      requires = {"WhoIsSethDaniel/lualine-lsp-progress.nvim"}
+   }, "my.plugins.lualine") -- Statusline
    use_setup("goolord/alpha-nvim", "my.plugins.alpha") -- Dashboard
    use {
       "nvim-neo-tree/neo-tree.nvim", -- File explorer
