@@ -80,7 +80,7 @@ local function packer_setup()
    use_setup("folke/tokyonight.nvim", "tokyonight")
 
    -- === UI ===
-   -- use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
+   use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
    use_setup({
       "nvim-lualine/lualine.nvim",
       requires = {
