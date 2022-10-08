@@ -30,6 +30,7 @@ map:mode("normal", function(m)
       ["<leader>fh"] = vimcmd "Telescope help_tags",
       ["<leader>fl"] = luacmd "require('telescope').extensions.live_grep_args.live_grep_args { layout_strategy='vertical', layout_config = {prompt_position='top', mirror=true} }",
       ["<leader>fm"] = vimcmd "Telescope man_pages",
+      ["<leader>fr"] = vimcmd "Telescope resume",
       ["<leader>ft"] = vimcmd "Telescope treesitter",
       ["<leader>g"] = vimcmd "G",
       ["<leader>gP"] = vimcmd 'TermExec cmd="git push"',
