@@ -185,23 +185,27 @@ local function packer_setup()
    }, "my.plugins.telescope")
 
    -- === LSP ===
-   use_setup({
+   use "folke/neodev.nvim" -- sumneko_lua lsp + nvim integration
+
+   use_setup("williamboman/mason.nvim", "mason")
+
+   use_setup("williamboman/mason-lspconfig.nvim", "my.plugins.mason-lspconfig")
+
+   use {
       "neovim/nvim-lspconfig",
       requires = {
-         "williamboman/nvim-lsp-installer",
          "onsails/lspkind-nvim", -- LSP Completion symbols
-         "folke/lua-dev.nvim", -- sumneko_lua lsp + nvim integration
          "ray-x/lsp_signature.nvim", -- function signature as you type
       },
-   }, "my.plugins.lspconfig")
+   }
 
    use_setup({ -- Completion engine for LSPs
       "hrsh7th/nvim-cmp",
       requires = {
-         { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
-         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
-         { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
-         { "hrsh7th/cmp-path", after = "nvim-cmp" },
+         { "hrsh7th/cmp-buffer" },
+         { "hrsh7th/cmp-nvim-lsp" },
+         { "saadparwaiz1/cmp_luasnip" },
+         { "hrsh7th/cmp-path" },
       },
    }, "my.plugins.cmp")
 

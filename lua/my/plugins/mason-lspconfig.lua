@@ -18,7 +18,7 @@ local default_mappings = {
    ["gr"] = luacmd "vim.lsp.buf.references()",
 }
 
-local function on_attach(client, bufnr)
+local function default_on_attach(client, bufnr)
    map:buffer(bufnr, function(m)
       m:with_options({ silent = true, noremap = true }, function(m)
          m:bind(default_mappings)
@@ -34,32 +34,9 @@ local function on_attach(client, bufnr)
    end)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-vim.tbl_extend("force", capabilities.textDocument.completion.completionItem, {
-   snippetSupport = true,
-   preselectSupport = true,
-   insertReplaceSupport = true,
-   labelDetailsSupport = true,
-   deprecatedSupport = true,
-   commitCharactersSupport = true,
-   tagSupport = { valueSet = { 1 } },
-   resolveSupport = {
-      properties = {
-         "documentation",
-         "detail",
-         "additionalTextEdits",
-      },
-   },
-})
+local default_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local lsp_servers = {
-   ccls = {},
-   pylsp = {},
-   pyright = {},
-   tsserver = {},
-   volar = {},
-   sumneko_lua = require("lua-dev").setup(),
    intelephense = {
       init_options = {
          globalStoragePath = os.getenv "HOME" .. "/.local/share/intelephense",
@@ -68,21 +45,47 @@ local lsp_servers = {
    },
 }
 
+local function extend_with_defaults(opts)
+   opts = opts or {}
+
+   if not opts.on_attach then
+      opts.on_attach = default_on_attach
+   end
+
+   if not opts.capabilities then
+      opts.capabilities = default_capabilities
+   end
+
+   return opts
+end
+
 return {
    setup = function()
-      require("nvim-lsp-installer").setup {}
-
       local lspconfig = require "lspconfig"
+      local mason_lspconfig = require "mason-lspconfig"
 
-      for name, opts in pairs(lsp_servers) do
-         if not opts.on_attach then
-            opts.on_attach = on_attach
-         end
-         if not opts.capabilities then
-            opts.capabilities = capabilities
-         end
+      mason_lspconfig.setup {
+         ensure_installed = { "sumneko_lua" },
+      }
 
-         lspconfig[name].setup(opts)
-      end
+      mason_lspconfig.setup_handlers {
+         function(server_name)
+            local opts = extend_with_defaults(lsp_servers[server_name])
+
+            lspconfig[server_name].setup(opts)
+         end,
+
+         sumneko_lua = function()
+            require("neodev").setup {
+               override = function(root_dir, library)
+                  if require("neodev.util").has_file(root_dir, "~/projects/nvim-config") then
+                     library.enabled = true
+                     library.plugins = true
+                  end
+               end,
+            }
+            lspconfig.sumneko_lua.setup(extend_with_defaults())
+         end,
+      }
    end,
 }
