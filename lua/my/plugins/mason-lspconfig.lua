@@ -43,6 +43,7 @@ local lsp_servers = {
          licenceKey = "EducationalCode",
       },
    },
+   ccls = {},
 }
 
 local function extend_with_defaults(opts)
@@ -87,5 +88,22 @@ return {
             lspconfig.sumneko_lua.setup(extend_with_defaults())
          end,
       }
+
+      local mason_servers = mason_lspconfig.get_installed_servers()
+      local function is_installed_through_mason(name)
+         for _, v in ipairs(mason_servers) do
+            if name == v then
+               return true
+            end
+         end
+
+         return false
+      end
+
+      for name, config in pairs(lsp_servers) do
+         if not is_installed_through_mason(name) then
+             lspconfig[name].setup(extend_with_defaults(config))
+         end
+      end
    end,
 }
