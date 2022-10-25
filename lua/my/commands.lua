@@ -10,25 +10,40 @@ lua_command("LuasnipEdit", [[require("luasnip.loaders.from_lua").edit_snippet_fi
 
 local function lua_playground()
    local output = io.popen("mktemp /tmp/lua_playground.XXXXXX.lua", "r")
-   local filename = output ~= nil and output:read("*a") or nil
+   local filename = output ~= nil and output:read "*a" or nil
 
    if filename then
       vim.cmd("tabnew " .. filename)
    else
-      print("Error creating file with mktemp")
+      vim.notify("Error creating file with mktemp", vim.log.levels.ERROR)
    end
 end
 
 command("LuaPlayground", lua_playground)
 
 vim.api.nvim_create_autocmd("FileType", {
-   pattern = {'html', 'css', 'blade', 'vue'},
+   pattern = { "html", "css", "blade", "vue" },
    command = "EmmetInstall",
-   group = vim.api.nvim_create_augroup("emmet_on_filetypes", {})
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-   pattern = {'/tmp/lua_playground.*.lua'},
+   pattern = { "/tmp/lua_playground.*.lua" },
    command = "luafile %",
-   group = vim.api.nvim_create_augroup("lua_playground", {})
+})
+
+local config_dir = (os.getenv "XDG_CONFIG_HOME") or (os.getenv "HOME" .. "/.config")
+
+-- Reload sxhkd daemon
+vim.api.nvim_create_autocmd("BufWritePost", {
+   pattern = { config_dir .. "/sxhkd/sxhkdrc" },
+   callback = function()
+      io.popen('pkill -USR1 sxhkd')
+      vim.notify('sxhkd daemon reloaded!')
+   end
+})
+
+-- Set options for documents
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = { "markdown", "norg", "tex" },
+   command = "set tw=80 spell"
 })
