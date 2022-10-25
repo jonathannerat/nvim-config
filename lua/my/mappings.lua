@@ -75,8 +75,7 @@ map:mode("insert", function(m)
    })
 
    m:with_noremap {
-      jj = "<esc>",
-      kk = "<esc>",
+      jk = "<esc>",
    }
 end)
 
