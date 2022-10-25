@@ -44,6 +44,13 @@ local lsp_servers = {
       },
    },
    ccls = {},
+   volar = {
+      init_options = {
+         typescript = {
+            tsdk = "/usr/lib/node_modules/typescript/lib",
+         }
+      }
+   }
 }
 
 local function extend_with_defaults(opts)
