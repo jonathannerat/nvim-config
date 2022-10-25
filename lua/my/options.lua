@@ -26,6 +26,7 @@ set("scrolloff", 5)
 set("shiftwidth", tabwidth)
 set("shortmess", vim.o.shortmess .. "ac")
 set("spelllang", "es,en")
+set("splitkeep", "cursor")
 set("tabstop", tabwidth)
 set("timeoutlen", 300)
 
