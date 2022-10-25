@@ -108,7 +108,10 @@ M.setup = function()
          end,
          mappings = {
             i = {
-               ["<c-o>"] = action_open,
+               ["<C-o>"] = action_open,
+               ["<C-Down>"] = actions.cycle_history_next,
+               ["<C-Up>"] = actions.cycle_history_prev,
+               ["<C-r>"] = actions.delete_buffer,
             },
          },
       },
