@@ -1,10 +1,10 @@
 local ls = require "luasnip"
 local u = require "my.util.snippets"
+local c, d, f, i, s, sn, t = ls.c, ls.d, ls.f, ls.i, ls.s, ls.sn, ls.t
 
 local rec_list
 ---recursively add `\item`s to a latex list (enumerate, itemize, etc)
 ---@param indent boolean wether to the next \item or not
----@return SnippetNote
 rec_list = function(_, _, indent)
 	indent = indent == nil and true or indent
 
@@ -14,32 +14,6 @@ rec_list = function(_, _, indent)
 			sn(nil, { t { "", (indent and "\t" or "") .. "\\item " }, i(1), d(2, rec_list, {}) }),
 		}),
 	})
-end
-
----choose between different font types
----@param type '"b"'|'"i"'|'"t"' which font type should be the first
----@return SnippetNode
-local function text_faces(_, _, type)
-	local choices = {
-		t "\\textbf{",
-		t "\\textit{",
-		t "\\texttt{",
-	}
-
-	local swap = false
-	if type == "i" then
-		swap = 2
-	elseif type == "t" then
-		swap = 3
-	end
-
-	if swap then
-		local tmp = choices[1]
-		choices[1] = choices[swap]
-		choices[swap] = tmp
-	end
-
-	return sn(nil, { c(2, choices), i(1), t "}" })
 end
 
 local tex_snippets = {
@@ -102,12 +76,12 @@ local snippets = {
 		i(1, "Subsection"),
 		t "}",
 	}),
-	s("b", {
+	s("bb", {
 		t "\\textbf{",
 		i(1),
 		t "}",
 	}),
-	s("i", {
+	s("ii", {
 		t "\\textit{",
 		i(1),
 		t "}",
@@ -117,20 +91,15 @@ local snippets = {
 		i(1),
 		t "}",
 	}),
-	s("mi", {
-		t "$",
+	s("sc", {
+		t "\\textsc{",
 		i(1),
-		t "$",
-	}),
-	s("mb", {
-		t { "\\[", "\t" },
-		i(1),
-		t { "", "\\]" },
+		t "}",
 	}),
 }
 
 for trigger, snippet_def in pairs(tex_snippets) do
-	snippets[#snippets + 1] = ls.parser.parse_snippet(trigger, snippet_def)
+	snippets[#snippets + 1] = ls.parser.parse_snippet(trigger, snippet_def, {})
 end
 
 return snippets
