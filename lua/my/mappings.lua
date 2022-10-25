@@ -30,7 +30,7 @@ map:mode("normal", function(m)
       ["<leader>fm"] = vimcmd "Telescope man_pages",
       ["<leader>fr"] = vimcmd "Telescope resume",
       ["<leader>ft"] = vimcmd "Telescope treesitter",
-      ["<leader>g"] = vimcmd "G",
+      ["<leader>g"] = vimcmd "vert Git | exec '80wincmd|'",
       ["<leader>gP"] = vimcmd 'TermExec cmd="git push"',
       ["<leader>gT"] = vimcmd "tabmove-",
       ["<leader>gc"] = vimcmd "Git commit",
