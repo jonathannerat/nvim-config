@@ -21,6 +21,7 @@ local prettier_format = require("formatter.defaults.prettier")
 
 M.config = {
 	filetype = {
+		blade = { prettier_format },
 		c = { clike_format },
 		cpp = { clike_format },
 		lua = {
