@@ -81,13 +81,7 @@ local function packer_setup()
 
    -- === UI ===
    use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
-   use_setup({
-      "nvim-lualine/lualine.nvim",
-      requires = {
-         "WhoIsSethDaniel/lualine-lsp-progress.nvim",
-         { "kyazdani42/nvim-web-devicons" },
-      },
-   }, "my.plugins.lualine") -- Statusline
+   use_setup("feline-nvim/feline.nvim", "my.plugins.feline") -- Statusline
    use_setup("goolord/alpha-nvim", "my.plugins.alpha") -- Dashboard
    use_setup({
       "nvim-neo-tree/neo-tree.nvim", -- File explorer
@@ -262,6 +256,7 @@ local function packer_setup()
 
    -- === Utilities ===
    use "tpope/vim-fugitive" -- Git integration
+   use_setup("lewis6991/gitsigns.nvim", "gitsigns")
    use "rafamadriz/friendly-snippets" -- Collection of snippets
    use "HiPhish/info.vim" -- Info files
    use_setup({
