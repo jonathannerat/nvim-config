@@ -150,11 +150,6 @@ local function packer_setup()
       after = "nvim-treesitter",
    }
 
-   use { -- Smarter text-objects
-      "RRethy/nvim-treesitter-textsubjects",
-      after = "nvim-treesitter",
-   }
-
    use { -- Context aware comment string (injections)
       "JoosepAlviste/nvim-ts-context-commentstring",
       after = "nvim-treesitter",
