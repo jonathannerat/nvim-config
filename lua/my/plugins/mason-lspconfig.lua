@@ -44,6 +44,18 @@ local lsp_servers = {
       },
    },
    ccls = {},
+   --[[
+   clangd = {
+      cmd = {
+         -- taken from: gh@fitrh/init.nvim
+         "clangd",
+         "--clang-tidy",
+         "--completion-style=bundled",
+         "--cross-file-rename",
+         "--header-insertion=iwyu",
+      },
+   },
+   --]]
    volar = {
       init_options = {
          typescript = {
