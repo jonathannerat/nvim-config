@@ -160,18 +160,23 @@ return {
             active = {
                { -- Left
                   {
-                     provider = "file_info",
-                     opts = { type = "relative" },
+                     provider = {
+                        name =  "file_info",
+                        opts = { type = "relative" },
+                     },
                   },
                },
             },
             inactive = {
                { -- Left
                   {
-                     provider = "file_info",
-                     opts = {
-                        type = "relative",
+                     provider = {
+                        name =  "file_info",
+                        opts = { type = "relative" },
                      },
+                     hl = {
+                        fg = "fg_darker"
+                     }
                   },
                },
             },
