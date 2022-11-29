@@ -4,7 +4,8 @@ local previewers = require "telescope.previewers"
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local finders = require "telescope.finders"
-local conf = require "telescope.config".values
+local conf = require("telescope.config").values
+local lga_actions = require "telescope-live-grep-args.actions"
 
 local M = {}
 
@@ -46,7 +47,14 @@ local extensions = {
       override_file_sorter = true,
       case_mode = "smart_case",
    },
-   "live_grep_args",
+   live_grep_args = {
+      mappings = { -- extend mappings
+         i = {
+            ["<C-k>"] = lga_actions.quote_prompt(),
+            ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+         },
+      },
+   },
 }
 
 M.pickers = {}
