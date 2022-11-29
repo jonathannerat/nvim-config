@@ -75,6 +75,7 @@ setg("firenvim_config", {
       [".*"] = { cmdline = "neovim", takeover = "never" },
    },
 })
+setg("vimtex_view_method", "zathura")
 setg("vimtex_compiler_latexmk", {
    build_dir = "build",
    callback = 1,
