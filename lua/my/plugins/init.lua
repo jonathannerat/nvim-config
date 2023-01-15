@@ -77,6 +77,8 @@ local function packer_setup()
    use { "vim-pandoc/vim-pandoc", ft = "pandoc" } -- Pandoc integration & utilities
    use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 
+   use { "theHamsta/nvim-treesitter-commonlisp" }
+
    -- === Colorschemes ===
    use_setup("folke/tokyonight.nvim", "tokyonight")
 
