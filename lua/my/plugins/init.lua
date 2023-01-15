@@ -73,6 +73,7 @@ local function packer_setup()
    use_syntax("baskerville/vim-sxhkdrc", "sxhkdrc")
    use_syntax("adimit/prolog.vim", "prolog")
    use_syntax("jwalton512/vim-blade", "blade")
+   use_syntax("jpalardy/vim-slime", "lisp")
    use { "vim-pandoc/vim-pandoc", ft = "pandoc" } -- Pandoc integration & utilities
    use { "lervag/vimtex", ft = { "tex", "latex" } } -- Latex integration & utilities
 

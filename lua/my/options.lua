@@ -86,4 +86,9 @@ setg("vimtex_compiler_latexmk", {
 setg("user_emmet_mode", "in")
 setg("user_emmet_install_global", 0)
 setg("neo_tree_remove_legacy_commands", 1)
+setg("slime_target", "tmux")
+setg("slime_default_config", {
+   socket_name = "default",
+   target_pane = "{last}"
+})
 -- }}}
