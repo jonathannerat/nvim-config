@@ -2,27 +2,26 @@
 return {
    setup = function()
       local feline = require "feline"
-
-      local tokyonight_colors = require("tokyonight.colors").setup { style = "night" }
+      local palette = require("kanagawa.colors").setup()
 
       local theme = { -- {{{
-         bg = tokyonight_colors.bg_statusline,
-         bg_dark = tokyonight_colors.bg,
-         bg_darker = tokyonight_colors.bg_dark,
-         bg_light = tokyonight_colors.bg_highlight,
-         fg = tokyonight_colors.fg,
-         fg_dark = tokyonight_colors.fg_dark,
-         fg_darker = tokyonight_colors.fg_gutter,
-         yellow = tokyonight_colors.yellow,
-         cyan = tokyonight_colors.cyan,
-         darkblue = tokyonight_colors.blue0,
-         green = tokyonight_colors.green,
-         orange = tokyonight_colors.orange,
-         violet = tokyonight_colors.purple,
-         magenta = tokyonight_colors.magenta,
-         blue = tokyonight_colors.blue,
-         red = tokyonight_colors.red,
-         primary_blue = tokyonight_colors.blue5,
+         bg = palette.sumiInk0,
+         bg_dark = palette.sumiInk1,
+         bg_darker = palette.sumiInk0,
+         bg_light = palette.sumiInk2,
+         fg = palette.fujiWhite,
+         fg_dark = palette.oldWhite,
+         fg_darker = palette.oldWhite,
+         yellow = palette.carpYellow,
+         cyan = palette.waveAqua2,
+         darkblue = palette.waveBlue2,
+         green = palette.springGreen,
+         orange = palette.surimiOrange,
+         violet = palette.oniViolet,
+         magenta = palette.sakuraPink,
+         blue = palette.crystalBlue,
+         red = palette.peachRed,
+         primary_blue = palette.crystalBlue,
       } -- }}}
 
       local vi_mode_colors = { -- {{{
@@ -88,20 +87,26 @@ return {
                },
                {
                   provider = "git_diff_added",
+                  left_sep = " ",
+                  icon = " ",
                   hl = {
-                     fg = "green",
+                     fg = palette.auntumnGreen,
                   },
                },
                {
                   provider = "git_diff_removed",
+                  left_sep = " ",
+                  icon = " ",
                   hl = {
-                     fg = "red",
+                     fg = palette.auntumnRed,
                   },
                },
                {
                   provider = "git_diff_changed",
+                  left_sep = " ",
+                  icon = " ",
                   hl = {
-                     fg = "blue",
+                     fg = palette.auntumnYellow,
                   },
                },
             },
@@ -132,9 +137,30 @@ return {
                   right_sep = " ",
                },
                {
+                  provider = {
+                     name = "position",
+                     opts = {
+                        format = "{line} {col}"
+                     },
+                  },
+                  hl = {
+                     fg = "red",
+                  },
+                  right_sep = " ",
+               },
+               {
                   provider = "line_percentage",
                   hl = {
                      fg = "magenta",
+                     style = "bold"
+                  },
+                  right_sep = " ",
+               },
+               {
+                  provider = 'scroll_bar',
+                  hl = {
+                     fg = 'skyblue',
+                     style = 'bold',
                   },
                },
             },

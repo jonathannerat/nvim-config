@@ -81,7 +81,7 @@ local function packer_setup()
    use { "theHamsta/nvim-treesitter-commonlisp" }
 
    -- === Colorschemes ===
-   use_setup("folke/tokyonight.nvim", "tokyonight")
+   use "rebelot/kanagawa.nvim"
 
    -- === UI ===
    use_setup("alvarosevilla95/luatab.nvim", "luatab") -- Tabline
@@ -98,8 +98,6 @@ local function packer_setup()
             "s1n7ax/nvim-window-picker",
             tag = "v1.*",
             config = function()
-               local colors = require("tokyonight.colors").setup()
-
                require("window-picker").setup {
                   autoselect_one = true,
                   include_current = false,
@@ -109,7 +107,6 @@ local function packer_setup()
                         buftype = { "terminal" },
                      },
                   },
-                  other_win_hl_color = colors.orange,
                }
             end,
          },
