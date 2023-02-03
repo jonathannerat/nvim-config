@@ -225,13 +225,15 @@ local function packer_setup()
    use {
       "glepnir/lspsaga.nvim",
       config = function()
-         require("lspsaga").init_lsp_saga {
-            code_action_keys = {
-               quit = "<ESC>",
-               exec = "<CR>",
-            },
-            code_action_lightbulb = {
-               enable = false,
+         require("lspsaga").setup {
+            lightbulb = { enable = false },
+            outline = { enable = false },
+            beacon = { enable = false },
+            symbol_in_winbar = { enable = false },
+            diagnostic = {
+               show_code_action = false,
+               show_source = true,
+               jump_num_shortcut = true,
             },
          }
       end,
