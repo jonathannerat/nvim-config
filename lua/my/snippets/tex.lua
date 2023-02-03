@@ -5,7 +5,7 @@ local c, d, f, i, s, sn, t = ls.c, ls.d, ls.f, ls.i, ls.s, ls.sn, ls.t
 local rec_list
 ---recursively add `\item`s to a latex list (enumerate, itemize, etc)
 ---@param indent boolean wether to the next \item or not
-rec_list = function(_, _, indent)
+rec_list = function(_, _, _, indent)
 	indent = indent == nil and true or indent
 
 	return sn(nil, {
