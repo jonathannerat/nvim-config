@@ -45,6 +45,9 @@ M.config = {
 				}
 			end,
 		},
+		ruby = {
+		   require("formatter.filetypes.ruby").rubocop
+		},
 		rust = {
 			function()
 				return {
