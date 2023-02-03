@@ -19,13 +19,15 @@ M.parsers = {
 
 M.config = {
    ensure_installed = {
-      "lua",
       "c",
       "cpp",
-      "html",
       "css",
       "haskell",
+      "html",
       "javascript",
+      "lua",
+      "markdown",
+      "markdown_inline",
       "php",
       "vim",
       "vue",
@@ -46,6 +48,8 @@ M.config = {
             -- You can use the capture groups defined in textobjects.scm
             ["af"] = "@function.outer",
             ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
          },
       },
       move = {
