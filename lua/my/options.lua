@@ -19,7 +19,6 @@ local textwidth = 80
 set("background", "dark")
 set("completeopt", "menuone,noselect")
 set("conceallevel", 2)
-set("fillchars", "eob:~")
 set("inccommand", "split")
 set("laststatus", 3)
 set("listchars", "tab:│ ,trail:·,extends:…,precedes:…,nbsp:☠")
@@ -58,6 +57,16 @@ set "noswapfile"
 set "nowritebackup"
 
 vim.opt.sessionoptions:append { "options", "resize", "winpos", "terminal" }
+vim.opt.fillchars:append {
+   eob = "~",
+   horiz = '━',
+   horizup = '┻',
+   horizdown = '┳',
+   vert = '┃',
+   vertleft = '┨',
+   vertright = '┣',
+   verthoriz = '╋',
+}
 -- }}}
 
 -- Globals {{{
