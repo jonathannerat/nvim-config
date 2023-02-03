@@ -294,6 +294,23 @@ local function packer_setup()
       cmd = "ColorizerToggle",
    }, "colorizer")
 
+   use {
+     "nvim-neotest/neotest",
+     requires = {
+       "nvim-lua/plenary.nvim",
+       "nvim-treesitter/nvim-treesitter",
+       "antoinemadec/FixCursorHold.nvim",
+       "olimorris/neotest-phpunit",
+     },
+      config = function ()
+         require("neotest").setup {
+            adapters = {
+               require("neotest-phpunit")
+            }
+         }
+      end
+   }
+
    if packer_bootstrap then
       packer.sync()
    end

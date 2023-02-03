@@ -103,6 +103,10 @@ return {
                      library.plugins = true
                   end
                end,
+               library = {
+                  plugins = { "neotest" },
+                  types = true,
+               },
             }
             lspconfig.sumneko_lua.setup(extend_with_defaults())
          end,
