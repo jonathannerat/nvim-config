@@ -243,7 +243,10 @@ local function packer_setup()
    use "gpanders/editorconfig.nvim"
    use_setup("windwp/nvim-autopairs", "my.plugins.autopairs")
    use_setup("numToStr/Comment.nvim", "Comment")
-   use_setup "kylechui/nvim-surround"
+   use_setup {
+      "kylechui/nvim-surround",
+      tag = "*",
+   }
 
    use_setup({ -- File formatting
       "mhartington/formatter.nvim",
