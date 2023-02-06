@@ -37,7 +37,7 @@ dashboard.section.buttons.val = {
    dashboard.button("g", "  > Git", ":vert Git | exec '80wincmd|' <CR>"),
    dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
    dashboard.button("s", "  > Settings", ":exec 'edit ' . resolve($MYVIMRC) | Neotree show <CR>"),
-   dashboard.button("u", "ﮮ  > Update", ":lua vim.ui.input({prompt='Update? [y/N]'}, function(input) if input and string.match(input, '[yY]') then require('packer').update() end require('packer').compile() end)<cr>"),
+   dashboard.button("l", "鈴 > Lazy", ":Lazy<cr>"),
    dashboard.button("n", "  > News", ":vert help news | exec '80wincmd|' <CR>"),
    dashboard.button("q", "  > Quit NVIM", ":q<CR>"),
 }

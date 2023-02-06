@@ -174,7 +174,7 @@ return {
          force_inactive = {
             filetypes = {
                "neo-tree",
-               "packer",
+               "lazy",
                "fugitive",
                "fugitiveblame",
             },
