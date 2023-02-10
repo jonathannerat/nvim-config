@@ -85,7 +85,7 @@ for _, picker_spec in ipairs(simple_pickers) do
    opts.finder = finders.new_oneshot_job({ "sh", "-c", picker_spec.command }, {})
    opts.sorter = conf.generic_sorter()
 
-   M.pickers[picker_spec.name] = function ()
+   M.pickers[picker_spec.name] = function()
       pickers.new({}, opts):find()
    end
 end
@@ -103,7 +103,7 @@ M.setup = function()
          name = extv
       end
 
-      extension_names[#extension_names+1] = name
+      extension_names[#extension_names + 1] = name
    end
 
    telescope.setup {
@@ -117,9 +117,11 @@ M.setup = function()
          mappings = {
             i = {
                ["<C-o>"] = action_open,
-               ["<C-Down>"] = actions.cycle_history_next,
-               ["<C-Up>"] = actions.cycle_history_prev,
-               ["<C-r>"] = actions.delete_buffer,
+               ["<C-Down>"] = "cycle_history_next",
+               ["<C-Up>"] = "cycle_history_prev",
+               ["<C-r>"] = "delete_buffer",
+               ["<C-h>"] = "which_key",
+               ["<C-k>"] = "select_drop",
             },
          },
       },
