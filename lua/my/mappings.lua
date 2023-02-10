@@ -6,6 +6,8 @@ local map = Mapper:new()
 
 map:mode("normal", function(m)
    m:with_options({ silent = true, noremap = true }, {
+      ["g<"] = vimcmd "tabmove-",
+      ["g>"] = vimcmd "tabmove+",
       ["<c-n>"] = vimcmd "Neotree toggle",
       ["<M-e>"] = vimcmd "Neotree reveal",
       ["<c-t>"] = vimcmd "tabnew",
@@ -30,8 +32,6 @@ map:mode("normal", function(m)
       ["<leader>fm"] = vimcmd "Telescope man_pages",
       ["<leader>fr"] = vimcmd "Telescope resume",
       ["<leader>ft"] = vimcmd "Telescope treesitter",
-      ["<leader>gT"] = vimcmd "tabmove-",
-      ["<leader>gt"] = vimcmd "tabmove+",
       ["<leader>hh"] = vimcmd "noh",
       ["<leader>ht"] = [[/\s\+$<cr>]],
       ["<leader>mp"] = vimcmd "MarkdownPreviewToggle",
