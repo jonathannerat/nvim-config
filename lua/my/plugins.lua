@@ -234,8 +234,6 @@ require("lazy").setup {
    -- }}}
 
    -- === Utilities === {{{
-   "tpope/vim-fugitive", -- Git integration
-
    { "lewis6991/gitsigns.nvim", config = true },
    "rafamadriz/friendly-snippets", -- Collection of snippets
    "HiPhish/info.vim", -- Info files

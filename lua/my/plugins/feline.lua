@@ -175,8 +175,6 @@ return {
             filetypes = {
                "neo-tree",
                "lazy",
-               "fugitive",
-               "fugitiveblame",
             },
          },
       }
