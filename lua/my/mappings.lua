@@ -32,6 +32,7 @@ map:mode("normal", function(m)
       ["<leader>fm"] = vimcmd "Telescope man_pages",
       ["<leader>fr"] = vimcmd "Telescope resume",
       ["<leader>ft"] = vimcmd "Telescope treesitter",
+      ["<leader>g"] = vimcmd "Lazygit",
       ["<leader>hh"] = vimcmd "noh",
       ["<leader>ht"] = [[/\s\+$<cr>]],
       ["<leader>mp"] = vimcmd "MarkdownPreviewToggle",

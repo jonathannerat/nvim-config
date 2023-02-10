@@ -47,3 +47,16 @@ vim.api.nvim_create_autocmd("FileType", {
    pattern = { "markdown", "norg", "tex" },
    command = "set tw=80 spell"
 })
+
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new {
+   cmd = "lazygit",
+   float_opts = {
+      border = "double",
+   }
+}
+local function toggle_lazygit()
+   lazygit:toggle()
+end
+
+command("Lazygit", toggle_lazygit)

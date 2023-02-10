@@ -34,7 +34,7 @@ dashboard.section.buttons.val = {
       ":cd . | :Telescope find_files find_command=fd,-t,f,-t,l previewer=false layout={width=0.6}<CR>"
    ),
    dashboard.button("p", "  > Find projects", ":lua require'my.plugins.telescope'.pickers.projects()<CR>"),
-   dashboard.button("g", "  > Git", ":vert Git | exec '80wincmd|' <CR>"),
+   dashboard.button("g", "  > Git", "<cmd>Lazygit<cr>"),
    dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
    dashboard.button("s", "  > Settings", ":exec 'edit ' . resolve($MYVIMRC) | Neotree show <CR>"),
    dashboard.button("l", "鈴 > Lazy", ":Lazy<cr>"),
