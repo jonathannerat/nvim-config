@@ -1,4 +1,4 @@
--- vi: fdm=marker
+-- vi: fdm=marker nofen
 -- Bootstrap lazy.nvim-- {{{
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -21,7 +21,7 @@ local function syntax_spec(spec, name, filetypes)
 
    spec = type(spec) == "string" and { spec } or spec
    spec.name = "syntax-" .. name
-   spec.filetypes = filetypes
+   spec.ft = filetypes
 
    return spec
 end
@@ -55,6 +55,7 @@ require("lazy").setup {
    setup_spec("goolord/alpha-nvim", "my.plugins.alpha"), -- Dashboard
    setup_spec({
       "nvim-neo-tree/neo-tree.nvim",
+      cmd = "Neotree",
       branch = "v2.x",
       dependencies = {
          "nvim-lua/plenary.nvim",
@@ -105,25 +106,25 @@ require("lazy").setup {
 
    { -- Syntax aware text-objects
       "nvim-treesitter/nvim-treesitter-textobjects",
-      priority = 60,
+      dependencies = "nvim-treesitter/nvim-treesitter",
    },
 
    { -- Context aware comment string (injections)
       "JoosepAlviste/nvim-ts-context-commentstring",
-      priority = 60,
+      dependencies = "nvim-treesitter/nvim-treesitter",
    },
 
    { -- TreeSitter node viewer
       "nvim-treesitter/playground",
-      priority = 60,
+      dependencies = "nvim-treesitter/nvim-treesitter",
       cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
       build = ":TSUpdate query",
    },
 
    { -- Show cursor context block (class / function / if / for / etc.)
       "nvim-treesitter/nvim-treesitter-context",
-      after = "nvim-treesitter",
-      config = {
+      dependencies = "nvim-treesitter/nvim-treesitter",
+      opts = {
          enabled = true,
          max_lines = 3,
       },
@@ -145,24 +146,17 @@ require("lazy").setup {
    -- }}}
 
    -- === LSP === {{{
-   "folke/neodev.nvim", -- sumneko_lua lsp + nvim integration
 
    setup_spec("williamboman/mason.nvim", "mason"),
 
-   setup_spec(
-      { "williamboman/mason-lspconfig.nvim", dependencies = {
-         "hrsh7th/cmp-nvim-lsp",
-      } },
-      "my.plugins.mason-lspconfig"
-   ),
-
-   {
-      "neovim/nvim-lspconfig",
+   setup_spec({
+      "williamboman/mason-lspconfig.nvim",
       dependencies = {
-         "onsails/lspkind-nvim", -- LSP Completion symbols
-         "ray-x/lsp_signature.nvim", -- function signature as you type
+         "neovim/nvim-lspconfig",
+         "hrsh7th/cmp-nvim-lsp",
+         "folke/neodev.nvim", -- sumneko_lua lsp + nvim integration
       },
-   },
+   }, "my.plugins.mason-lspconfig"),
 
    setup_spec({ -- Completion engine for LSPs
       "hrsh7th/nvim-cmp",
@@ -172,6 +166,8 @@ require("lazy").setup {
          "saadparwaiz1/cmp_luasnip",
          "hrsh7th/cmp-path",
          "hrsh7th/cmp-cmdline",
+         "onsails/lspkind-nvim", -- LSP Completion symbols
+         setup_spec("windwp/nvim-autopairs", "my.plugins.autopairs"),
       },
    }, "my.plugins.cmp"),
 
@@ -207,8 +203,6 @@ require("lazy").setup {
    -- === Editing === {{{
    "gpanders/editorconfig.nvim",
 
-   setup_spec("windwp/nvim-autopairs", "my.plugins.autopairs"),
-
    { "numToStr/Comment.nvim", config = true },
 
    {
@@ -229,17 +223,20 @@ require("lazy").setup {
    },
 
    "mattn/emmet-vim",
-
-   "cbochs/portal.nvim",
    -- }}}
 
    -- === Utilities === {{{
    { "lewis6991/gitsigns.nvim", config = true },
-   "rafamadriz/friendly-snippets", -- Collection of snippets
-   "HiPhish/info.vim", -- Info files
+
+   { "HiPhish/info.vim", cmd = "Info" }, -- Info files
+
    setup_spec({
       "L3MON4D3/LuaSnip",
       version = "v1.*",
+      build = "make install_jsregexp",
+      dependencies = {
+         "rafamadriz/friendly-snippets", -- Collection of snippets
+      }
    }, "my.plugins.luasnip"), -- Snippets engine
 
    { -- Organization tool (note taking / todo lists / etc.)
@@ -275,11 +272,13 @@ require("lazy").setup {
          "antoinemadec/FixCursorHold.nvim",
          "olimorris/neotest-phpunit",
       },
-      opts = {
-         adapters = {
-            require "neotest-phpunit",
-         },
-      },
+      opts = function ()
+         return {
+            adapters = {
+               require "neotest-phpunit",
+            },
+         }
+      end,
    },
    -- }}}
 }
