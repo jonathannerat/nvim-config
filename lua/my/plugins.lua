@@ -50,7 +50,12 @@ require("lazy").setup {
    -- }}}
 
    --- === UI === {{{
-   "alvarosevilla95/luatab.nvim", -- Tabline
+   { -- Tabline
+      "alvarosevilla95/luatab.nvim",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+      config = true,
+   },
+
    setup_spec("feline-nvim/feline.nvim", "my.plugins.feline"), -- Statusline
    setup_spec("goolord/alpha-nvim", "my.plugins.alpha"), -- Dashboard
    setup_spec({
