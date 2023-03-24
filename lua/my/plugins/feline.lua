@@ -1,8 +1,9 @@
+local custom = require("my.utils").custom
 -- vi:fdm=marker
 return {
    setup = function()
       local feline = require "feline"
-      local palette = require("kanagawa.colors").setup()
+      local palette = require("kanagawa.colors").setup { theme = custom "variant" }
 
       local theme = { -- {{{
          bg = palette.sumiInk0,
