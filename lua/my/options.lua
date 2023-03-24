@@ -100,4 +100,7 @@ setg("slime_default_config", {
    socket_name = "default",
    target_pane = "{last}"
 })
+
+setg("mkdp_refresh_slow", 1)
+setg("mkdp_theme", "dark")
 -- }}}
