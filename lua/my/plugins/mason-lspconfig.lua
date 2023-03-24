@@ -56,6 +56,7 @@ local lsp_servers = {
       },
    },
    --]]
+   rust_analyzer = {},
    volar = {
       init_options = {
          typescript = {
@@ -85,7 +86,7 @@ return {
       local mason_lspconfig = require "mason-lspconfig"
 
       mason_lspconfig.setup {
-         ensure_installed = { "sumneko_lua" },
+         ensure_installed = { "lua_ls", "jsonls" },
       }
 
       mason_lspconfig.setup_handlers {
@@ -95,7 +96,7 @@ return {
             lspconfig[server_name].setup(opts)
          end,
 
-         sumneko_lua = function()
+         lua_ls = function()
             require("neodev").setup {
                override = function(root_dir, library)
                   if require("neodev.util").has_file(root_dir, "~/projects/nvim-config") then
@@ -108,7 +109,18 @@ return {
                   types = true,
                },
             }
-            lspconfig.sumneko_lua.setup(extend_with_defaults())
+            lspconfig.lua_ls.setup(extend_with_defaults())
+         end,
+
+         jsonls = function()
+            lspconfig.jsonls.setup(extend_with_defaults {
+               settings = {
+                  json = {
+                     schemas = require("schemastore").json.schemas(),
+                     validate = { enable = true },
+                  },
+               },
+            })
          end,
       }
 

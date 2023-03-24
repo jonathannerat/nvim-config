@@ -155,6 +155,7 @@ require("lazy").setup {
          "neovim/nvim-lspconfig",
          "hrsh7th/cmp-nvim-lsp",
          "folke/neodev.nvim", -- sumneko_lua lsp + nvim integration
+         "b0o/SchemaStore.nvim",
       },
    }, "my.plugins.mason-lspconfig"),
 
