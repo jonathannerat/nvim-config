@@ -282,11 +282,18 @@ require("lazy").setup {
          "nvim-treesitter/nvim-treesitter",
          "antoinemadec/FixCursorHold.nvim",
          "olimorris/neotest-phpunit",
+         "haydenmeade/neotest-jest",
       },
       opts = function ()
          return {
             adapters = {
                require "neotest-phpunit",
+               require "neotest-jest" {
+                  jestCommand = "yarn test",
+                  cwd = function()
+                     return vim.fn.getcwd()
+                  end,
+               },
             },
          }
       end,
