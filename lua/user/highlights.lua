@@ -1,8 +1,7 @@
-local api = vim.api
-local custom = require("my.utils").custom
+local custom = require("user.utils").custom
 
 local palette = require("kanagawa.colors").setup { theme = custom "variant" }
-local normalHl = api.nvim_get_hl_by_name("Normal", true)
+local normalHl = vim.api.nvim_get_hl_by_name("Normal", true)
 local bg = normalHl.background or "NONE"
 
 local custom_highlights = {
@@ -75,5 +74,5 @@ local custom_highlights = {
    TerminalNormal = { link = "SagaNormal" },
 }
 for group, conf in pairs(custom_highlights) do
-   api.nvim_set_hl(0, group, vim.tbl_extend("keep", conf, { default = true }))
+   vim.api.nvim_set_hl(0, group, vim.tbl_extend("keep", conf, { default = true }))
 end

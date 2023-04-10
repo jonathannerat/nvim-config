@@ -6,11 +6,11 @@ function M.custom(key)
    if not custom_opts then
       local has_custom
       has_custom, custom_opts = pcall(function()
-         return require "my.custom"
+         return require "user.custom"
       end)
 
       if not has_custom then
-         custom_opts = require "my.defaults"
+         custom_opts = require "user.defaults"
       end
    end
 

@@ -1,5 +1,5 @@
 local ls = require "luasnip"
-local u = require "my.util.snippets"
+local u = require "user.utils.snippets"
 local c, d, f, i, s, sn, t = ls.c, ls.d, ls.f, ls.i, ls.s, ls.sn, ls.t
 
 local rec_list

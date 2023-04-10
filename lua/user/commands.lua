@@ -8,7 +8,7 @@ end
 
 lua_command("LuasnipEdit", [[require("luasnip.loaders.from_lua").edit_snippet_files()]])
 
-local function lua_playground()
+command("LuaPlayground", function ()
    local output = io.popen("mktemp /tmp/lua_playground.XXXXXX.lua", "r")
    local filename = output ~= nil and output:read "*a" or nil
 
@@ -17,9 +17,7 @@ local function lua_playground()
    else
       vim.notify("Error creating file with mktemp", vim.log.levels.ERROR)
    end
-end
-
-command("LuaPlayground", lua_playground)
+end)
 
 vim.api.nvim_create_autocmd("FileType", {
    pattern = { "html", "css", "blade", "vue" },
@@ -48,15 +46,8 @@ vim.api.nvim_create_autocmd("FileType", {
    command = "set tw=80 spell"
 })
 
-local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new {
-   cmd = "lazygit",
-   float_opts = {
-      border = "double",
-   }
-}
-local function toggle_lazygit()
-   lazygit:toggle()
-end
-
-command("Lazygit", toggle_lazygit)
+-- Autostart insert mode in terminal
+vim.api.nvim_create_autocmd("TermOpen", {
+   pattern = "*",
+   command = "startinsert"
+})
