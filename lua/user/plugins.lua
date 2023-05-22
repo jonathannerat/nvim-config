@@ -8,23 +8,24 @@ return {
       opts = {
          load = {
             ["core.defaults"] = {},
-            ["core.norg.concealer"] = {},
+            ["core.concealer"] = {},
             ["core.keybinds"] = {
                config = {
                   default_keybinds = true,
                },
             },
-            ["core.norg.dirman"] = {
+            ["core.dirman"] = {
                config = {
+                  default_workspace = "notes",
                   workspaces = {
                      notes = "~/notebook/",
                   },
-                  autochdir = true,
                },
             },
-            ["core.norg.completion"] = {
+            ["core.completion"] = {
                config = { engine = "nvim-cmp" },
             },
+            ["core.export"] = {}
          },
       },
    },
