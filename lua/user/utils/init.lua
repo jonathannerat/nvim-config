@@ -25,4 +25,21 @@ function M.luacmd(str)
    return ":lua " .. str .. "<cr>"
 end
 
+function M.silent(keybinds)
+   local is_single_keybind = true
+
+   for _, keybind in pairs(keybinds) do
+      if type(keybind) == "table" then
+         keybind.silent = true
+         is_single_keybind = false
+      end
+   end
+
+   if is_single_keybind then
+      keybinds.silent = true
+   end
+
+   return keybinds
+end
+
 return M

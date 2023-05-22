@@ -1,6 +1,7 @@
 local utils = require "user.utils"
 local vimcmd = utils.vimcmd
 local luacmd = utils.luacmd
+local silent = utils.silent
 
 return {
    { -- LaTeX integration
@@ -22,9 +23,10 @@ return {
 
    { -- Git IDE
       "tpope/vim-fugitive",
-      cmd = { "Git", "G" },
-      keys = {
-         { "<leader>g", vimcmd "G" }
+      cmd = { "G", "Git", "Ggrep", "Glgrep", "Gclog", "Gllog", "Gcd", "Glcd" },
+      keys = silent {
+         { "<leader>g", vimcmd "G" },
+         { "<leader>gl", vimcmd "Gclog!" },
       },
    },
 
@@ -57,7 +59,7 @@ return {
             },
          }
       end,
-      keys = {
+      keys = silent {
          { "<leader>tt", luacmd "require('neotest').run.run()" },
          { "<leader>tf", luacmd "require('neotest').run.run(vim.fn.expand('%'))" },
          { "<leader>to", luacmd "require('neotest').output.open{enter = true, last_run = true}" },
@@ -77,7 +79,7 @@ return {
          vim.g.mkdp_refresh_slow = 1
          vim.g.mkdp_theme = "dark"
       end,
-      keys = {
+      keys = silent {
          { "<leader>mp", vimcmd "MarkdownPreviewToggle" },
       },
    },

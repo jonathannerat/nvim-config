@@ -1,4 +1,6 @@
-local vimcmd = require("user.utils").vimcmd
+local utils = require "user.utils"
+local vimcmd = utils.vimcmd
+local silent = utils.silent
 
 return {
    { -- TreeSitter support
@@ -85,7 +87,7 @@ return {
       opts = function()
          return require "user.plugins.config.formatter"
       end,
-      keys = {
+      keys = silent {
          { "<leader>bf", vimcmd "Format" },
          { "<leader>bF", vimcmd "FormatWrite" },
       },

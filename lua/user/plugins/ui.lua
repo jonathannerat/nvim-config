@@ -1,6 +1,6 @@
 local utils = require "user.utils"
 local vimcmd = utils.vimcmd
-local luacmd = utils.luacmd
+local silent = utils.silent
 
 return {
    { "rebelot/kanagawa.nvim", priority = 1000 },
@@ -24,10 +24,10 @@ return {
    {
       "nvim-tree/nvim-tree.lua",
       config = true,
-      keys = {
+      keys = silent {
          { "<C-n>", vimcmd "NvimTreeToggle" },
-         { "<M-e>", vimcmd "NvimTreeFindFileToggle" },
-      }
+         { "<M-e>", vimcmd "NvimTreeFindFile" },
+      },
    },
 
    {
@@ -48,8 +48,8 @@ return {
             telescope.load_extension(extension)
          end
       end,
-      keys = {
-         { "<leader>fb", vimcmd "Telescope buffers", silent = true },
+      keys = silent {
+         { "<leader>fb", vimcmd "Telescope buffers" },
          { "<leader>ff", vimcmd "Telescope find_files find_command=fd,-t,f,-t,l previewer=false layout={width=0.6}" },
          { "<leader>fh", vimcmd "Telescope help_tags" },
          { "<leader>fm", vimcmd "Telescope man_pages" },
