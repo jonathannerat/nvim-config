@@ -34,15 +34,7 @@ return {
             }
          end,
       },
-      python = {
-         function()
-            return {
-               exe = "black",
-               args = { "-" },
-               stdin = true,
-            }
-         end,
-      },
+      python = { require("formatter.filetypes.python").black },
       ruby = {
          require("formatter.filetypes.ruby").rubocop,
       },
@@ -88,6 +80,20 @@ return {
       },
       json = {
          prettier_format,
+      },
+      tex = {
+         function()
+            return {
+               exe = "latexindent",
+               args = {
+                  [[-y="defaultIndent:'  '"]],
+               },
+               stdin = true,
+            }
+         end,
+      },
+      ["*"] = {
+         require("formatter.filetypes.any").remove_trailing_whitespace,
       },
    },
 }
