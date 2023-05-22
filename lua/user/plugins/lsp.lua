@@ -150,4 +150,6 @@ return {
          },
       },
    },
+
+   "mfussenegger/nvim-jdtls"
 }
