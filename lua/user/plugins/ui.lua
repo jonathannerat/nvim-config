@@ -71,4 +71,26 @@ return {
          },
       },
    },
+
+   {
+      "rebelot/heirline.nvim",
+      dependencies = { "nvim-tree/nvim-web-devicons", "SmiteshP/nvim-navic" },
+      opts = function()
+         return require "user.plugins.config.heirline"
+      end,
+   },
+
+   {
+      "folke/zen-mode.nvim",
+      opts = {
+         options = {
+            enabled = true,
+            ruler = false, -- disables the ruler text in the cmd line area
+            showcmd = false, -- disables the command in the last line of the screen
+         },
+         plugins = {
+            tmux = { enabled = true },
+         },
+      },
+   },
 }

@@ -25,4 +25,6 @@ return {
    },
 
    { "HiPhish/info.vim", cmd = "Info" }, -- Info files
+
+   { "chrisbra/csv.vim" }
 }

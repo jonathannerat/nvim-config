@@ -83,4 +83,20 @@ return {
          { "<leader>mp", vimcmd "MarkdownPreviewToggle" },
       },
    },
+
+   {
+      "numToStr/FTerm.nvim",
+      opts = {
+         border = "rounded",
+      },
+      keys = silent {
+         { "<C-\\>", luacmd "require('FTerm').toggle()" },
+         { "<C-\\>", "<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", mode = "t" },
+      }
+   },
+
+   {
+      'glacambre/firenvim',
+      build = function() vim.fn['firenvim#install'](0) end,
+   }
 }
