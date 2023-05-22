@@ -1,19 +1,24 @@
 local lspconfig = require "lspconfig"
+local navic = require "nvim-navic"
+
 local Mapper = require "user.utils.mapper"
+local utils = require "user.utils"
+local vimcmd, luacmd, custom = utils.vimcmd, utils.luacmd, utils.custom
+
 local M = {}
 
 local default_mappings = {
-   ["<C-k>"] = "<cmd>lua vim.lsp.buf.signature_help()<cr>",
-   ["gA"] = '<cmd>Lspsaga code_action<cr>',
-   ["gR"] = '<cmd>Lspsaga rename<cr>',
-   ["K"]  = '<cmd>Lspsaga hover_doc<cr>',
-   ["gw"] = '<cmd>Lspsaga show_line_diagnostics<cr>',
-   ["gW"] = '<cmd>Lspsaga show_buf_diagnostics<cr>',
-   ["[d"] = '<cmd>Lspsaga diagnostic_jump_prev<cr>',
-   ["]d"] = '<cmd>Lspsaga diagnostic_jump_next<cr>',
-   ["gd"] = '<cmd>Lspsaga goto_definition<cr>',
-   ["gi"] = '<cmd>Lspsaga peek_definition<cr>',
-   ["gD"] = '<cmd>Lspsaga lsp_finder<cr>',
+   ["<C-k>"] = luacmd "vim.lsp.buf.signature_help()",
+   ["gA"] = vimcmd "Lspsaga code_action",
+   ["gR"] = vimcmd "Lspsaga rename",
+   ["K"] = vimcmd "Lspsaga hover_doc",
+   ["gw"] = vimcmd "Lspsaga show_line_diagnostics",
+   ["gW"] = vimcmd "Lspsaga show_buf_diagnostics",
+   ["[d"] = vimcmd "Lspsaga diagnostic_jump_prev",
+   ["]d"] = vimcmd "Lspsaga diagnostic_jump_next",
+   ["gd"] = vimcmd "Lspsaga goto_definition",
+   ["gi"] = vimcmd "Lspsaga peek_definition",
+   ["gD"] = vimcmd "Lspsaga lsp_finder",
 }
 
 local function default_on_attach(client, bufnr)
@@ -30,6 +35,10 @@ local function default_on_attach(client, bufnr)
          end
       end)
    end)
+
+   if client.server_capabilities.documentSymbolProvider then
+      navic.attach(client, bufnr)
+   end
 end
 
 local default_capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -50,21 +59,7 @@ end
 
 M.ensure_installed = { "bashls", "jsonls", "lua_ls", "vimls" }
 
-M.lsp_servers = {
-      intelephense = {
-         init_options = {
-            globalStoragePath = os.getenv "HOME" .. "/.local/share/intelephense",
-            licenceKey = "EducationalCode",
-         },
-      },
-      volar = {
-         init_options = {
-            typescript = {
-               tsdk = "/usr/lib/node_modules/typescript/lib",
-            }
-         }
-      }
-   }
+M.lsp_servers = custom "lsp_servers"
 
 M.handlers = {
    function (server_name)
@@ -76,16 +71,12 @@ M.handlers = {
    lua_ls = function ()
       require("neodev").setup {
          override = function(root_dir, library)
-            local configdir = "~/projects/nvim-config"
-            if require("neodev.util").has_file(root_dir, configdir) then
+            local config_dir = vim.fs.normalize("~/projects/nvim-config")
+            if root_dir:find(config_dir, 1, true) == 1 then
                library.enabled = true
                library.plugins = true
             end
-         end,
-         library = {
-            plugins = { "neotest" },
-            types = true,
-         },
+         end
       }
       lspconfig.lua_ls.setup(M.extend_with_defaults())
    end,
