@@ -23,11 +23,34 @@ return {
 
    {
       "nvim-tree/nvim-tree.lua",
-      config = true,
+      config = {
+         renderer = {
+            group_empty = true,
+            indent_markers = {
+               enable = true,
+            },
+         },
+         system_open = {
+            cmd = "xdg-open"
+         },
+         diagnostics = {
+            enable = true,
+         },
+         filters = {
+            dotfiles = true,
+         },
+         live_filter = {
+            prefix = " "
+         }
+      },
       keys = silent {
          { "<C-n>", vimcmd "NvimTreeToggle" },
          { "<M-e>", vimcmd "NvimTreeFindFile" },
       },
+      init = function ()
+         vim.g.loaded_netrw = 1
+         vim.g.loaded_netrwPlugin = 1
+      end
    },
 
    {
