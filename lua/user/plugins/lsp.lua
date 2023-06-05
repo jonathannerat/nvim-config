@@ -85,13 +85,13 @@ return {
 
          cmp.setup {
             sources = cmp.config.sources({
-               { name = "nvim_lsp", max_item_count = 10 },
+               { name = "nvim_lsp" },
             }, {
-               { name = "luasnip", max_item_count = 5 },
+               { name = "luasnip" },
                { name = "luasnip_choice" },
             }, {
-               { name = "buffer", max_item_count = 5 },
-               { name = "path", max_item_count = 5 },
+               { name = "buffer" },
+               { name = "path" },
             }),
             mapping = cmp.mapping.preset.insert {
                ['<CR>'] = cmp.mapping.confirm({ select = false }),
@@ -130,6 +130,9 @@ return {
                   maxwidth = 50,
                   ellipsis_char = "…",
                }
+            },
+            performance = {
+               max_view_entries = 20,
             }
          }
 
