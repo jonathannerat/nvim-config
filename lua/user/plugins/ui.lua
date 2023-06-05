@@ -23,7 +23,7 @@ return {
 
    {
       "nvim-tree/nvim-tree.lua",
-      config = {
+      opts = {
          renderer = {
             group_empty = true,
             indent_markers = {
