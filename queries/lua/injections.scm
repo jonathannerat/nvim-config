@@ -29,3 +29,9 @@
    (_ _ (identifier) @_identifier)
    (arguments (string content: _ @bash)))
  (#match? @_identifier "with_shell"))
+
+(
+ (function_call
+   (dot_index_expression (identifier) (identifier) @_identifier)
+   (arguments (string content: _ @bash)))
+ (#match? @_identifier "with_shell"))
