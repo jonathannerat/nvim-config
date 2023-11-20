@@ -10,11 +10,8 @@ return {
       init = function()
          vim.g.vimtex_view_method = "zathura"
          vim.g.vimtex_compiler_latexmk = {
-            build_dir = "build",
-            callback = 1,
-            continuous = 1,
-            executable = "latexmk",
-            options = { "-verbose", "-file-line-error", "-synctex=1", "-interaction=nonstopmode" },
+            out_dir = ".",
+            aux_dir = "build",
          }
          vim.g.tex_conceal = "adbmg"
          vim.g.tex_flavor = "latex"
@@ -83,20 +80,4 @@ return {
          { "<leader>mp", vimcmd "MarkdownPreviewToggle" },
       },
    },
-
-   {
-      "numToStr/FTerm.nvim",
-      opts = {
-         border = "rounded",
-      },
-      keys = silent {
-         { "<C-\\>", luacmd "require('FTerm').toggle()" },
-         { "<C-\\>", "<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", mode = "t" },
-      }
-   },
-
-   {
-      'glacambre/firenvim',
-      build = function() vim.fn['firenvim#install'](0) end,
-   }
 }

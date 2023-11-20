@@ -43,7 +43,17 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- Set options for documents
 vim.api.nvim_create_autocmd("FileType", {
    pattern = { "markdown", "norg", "tex" },
-   command = "set tw=80 spell"
+   command = "setlocal tw=80 spell"
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = { "lua" },
+   command = "setlocal ts=3 sw=3"
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = { "go" },
+   command = "setlocal ts=4 sw=4 noet",
 })
 
 -- Autostart insert mode in terminal

@@ -92,6 +92,9 @@ return {
             }
          end,
       },
+      go = {
+         require("formatter.filetypes.go").gofmt
+      },
       ["*"] = {
          require("formatter.filetypes.any").remove_trailing_whitespace,
       },

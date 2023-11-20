@@ -24,10 +24,10 @@ return {
                   jump_num_shortcut = true,
                },
             },
-         }
+         },
       },
       -- (2) Then setup mason-lspconfig
-      config = function ()
+      config = function()
          local config = require "user.plugins.config.mason-lspconfig"
          local mason_lspconfig = require "mason-lspconfig"
 
@@ -54,7 +54,7 @@ return {
          local lspconfig = require "lspconfig"
          for name, server_config in pairs(config.lsp_servers) do
             if not is_installed_through_mason(name) then
-                lspconfig[name].setup(config.extend_with_defaults(server_config))
+               lspconfig[name].setup(config.extend_with_defaults(server_config))
             end
          end
       end,
@@ -71,17 +71,16 @@ return {
          "onsails/lspkind-nvim", -- LSP Completion symbols
          "windwp/nvim-autopairs",
       },
-      config = function ()
+      config = function()
          local cmp = require "cmp"
          local lspkind = require "lspkind"
          local luasnip = require "luasnip"
 
          local function has_words_before()
-           unpack = unpack or table.unpack
-           local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-           return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            unpack = unpack or table.unpack
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
          end
-
 
          cmp.setup {
             sources = cmp.config.sources({
@@ -94,8 +93,11 @@ return {
                { name = "path" },
             }),
             mapping = cmp.mapping.preset.insert {
-               ['<CR>'] = cmp.mapping.confirm({ select = false }),
-               ['<Tab>'] = cmp.mapping(function (fallback)
+               ["<CR>"] = cmp.mapping.confirm {
+                  behavior = cmp.ConfirmBehavior.Replace,
+                  select = true
+               },
+               ["<Tab>"] = cmp.mapping(function(fallback)
                   if cmp.visible() then
                      cmp.select_next_item()
                   elseif luasnip.expand_or_locally_jumpable() then
@@ -106,7 +108,7 @@ return {
                      fallback()
                   end
                end, { "i", "s" }),
-               ['<S-Tab>'] = cmp.mapping(function (fallback)
+               ["<S-Tab>"] = cmp.mapping(function(fallback)
                   if cmp.visible() then
                      cmp.select_prev_item()
                   elseif luasnip.jumpable(-1) then
@@ -114,12 +116,12 @@ return {
                   else
                      fallback()
                   end
-               end, { "i", "s" })
+               end, { "i", "s" }),
             },
             snippet = {
-               expand = function (args)
+               expand = function(args)
                   require("luasnip").lsp_expand(args.body)
-               end
+               end,
             },
             window = {
                documentation = cmp.config.window.bordered(),
@@ -129,16 +131,16 @@ return {
                   mode = "symbol_text",
                   maxwidth = 50,
                   ellipsis_char = "…",
-               }
+               },
             },
             performance = {
                max_view_entries = 20,
-            }
+            },
          }
 
          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
          cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-      end
+      end,
    },
 
    {
@@ -154,5 +156,5 @@ return {
       },
    },
 
-   "mfussenegger/nvim-jdtls"
+   "mfussenegger/nvim-jdtls",
 }

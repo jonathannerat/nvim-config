@@ -26,13 +26,12 @@ return {
    { -- Context aware comment string (injections)
       "JoosepAlviste/nvim-ts-context-commentstring",
       dependencies = "nvim-treesitter/nvim-treesitter",
-   },
-
-   { -- TreeSitter node viewer
-      "nvim-treesitter/playground",
-      dependencies = "nvim-treesitter/nvim-treesitter",
-      cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
-      build = ":TSUpdate query",
+      opts = {
+         enable_autocmd = false,
+      },
+      init = function()
+         vim.g.skip_ts_context_commentstring_module = true
+      end,
    },
 
    { -- Show cursor context block (class / function / if / for / etc.)
@@ -46,7 +45,7 @@ return {
 
    {
       "L3MON4D3/LuaSnip",
-      version = "1.*",
+      version = "v2.*",
       build = "make install_jsregexp",
       dependencies = {
          "rafamadriz/friendly-snippets", -- Collection of snippets
@@ -73,11 +72,19 @@ return {
 
    "gpanders/editorconfig.nvim",
 
-   { "numToStr/Comment.nvim", config = true },
+   {
+      "numToStr/Comment.nvim",
+      opts = function()
+         return {
+            pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+         }
+      end,
+   },
 
    {
       "kylechui/nvim-surround",
       version = "*",
+      event = "VeryLazy",
       config = true,
    },
 
