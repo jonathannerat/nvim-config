@@ -39,6 +39,13 @@ map:mode("insert", function(m)
    }
 end)
 
+map:mode("visual", function(m)
+   m:with_options({ noremap = true }, {
+      ["/"] = "<esc>/\\%V",
+      ["?"] = "<esc>?\\%V",
+   })
+end)
+
 map:with_options({ silent = true, noremap = true }, function(m)
    m:mode("command", {
       ["<c-j>"] = "<down>",
