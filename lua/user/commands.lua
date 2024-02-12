@@ -56,6 +56,11 @@ vim.api.nvim_create_autocmd("FileType", {
    command = "setlocal ts=4 sw=4 noet",
 })
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+   pattern = { "*.nasm" },
+   command = "set filetype=nasm fdm=marker",
+})
+
 -- Autostart insert mode in terminal
 vim.api.nvim_create_autocmd("TermOpen", {
    pattern = "*",
