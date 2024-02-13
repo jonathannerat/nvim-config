@@ -18,7 +18,7 @@ local default_mappings = {
    ["]d"] = vimcmd "Lspsaga diagnostic_jump_next",
    ["gd"] = vimcmd "Lspsaga goto_definition",
    ["gi"] = vimcmd "Lspsaga peek_definition",
-   ["gD"] = vimcmd "Lspsaga lsp_finder",
+   ["gD"] = vimcmd "Lspsaga finder",
 }
 
 local function default_on_attach(client, bufnr)
