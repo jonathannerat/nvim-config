@@ -73,7 +73,7 @@ return {
       end,
       keys = silent {
          { "<leader>fb", vimcmd "Telescope buffers" },
-         { "<leader>ff", vimcmd "Telescope find_files find_command=fd,-t,f,-t,l previewer=false layout={width=0.6}" },
+         { "<leader>ff", vimcmd "Telescope find_files layout_config={preview_cutoff=120}" },
          { "<leader>fh", vimcmd "Telescope help_tags" },
          { "<leader>fm", vimcmd "Telescope man_pages" },
          { "<leader>fo", vimcmd "Telescope oldfiles" },
@@ -81,7 +81,7 @@ return {
          { "<leader>ft", vimcmd "Telescope treesitter" },
          {
             "<leader>fF",
-            vimcmd "Telescope find_files find_command=fd,-t,f,-t,l,-H,--no-ignore-vcs previewer=false layout={width=0.6}",
+            vimcmd "Telescope find_files find_command=fd,-t,f,-t,l,-H,--no-ignore-vcs layout_config={preview_cutoff=120}",
          },
          {
             "<leader>fl",
