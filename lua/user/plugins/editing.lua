@@ -124,4 +124,12 @@ return {
       dependencies = "nvim-treesitter/nvim-treesitter",
       config = true,
    },
+
+   {
+      url = "https://git.sr.ht/~vigoux/architext.nvim",
+      dependencies = {
+         -- Not required, only used to refine the language resolution
+         "nvim-treesitter/nvim-treesitter",
+      },
+   },
 }
