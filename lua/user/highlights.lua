@@ -1,7 +1,7 @@
 local custom = require("user.utils").custom
 
 local palette = require("kanagawa.colors").setup { theme = custom "variant" }
-local normalHl = vim.api.nvim_get_hl_by_name("Normal", true)
+local normalHl = vim.api.nvim_get_hl(0, { name = "Normal" })
 local bg = normalHl.background or "NONE"
 
 local custom_highlights = {
