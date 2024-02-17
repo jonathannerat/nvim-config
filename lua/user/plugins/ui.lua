@@ -40,7 +40,7 @@ return {
             dotfiles = true,
          },
          live_filter = {
-            prefix = " "
+            prefix = " ",
          }
       },
       keys = silent {
