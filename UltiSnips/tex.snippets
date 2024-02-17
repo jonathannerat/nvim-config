@@ -1,0 +1,60 @@
+snippet article "Article"
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\author{${1:Jonathan Teran}}
+\title{${2:Document Title}}
+\date{}
+
+\begin{document}
+$0
+\end{document}
+endsnippet
+
+snippet fig "Figure"
+\begin{figure\}
+	\centering
+	\includegraphics[width=${2:\textwidth}]{${1:/path/to/image.png}\}
+	\caption{${3:Caption}\}
+	\label{fig:${4:label}\}
+\end{figure\}
+endsnippet
+
+snippet ii "Italics"
+\textit{$1} $0
+endsnippet
+
+snippet bb "Bold"
+\textbf{$1} $0
+endsnippet
+
+snippet tt "Teletype"
+\texttt{$1} $0
+endsnippet
+
+snippet sc "Small Caps"
+\textsc{$1} $0
+endsnippet
+
+snippet q "Quote"
+``$1'' $0
+endsnippet
+
+snippet - "Item"
+\item $1
+$0
+endsnippet
+
+snippet sec "Section"
+\section{${1:Section}}$0
+endsnippet
+
+snippet ssec "Sub-section"
+\subsection{${1:Sub-section}}$0
+endsnippet

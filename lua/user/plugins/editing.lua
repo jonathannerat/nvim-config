@@ -43,23 +43,69 @@ return {
       },
    },
 
-   {
-      "L3MON4D3/LuaSnip",
-      version = "v2.*",
-      build = "make install_jsregexp",
+   { -- Completion engine
+      "hrsh7th/nvim-cmp",
       dependencies = {
-         "rafamadriz/friendly-snippets", -- Collection of snippets
+         "hrsh7th/cmp-nvim-lsp",
+         "quangnguyen30192/cmp-nvim-ultisnips",
+         "hrsh7th/cmp-buffer",
+         "hrsh7th/cmp-path",
+         "onsails/lspkind-nvim", -- LSP Completion symbols
+         "windwp/nvim-autopairs",
       },
       config = function()
-         local luasnip = require "luasnip"
-         require("luasnip.loaders.from_lua").load {
-            paths = vim.fn.stdpath "config" .. "/lua/snippets",
+         local cmp = require "cmp"
+         local lspkind = require "lspkind"
+         local ultisnips_mappings = require "cmp_nvim_ultisnips.mappings"
+
+         cmp.setup {
+            sources = cmp.config.sources {
+               { name = "nvim_lsp" },
+               { name = "ultisnips" },
+               { name = "buffer" },
+               { name = "path" },
+            },
+            mapping = cmp.mapping.preset.insert {
+               ["<CR>"] = cmp.mapping.confirm {
+                  behavior = cmp.ConfirmBehavior.Replace,
+                  select = true,
+               },
+               ["<Tab>"] = cmp.mapping(function(fallback)
+                  ultisnips_mappings.compose { "select_next_item", "expand", "jump_forwards" }(fallback)
+               end, { "i", "s" }),
+               ["<S-Tab>"] = cmp.mapping(function(fallback)
+                  ultisnips_mappings.compose { "select_prev_item", "jump_backwards" }(fallback)
+               end, { "i", "s" }),
+            },
+            snippet = {
+               expand = function(args)
+                  vim.fn["UltiSnips#Anon"](args.body)
+               end,
+            },
+            window = {
+               documentation = cmp.config.window.bordered(),
+            },
+            formatting = {
+               format = lspkind.cmp_format {
+                  mode = "symbol_text",
+                  maxwidth = 50,
+                  ellipsis_char = "…",
+               },
+            },
+            performance = {
+               max_view_entries = 20,
+            },
          }
 
-         luasnip.filetype_extend("cpp", { "c" })
-         luasnip.filetype_extend("pandoc", { "html", "tex" })
+         local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+         cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+      end,
+   },
 
-         require("luasnip.loaders.from_vscode").lazy_load()
+   {
+      "SirVer/ultisnips",
+      init = function()
+         vim.g.UltiSnipsEditSplit = "vertical"
       end,
    },
 

@@ -1,0 +1,38 @@
+snippet main "main function"
+#include <stdio.h>
+
+int main(int argc, char** arv) {
+	${1:printf("Hello world!\n");}
+	return 0;
+}
+endsnippet
+
+snippet pragma "Starter for header file"
+#ifndef ${1:HEADER_H}
+#define $1
+
+${0:// code}
+
+#endif // $1
+endsnippet
+
+snippet switch "Switch statement"
+switch (${1:value}) {
+	case ${2:match}:
+		${3:// code}
+		break;
+	${4:default:
+		${5:// code}
+		break;}
+}
+endsnippet
+
+snippet case "case for switch statement"
+case ${1:match}:
+	${0:// code}
+	break;
+endsnippet
+
+snippet printf "print stuff"
+printf("${1:%s}\n"${2:, ${3:"something"}});
+endsnippet
