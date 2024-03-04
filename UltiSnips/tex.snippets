@@ -26,29 +26,47 @@ snippet fig "Figure"
 \end{figure\}
 endsnippet
 
+snippet subfig "Subfigures"
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{${1:0.4\textwidth}}
+        \centering
+        \includegraphics[width=${2:\textwidth}]{${3:/path/to/image1.png}}
+        \caption{${4:First image caption}}
+        \label{fig:${5:first-image-label}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{$1}
+        \centering
+        \includegraphics[width=$2]{${6:/path/to/image2.png}}
+        \caption{${7:Second image caption}}
+        \label{fig:${8:second-image-label}}
+    \end{subfigure}
+\end{figure}
+endsnippet
+
 snippet ii "Italics"
-\textit{$1} $0
+\textit{$1}$0
 endsnippet
 
 snippet bb "Bold"
-\textbf{$1} $0
+\textbf{$1}$0
 endsnippet
 
 snippet tt "Teletype"
-\texttt{$1} $0
+\texttt{$1}$0
 endsnippet
 
 snippet sc "Small Caps"
-\textsc{$1} $0
+\textsc{$1}$0
 endsnippet
 
 snippet q "Quote"
-``$1'' $0
+\`\`$1''$0
 endsnippet
 
 snippet - "Item"
 \item $1
-$0
 endsnippet
 
 snippet sec "Section"
@@ -57,4 +75,10 @@ endsnippet
 
 snippet ssec "Sub-section"
 \subsection{${1:Sub-section}}$0
+endsnippet
+
+snippet list "Itemize list"
+\begin{itemize}
+	\item $0
+\end{itemize}
 endsnippet
