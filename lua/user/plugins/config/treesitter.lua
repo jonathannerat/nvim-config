@@ -14,6 +14,14 @@ return {
             branch = "main",
          },
       },
+      gotmpl = {
+         install_info = {
+            url = "https://github.com/ngalaiko/tree-sitter-go-template",
+            files = { "src/parser.c" },
+         },
+         filetypes = { "gotmpl" },
+         used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl" },
+      },
    },
    opts = {
       ensure_installed = {
@@ -78,5 +86,5 @@ return {
          enable = true,
          filetypes = { "html", "xml", "vue", "php" },
       },
-   }
+   },
 }
