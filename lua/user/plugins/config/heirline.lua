@@ -454,8 +454,114 @@ local StatusLines = {
    DefaultStatusline,
 }
 
+local TabpageBufnr = {
+   provider = function(self)
+      return tostring(self.bufnr) .. ". "
+   end,
+}
+
+-- we redefine the filename component, as we probably only want the tail and not the relative path
+local TabpageFilename = {
+   provider = function(self)
+      -- self.filename will be defined later, just keep looking at the example!
+      local filename = self.filename
+      filename = filename == "" and "[No Name]" or vim.fn.fnamemodify(filename, ":t")
+      return filename
+   end,
+   hl = function(self)
+      return { bold = self.is_active or self.is_visible, italic = true }
+   end,
+}
+
+local TabpageFileFlags = {
+   {
+      condition = function(self)
+         return vim.api.nvim_get_option_value("modified", { buf = self.bufnr })
+      end,
+      provider = " [+]",
+      hl = { fg = "green" },
+   },
+   {
+      condition = function(self)
+         return not vim.api.nvim_get_option_value("modifiable", { buf = self.bufnr })
+            or vim.api.nvim_get_option_value("readonly", { buf = self.bufnr })
+      end,
+      provider = function(self)
+         if vim.api.nvim_get_option_value("buftype", { buf = self.bufnr }) == "terminal" then
+            return "  "
+         else
+            return ""
+         end
+      end,
+      hl = { fg = "orange" },
+   },
+}
+
+local TabpageFileNameBlock = {
+   init = function(self)
+      local curwin = vim.api.nvim_tabpage_get_win(self.tabpage)
+      local curbuf = vim.api.nvim_win_get_buf(curwin)
+      self.bufnr = curbuf
+      self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+   end,
+   hl = function(self)
+      if self.is_active then
+         return "TabLineSel"
+      -- why not?
+      -- elseif not vim.api.nvim_buf_is_loaded(self.bufnr) then
+      --     return { fg = "gray" }
+      else
+         return "TabLine"
+      end
+   end,
+   on_click = {
+      callback = function(_, minwid, _, button)
+         if button == "m" then -- close on mouse middle click
+            vim.schedule(function()
+               vim.api.nvim_buf_delete(minwid, { force = false })
+            end)
+         else
+            vim.api.nvim_win_set_buf(0, minwid)
+         end
+      end,
+      minwid = function(self)
+         return self.bufnr
+      end,
+      name = "heirline_tabline_buffer_callback",
+   },
+   TabpageBufnr,
+   FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
+   TabpageFilename,
+   TabpageFileFlags,
+}
+
+-- a nice "x" button to close the buffer
+local TabpageCloseButton = {
+   provider = function(self)
+      return ("%%%dX  %%X"):format(self.tabnr)
+   end,
+   hl = { fg = "gray" },
+}
+
+-- The final touch!
+local TabpageBlock = utils.surround({ "", "" }, function(self)
+   if self.is_active then
+      return utils.get_highlight("TabLineSel").bg
+   else
+      return utils.get_highlight("TabLine").bg
+   end
+end, { TabpageFileNameBlock, TabpageCloseButton })
+
+local TabPages = {
+   condition = function()
+      return #vim.api.nvim_list_tabpages() >= 2
+   end,
+   utils.make_tablist(TabpageBlock),
+}
+
 return {
    statusline = StatusLines,
+   tabline = TabPages,
    opts = {
       colors = colors,
    },
