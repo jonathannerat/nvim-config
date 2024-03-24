@@ -44,8 +44,7 @@ return {
          }
       },
       keys = silent {
-         { "<C-n>", vimcmd "NvimTreeToggle" },
-         { "<M-e>", vimcmd "NvimTreeFindFile" },
+         { "<M-e>", vimcmd "NvimTreeFindFileToggle" },
       },
       init = function ()
          vim.g.loaded_netrw = 1

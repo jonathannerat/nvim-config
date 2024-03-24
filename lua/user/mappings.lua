@@ -15,12 +15,15 @@ map:mode("normal", function(m)
       ["<leader>q"] = vimcmd "q",
       ["<leader>qa"] = vimcmd "qa",
       ["<leader>r"] = vimcmd "e %",
+      ["<leader>u"] = vimcmd "UltiSnipsEdit",
       ["<leader>w"] = vimcmd "w",
       ["<m-j>"] = ":m .+1<CR>==",
       ["<m-k>"] = ":m .-2<CR>==",
-
-      ["<leader>g"] = vimcmd "G",
    })
+
+   m:with_silent {
+      ["<C-w><C-f>"] = ":vsplit<CR>gf",
+   }
 
    m:with_noremap {
       ["<space>"] = "",
