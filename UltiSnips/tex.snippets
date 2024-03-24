@@ -42,6 +42,8 @@ snippet subfig "Subfigures"
         \caption{${7:Second image caption}}
         \label{fig:${8:second-image-label}}
     \end{subfigure}
+    \caption{${7:Figure caption}}
+    \label{fig:${8:fig-label}}
 \end{figure}
 endsnippet
 
@@ -50,7 +52,7 @@ snippet ii "Italics"
 endsnippet
 
 snippet bb "Bold"
-\textbf{$1}$0
+\textbf{${1:${VISUAL}}}$0
 endsnippet
 
 snippet tt "Teletype"
@@ -81,4 +83,10 @@ snippet list "Itemize list"
 \begin{itemize}
 	\item $0
 \end{itemize}
+endsnippet
+
+snippet enum "Enumerate list"
+\begin{enumerate}
+	\item $0
+\end{enumerate}
 endsnippet
