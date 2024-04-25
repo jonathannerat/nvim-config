@@ -76,6 +76,8 @@ return {
                ["<S-Tab>"] = cmp.mapping(function(fallback)
                   ultisnips_mappings.compose { "select_prev_item", "jump_backwards" }(fallback)
                end, { "i", "s" }),
+               ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+               ["<C-f>"] = cmp.mapping.scroll_docs(4),
             },
             snippet = {
                expand = function(args)
@@ -105,7 +107,7 @@ return {
    {
       "SirVer/ultisnips",
       init = function()
-         vim.g.UltiSnipsEditSplit = "vertical"
+         vim.g.UltiSnipsEditSplit = "context"
       end,
    },
 
@@ -151,9 +153,7 @@ return {
       version = "*",
       dependencies = "nvim-treesitter/nvim-treesitter",
       cmd = "Neogen",
-      opts = {
-         snippet_engine = "luasnip",
-      },
+      config = true,
    },
 
    { -- Emmet support

@@ -8,10 +8,6 @@ local function set(opt, value)
    vim.o[opt] = value
 end
 
-local function setg(opt, value)
-   vim.g[opt] = value
-end
-
 local tabwidth = 4
 
 -- Options

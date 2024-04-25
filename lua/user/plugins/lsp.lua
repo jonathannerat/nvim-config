@@ -11,20 +11,6 @@ return {
          "folke/neodev.nvim", -- sumneko_lua lsp + nvim integration
          "b0o/SchemaStore.nvim",
          "hrsh7th/cmp-nvim-lsp",
-         {
-            "glepnir/lspsaga.nvim",
-            opts = {
-               lightbulb = { enable = false },
-               outline = { enable = false },
-               beacon = { enable = false },
-               symbol_in_winbar = { enable = false },
-               diagnostic = {
-                  show_code_action = false,
-                  show_source = true,
-                  jump_num_shortcut = true,
-               },
-            },
-         },
       },
       -- (2) Then setup mason-lspconfig
       config = function()
@@ -58,19 +44,6 @@ return {
             end
          end
       end,
-   },
-
-   {
-      "ray-x/lsp_signature.nvim",
-      opts = {
-         bind = true,
-         floating_window = true,
-         hint_enable = false,
-         hint_prefix = " ",
-         handler_opts = {
-            border = "rounded",
-         },
-      },
    },
 
    "mfussenegger/nvim-jdtls",

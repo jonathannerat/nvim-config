@@ -1,12 +1,5 @@
 return {
    parsers = {
-      norg = {
-         install_info = {
-            url = "https://github.com/vhyrro/tree-sitter-norg",
-            files = { "src/parser.c", "src/scanner.cc" },
-            branch = "main",
-         },
-      },
       x86asm = {
          install_info = {
             url = "https://github.com/bearcove/tree-sitter-x86asm",

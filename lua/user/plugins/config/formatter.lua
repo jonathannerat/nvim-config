@@ -1,7 +1,11 @@
+local function get_filename()
+   return vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
+end
+
 local clike_format = function()
    return {
       exe = "clang-format",
-      args = { "--assume-filename", vim.api.nvim_buf_get_name(0) },
+      args = { "--assume-filename", get_filename() },
       stdin = true,
       cwd = vim.fn.expand "%:p:h",
    }
@@ -71,7 +75,7 @@ return {
                   "--config-precedence",
                   "prefer-file",
                   "--stdin-filepath",
-                  vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),
+                  get_filename(),
                },
                stdin = true,
                try_node_modules = true,
@@ -93,7 +97,16 @@ return {
          end,
       },
       go = {
-         require("formatter.filetypes.go").gofmt
+         require("formatter.filetypes.go").gofmt,
+      },
+      java = {
+         function()
+            return {
+               exe = "clang-format",
+               args = { "--style=Google", "--assume-filename=" .. get_filename() },
+               stdin = true,
+            }
+         end,
       },
       ["*"] = {
          require("formatter.filetypes.any").remove_trailing_whitespace,

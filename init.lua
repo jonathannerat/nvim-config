@@ -25,6 +25,7 @@ require("lazy").setup("user.plugins", {
     }
 })
 
+require "user.filetypes"
 require "user.commands"
 require "user.mappings"
 require "user.highlights"

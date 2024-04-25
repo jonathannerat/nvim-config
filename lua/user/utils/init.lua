@@ -42,4 +42,12 @@ function M.silent(keybinds)
    return keybinds
 end
 
+function table.find(list, search)
+   for i, v in ipairs(list) do
+      if v == search then
+         return i
+      end
+   end
+end
+
 return M

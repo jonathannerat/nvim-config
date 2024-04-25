@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 endsnippet
 
 snippet pragma "Starter for header file"
-#ifndef ${1:HEADER_H}
+#ifndef ${1:`!p snip.rv = fn.upper().replace(".", "_").replace("/", "_")`}
 #define $1
 
 ${0:// code}

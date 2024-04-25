@@ -253,14 +253,19 @@ local Navic = {
 
 Navic = { flexible = 3, Navic, { provider = "" } }
 
+
+local function get_icon(name)
+   return vim.fn.sign_getdefined("DiagnosticSign" .. name)[1].text
+end
+
 local Diagnostics = {
    condition = conditions.has_diagnostics,
 
    static = {
-      error_icon = " ",
-      warn_icon = " ",
-      info_icon = " ",
-      hint_icon = " ",
+      error_icon = get_icon("Error"),
+      warn_icon = get_icon("Warn"),
+      info_icon = get_icon("Info"),
+      hint_icon = get_icon("Hint"),
    },
 
    init = function(self)
@@ -454,9 +459,9 @@ local StatusLines = {
    DefaultStatusline,
 }
 
-local TabpageBufnr = {
+local TabpageTabnr = {
    provider = function(self)
-      return tostring(self.bufnr) .. ". "
+      return tostring(self.tabnr) .. ". "
    end,
 }
 
@@ -529,7 +534,7 @@ local TabpageFileNameBlock = {
       end,
       name = "heirline_tabline_buffer_callback",
    },
-   TabpageBufnr,
+   TabpageTabnr,
    FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
    TabpageFilename,
    TabpageFileFlags,

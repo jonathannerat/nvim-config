@@ -2,13 +2,15 @@ local utils = require "user.utils"
 local vimcmd = utils.vimcmd
 local silent = utils.silent
 
+vim.fn.sign_define {
+   { name = "DiagnosticSignError", text = " ", texthl = "DiagnosticSignError" },
+   { name = "DiagnosticSignWarn", text = " ", texthl = "DiagnosticSignWarn" },
+   { name = "DiagnosticSignInfo", text = " ", texthl = "DiagnosticSignInfo" },
+   { name = "DiagnosticSignHint", text = "󰌵 ", texthl = "DiagnosticSignHint" },
+}
+
 return {
    { "rebelot/kanagawa.nvim", priority = 1000 },
-
-   {
-      "nvim-tree/nvim-web-devicons",
-      lazy = true,
-   },
 
    {
       "goolord/alpha-nvim",
@@ -22,34 +24,46 @@ return {
    },
 
    {
-      "nvim-tree/nvim-tree.lua",
+      "nvim-neo-tree/neo-tree.nvim",
       opts = {
-         renderer = {
-            group_empty = true,
-            indent_markers = {
-               enable = true,
+         window = {
+            mappings = {
+               ["<c-v>"] = "vsplit_with_window_picker",
+               ["<c-x>"] = "split_with_window_picker",
+               ["<space>"] = "noop",
+               S = "noop",
+               o = "toggle_node",
+               s = {
+                  function(state)
+                     local opener = "xdg-open"
+
+                     if vim.fn.has "macunix" == 1 then
+                        opener = "open"
+                     elseif vim.fn.has "win32" == 1 then
+                        opener = "start"
+                     end
+
+                     local node = state.tree:get_node()
+                     os.execute(("%s '%s'"):format(opener, node.path))
+                  end,
+                  desc = "open with system",
+               },
+               v = "open_vsplit",
+               x = "open_split",
             },
          },
-         system_open = {
-            cmd = "xdg-open"
-         },
-         diagnostics = {
-            enable = true,
-         },
-         filters = {
-            dotfiles = true,
-         },
-         live_filter = {
-            prefix = " ",
-         }
+      },
+      branch = "v3.x",
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         "nvim-tree/nvim-web-devicons",
+         "MunifTanjim/nui.nvim",
+         "s1n7ax/nvim-window-picker",
       },
       keys = silent {
-         { "<M-e>", vimcmd "NvimTreeFindFileToggle" },
+         { "<M-e>", vimcmd "Neotree filesystem toggle" },
+         { "<M-f>", vimcmd "Neotree filesystem reveal" },
       },
-      init = function ()
-         vim.g.loaded_netrw = 1
-         vim.g.loaded_netrwPlugin = 1
-      end
    },
 
    {
@@ -72,7 +86,7 @@ return {
       end,
       keys = silent {
          { "<leader>fb", vimcmd "Telescope buffers" },
-         { "<leader>ff", vimcmd "Telescope find_files layout_config={preview_cutoff=120}" },
+         { "<leader>ff", vimcmd "Telescope find_files find_command=fd layout_config={preview_cutoff=120}" },
          { "<leader>fh", vimcmd "Telescope help_tags" },
          { "<leader>fm", vimcmd "Telescope man_pages" },
          { "<leader>fo", vimcmd "Telescope oldfiles" },

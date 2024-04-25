@@ -9,16 +9,14 @@ local M = {}
 
 local default_mappings = {
    ["<C-k>"] = luacmd "vim.lsp.buf.signature_help()",
-   ["gA"] = vimcmd "Lspsaga code_action",
-   ["gR"] = vimcmd "Lspsaga rename",
-   ["K"] = vimcmd "Lspsaga hover_doc",
-   ["gw"] = vimcmd "Lspsaga show_line_diagnostics",
-   ["gW"] = vimcmd "Lspsaga show_buf_diagnostics",
-   ["[d"] = vimcmd "Lspsaga diagnostic_jump_prev",
-   ["]d"] = vimcmd "Lspsaga diagnostic_jump_next",
-   ["gd"] = vimcmd "Lspsaga goto_definition",
-   ["gi"] = vimcmd "Lspsaga peek_definition",
-   ["gD"] = vimcmd "Lspsaga finder",
+   ["gA"] = luacmd "vim.lsp.buf.code_action()",
+   ["gR"] = luacmd "vim.lsp.buf.rename()",
+   ["K"] = luacmd "vim.lsp.buf.hover()",
+   ["gw"] = luacmd "vim.diagnostic.open_float()",
+   ["gW"] = luacmd "vim.diagnostic.open_float { scope = 'buffer' }",
+   ["[d"] = luacmd "vim.diagnostic.goto_prev()",
+   ["]d"] = luacmd "vim.diagnostic.goto_next()",
+   ["gd"] = luacmd "vim.lsp.buf.definition()",
 }
 
 local function default_on_attach(client, bufnr)
@@ -62,23 +60,23 @@ M.ensure_installed = { "bashls", "jsonls", "lua_ls", "vimls" }
 M.lsp_servers = custom "lsp_servers"
 
 M.handlers = {
-   function (server_name)
+   function(server_name)
       local opts = M.lsp_servers[server_name]
 
       lspconfig[server_name].setup(M.extend_with_defaults(opts))
    end,
 
-   lua_ls = function ()
+   lua_ls = function()
       require("neodev").setup {
          override = function(root_dir, library)
-            local config_dir = vim.fs.normalize("~/projects/nvim-config")
+            local config_dir = vim.fs.normalize "~/projects/nvim-config"
             if root_dir:find(config_dir, 1, true) == 1 then
                library.enabled = true
                library.plugins = true
             end
-         end
+         end,
       }
-      lspconfig.lua_ls.setup(M.extend_with_defaults())
+      lspconfig.lua_ls.setup(M.extend_with_defaults(M.lsp_servers.lua_ls))
    end,
 
    jsonls = function()

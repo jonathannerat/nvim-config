@@ -32,10 +32,9 @@ return {
                vim.api.nvim_command("Git")
             else
                -- more cols than rows ==> wide window ==> vertical Git window
-               vim.api.nvim_command("vert Git | vert res 80")
+               vim.api.nvim_command("vert Git | vert res 50")
             end
          end},
-         { "<leader>gl", vimcmd "Gclog!" },
       },
    },
 

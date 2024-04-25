@@ -1,8 +1,14 @@
 return {
    { -- Organization tool (note taking / todo lists / etc.)
       "nvim-neorg/neorg",
-      dependencies = "nvim-lua/plenary.nvim",
-      build = ":Neorg sync-parsers",
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         {
+            "vhyrro/luarocks.nvim",
+            priority = 1000, -- We'd like this plugin to load first out of the rest
+            config = true, -- This automatically runs `require("luarocks-nvim").setup()`
+         },
+      },
       ft = "norg",
       cmd = "Neorg",
       opts = {
@@ -25,7 +31,7 @@ return {
             ["core.completion"] = {
                config = { engine = "nvim-cmp" },
             },
-            ["core.export"] = {}
+            ["core.export"] = {},
          },
       },
    },
