@@ -55,12 +55,12 @@ function M.split(s, d, pattern)
 end
 
 --- Bootstrap a plugin into rtp
----@param opts {[1]: string, name: string, branch: string}
+---@param opts {url: string, name: string, branch: string}
 function M.bootstrap(opts)
    local url = opts.url
    local branch = opts.branch or "main"
    local name = opts.name or url:match "%w+://.+/.+/(.+)"
-   name = name:sub(-4) == ".git" and name:sub(1, -4) or name
+   name = name:sub(-4) == ".git" and name:sub(1, -5) or name
    local pluginpath = vim.fn.stdpath "data" .. "/lazy/" .. name
 
    if not vim.loop.fs_stat(pluginpath) then

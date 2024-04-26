@@ -21,13 +21,9 @@ return function(key)
    local keys = split(key, ".")
    local option = get(default_opts, keys)
 
-   print("getting key: ", vim.inspect(keys))
-
    if has_custom then
       option = get(custom_opts, keys) or option
    end
-
-   print("got: ", vim.inspect(option))
 
    return option
 end

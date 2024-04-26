@@ -1,5 +1,4 @@
 local utils = require "user.utils"
-local option = require "user.options"
 
 require "user.vim_options"
 
@@ -16,6 +15,8 @@ require("lazy").setup("user.plugins", {
         patterns = {"jonathannerat"}
     }
 })
+
+local option = require "user.options"
 
 require "user.filetypes"
 require "user.commands"
