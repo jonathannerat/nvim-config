@@ -1,21 +1,13 @@
-local custom = require("user.utils").custom
+local utils = require "user.utils"
+local option = require "user.options"
 
-require "user.options"
+require "user.vim_options"
 
--- === Plugins ===
--- Bootstraping
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-   vim.fn.system {
-      "git",
-      "clone",
-      "--filter=blob:none",
-      "https://github.com/folke/lazy.nvim.git",
-      "--branch=stable", -- latest stable release
-      lazypath,
-   }
-end
-vim.opt.rtp:prepend(lazypath)
+-- Bootstraping lazy.nvim
+utils.bootstrap {
+   url = "https://github.com/folke/lazy.nvim.git",
+   branch = "stable",
+}
 
 -- Load plugins from another file
 require("lazy").setup("user.plugins", {
@@ -30,4 +22,4 @@ require "user.commands"
 require "user.mappings"
 require "user.highlights"
 
-vim.cmd("colorscheme " .. custom "theme")
+vim.cmd("colorscheme " .. option "theme")

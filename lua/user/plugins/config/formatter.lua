@@ -108,6 +108,15 @@ return {
             }
          end,
       },
+      fennel = {
+         function()
+            return {
+               exe = "fnlfmt",
+               args = { "-" },
+               stdin = true,
+            }
+         end,
+      },
       ["*"] = {
          require("formatter.filetypes.any").remove_trailing_whitespace,
       },

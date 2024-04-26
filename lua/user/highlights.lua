@@ -1,6 +1,6 @@
-local custom = require("user.utils").custom
+local option = require("user.options")
 
-local palette = require("kanagawa.colors").setup { theme = custom "variant" }
+local palette = require("kanagawa.colors").setup { theme = option "variant" }
 local normalHl = vim.api.nvim_get_hl(0, { name = "Normal" })
 local bg = normalHl.background or "NONE"
 

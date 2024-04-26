@@ -1,8 +1,8 @@
-local custom = require("user.utils").custom
+local option = require("user.options")
 local conditions = require "heirline.conditions"
 local utils = require "heirline.utils"
 
-local kanagawa = require("kanagawa.colors").setup { theme = custom "variant" }
+local kanagawa = require("kanagawa.colors").setup { theme = option "variant" }
 local palette_colors = kanagawa.palette
 local theme_colors = kanagawa.theme
 

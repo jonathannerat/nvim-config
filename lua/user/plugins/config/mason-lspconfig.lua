@@ -3,7 +3,8 @@ local navic = require "nvim-navic"
 
 local Mapper = require "user.utils.mapper"
 local utils = require "user.utils"
-local vimcmd, luacmd, custom = utils.vimcmd, utils.luacmd, utils.custom
+local option = require "user.options"
+local vimcmd, luacmd = utils.vimcmd, utils.luacmd
 
 local M = {}
 
@@ -57,7 +58,7 @@ end
 
 M.ensure_installed = { "bashls", "jsonls", "lua_ls", "vimls" }
 
-M.lsp_servers = custom "lsp_servers"
+M.lsp_servers = option "lsp_servers"
 
 M.handlers = {
    function(server_name)

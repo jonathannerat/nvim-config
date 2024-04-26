@@ -1,27 +1,31 @@
+--- Set vim option
+---@param opt string option name
+---@param value any option value
 local function set(opt, value)
-   if string.sub(opt, 1, 2) == "no" then
-      opt = string.sub(opt, 3)
+   if opt:sub(1, 2) == "no" then
+      opt = opt:sub(3)
       value = false
    end
 
    value = value == nil and true or value
-   vim.o[opt] = value
+
+   vim.opt[opt] = value
+end
+
+local function append(name, value)
+   vim.opt[name]:append(value)
 end
 
 local tabwidth = 4
 
 -- Options
 set("background", "dark")
-set("completeopt", "menuone,noselect")
 set("conceallevel", 2)
 set("inccommand", "split")
 set("laststatus", 3)
-set("listchars", "tab:│ ,trail:·,extends:…,precedes:…,nbsp:☠")
 set("mouse", "nv")
 set("scrolloff", 5)
 set("shiftwidth", tabwidth)
-set("shortmess", vim.o.shortmess .. "ac")
-set("spelllang", "es,en")
 set("splitkeep", "cursor")
 set("tabstop", tabwidth)
 set("timeoutlen", 300)
@@ -51,17 +55,27 @@ set "noshowmode"
 set "noswapfile"
 set "nowritebackup"
 
-vim.opt.sessionoptions:append { "options", "resize", "winpos", "terminal" }
-vim.opt.fillchars:append {
+append("completeopt", { "menuone", "noselect" })
+append("sessionoptions", { "options", "resize", "winpos", "terminal" })
+append("shortmess", "ac")
+append("spelllang", { "es", "en" })
+append("listchars", {
+   tab = "│ ",
+   trail = "·",
+   extends = "…",
+   precedes = "…",
+   nbsp = "☠",
+})
+append("fillchars", {
    eob = "~",
-   horiz = '━',
-   horizup = '┻',
-   horizdown = '┳',
-   vert = '┃',
-   vertleft = '┨',
-   vertright = '┣',
-   verthoriz = '╋',
-}
+   horiz = "━",
+   horizup = "┻",
+   horizdown = "┳",
+   vert = "┃",
+   vertleft = "┨",
+   vertright = "┣",
+   verthoriz = "╋",
+})
 
 -- Globals
 vim.g.mapleader = " "
