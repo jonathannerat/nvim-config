@@ -1,26 +1,8 @@
-local utils = require "user.utils"
-
--- Bootstraping lazy.nvim
-utils.bootstrap {
-   url = "https://github.com/folke/lazy.nvim.git",
-   branch = "stable",
-}
-
-require "user.vim_options"
-
--- Load plugins from another file
-require("lazy").setup("user.plugins", {
-    dev = {
-        path = "~/projects/nvim-plugins",
-        patterns = {"jonathannerat"}
-    }
-})
-
-local option = require "user.options"
-
+require "user.vim"
 require "user.filetypes"
 require "user.commands"
 require "user.mappings"
-require "user.highlights"
 
-vim.cmd("colorscheme " .. option "theme")
+require("user.rocks").setup(function()
+   vim.cmd.colorscheme(require "user.option" "theme")
+end)

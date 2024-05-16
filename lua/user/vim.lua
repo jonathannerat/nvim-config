@@ -19,21 +19,17 @@ end
 local tabwidth = 4
 
 -- Options
-set("background", "dark")
-set("conceallevel", 2)
 set("inccommand", "split")
 set("laststatus", 3)
 set("mouse", "nv")
-set("scrolloff", 5)
+set("scrolloff", 3)
 set("shiftwidth", tabwidth)
-set("splitkeep", "cursor")
 set("tabstop", tabwidth)
 set("timeoutlen", 300)
 
 set "copyindent"
 set "cursorline"
 set "expandtab"
-set "hidden"
 set "ignorecase"
 set "lazyredraw"
 set "linebreak"
@@ -45,26 +41,19 @@ set "showmatch"
 set "smartcase"
 set "splitbelow"
 set "splitright"
-set "termguicolors"
 set "undofile"
-set "wrap"
 
-set "noautoindent"
-set "nobackup"
 set "noshowmode"
 set "noswapfile"
-set "nowritebackup"
 
-append("completeopt", { "menuone", "noselect" })
-append("sessionoptions", { "options", "resize", "winpos", "terminal" })
-append("shortmess", "ac")
+-- append("shortmess", "ac")
 append("spelllang", { "es", "en" })
 append("listchars", {
-   tab = "│ ",
-   trail = "·",
-   extends = "…",
-   precedes = "…",
-   nbsp = "☠",
+    tab = "│ ",
+    trail = "·",
+    extends = "…",
+    precedes = "…",
+    nbsp = "󰚌",
 })
 append("fillchars", {
    eob = "~",

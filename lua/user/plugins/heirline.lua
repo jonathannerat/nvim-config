@@ -1,4 +1,4 @@
-local option = require("user.options")
+local option = require "user.option"
 local conditions = require "heirline.conditions"
 local utils = require "heirline.utils"
 
@@ -37,6 +37,13 @@ local colors = {
 }
 
 require("heirline").load_colors(colors)
+
+vim.fn.sign_define {
+   { name = "DiagnosticSignError", text = " ", texthl = "DiagnosticSignError" },
+   { name = "DiagnosticSignWarn", text = " ", texthl = "DiagnosticSignWarn" },
+   { name = "DiagnosticSignInfo", text = " ", texthl = "DiagnosticSignInfo" },
+   { name = "DiagnosticSignHint", text = "󰌵 ", texthl = "DiagnosticSignHint" },
+}
 
 local ViMode = {
    init = function(self)
@@ -125,7 +132,8 @@ local FileIcon = {
    init = function(self)
       local filename = self.filename
       local extension = vim.fn.fnamemodify(filename, ":e")
-      self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+      self.icon, self.icon_color =
+         require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
    end,
 
    provider = function(self)
@@ -253,7 +261,6 @@ local Navic = {
 
 Navic = { flexible = 3, Navic, { provider = "" } }
 
-
 local function get_icon(name)
    return vim.fn.sign_getdefined("DiagnosticSign" .. name)[1].text
 end
@@ -262,10 +269,10 @@ local Diagnostics = {
    condition = conditions.has_diagnostics,
 
    static = {
-      error_icon = get_icon("Error"),
-      warn_icon = get_icon("Warn"),
-      info_icon = get_icon("Info"),
-      hint_icon = get_icon("Hint"),
+      error_icon = get_icon "Error",
+      warn_icon = get_icon "Warn",
+      info_icon = get_icon "Info",
+      hint_icon = get_icon "Hint",
    },
 
    init = function(self)
@@ -309,7 +316,9 @@ local Git = {
 
    init = function(self)
       self.status_dict = vim.b.gitsigns_status_dict
-      self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
+      self.has_changes = self.status_dict.added ~= 0
+         or self.status_dict.removed ~= 0
+         or self.status_dict.changed ~= 0
    end,
 
    hl = { fg = "orange" },
@@ -564,7 +573,7 @@ local TabPages = {
    utils.make_tablist(TabpageBlock),
 }
 
-return {
+require("heirline").setup {
    statusline = StatusLines,
    tabline = TabPages,
    opts = {

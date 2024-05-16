@@ -1,80 +1,32 @@
-local M = {}
+local utils = {}
 
-function M.vimcmd(str)
-   return ":" .. str .. "<cr>"
+--- Add directories to package path/cpath
+---@param dirs string | string[] directories to add
+---@param target? "path" | "cpath"
+function utils.add_to_path(dirs, target)
+   target = target or "path"
+   dirs = type(dirs) == "string" and { dirs } or dirs
+
+   ---@cast dirs string[]
+   package[target] = package[target] .. ";" .. table.concat(dirs, ";")
 end
 
-function M.luacmd(str)
-   return ":lua " .. str .. "<cr>"
-end
+local DEFAULT_XDG_DIRS = {
+   data = os.getenv "HOME" .. "/.local/share",
+   config = os.getenv "HOME" .. "/.config",
+   cache = os.getenv "HOME" .. "/.cache",
+}
 
-function M.silent(keybinds)
-   local is_single_keybind = true
+--- Return XDG_***_HOME directory
+---@param name "data"|"config"|"cache"
+function utils.xdgpath(name)
+   local xdgenv = os.getenv("XDG_" .. name:upper() .. "_HOME")
 
-   for _, keybind in pairs(keybinds) do
-      if type(keybind) == "table" then
-         keybind.silent = true
-         is_single_keybind = false
-      end
+   if xdgenv then
+      return xdgenv
    end
 
-   if is_single_keybind then
-      keybinds.silent = true
-   end
-
-   return keybinds
+   return DEFAULT_XDG_DIRS[name]
 end
 
-function table.find(list, search)
-   for i, v in ipairs(list) do
-      if v == search then
-         return i
-      end
-   end
-end
-
---- Split string with separator/pattern
----@param s string string to split
----@param d string separator/pattern used as delimiter
----@param pattern boolean? wether to search `d` as a pattern or not
----@return string[]
-function M.split(s, d, pattern)
-   local res = {}
-   local substart = 1
-   local pstart, pend = s:find(d, 1, not pattern)
-
-   while pstart do
-      res[#res + 1] = s:sub(substart, pstart - 1)
-      substart = pend + 1
-      pstart, pend = s:find(d, substart, not pattern)
-   end
-
-   res[#res + 1] = s:sub(substart)
-
-   return res
-end
-
---- Bootstrap a plugin into rtp
----@param opts {url: string, name: string, branch: string}
-function M.bootstrap(opts)
-   local url = opts.url
-   local branch = opts.branch or "main"
-   local name = opts.name or url:match "%w+://.+/.+/(.+)"
-   name = name:sub(-4) == ".git" and name:sub(1, -5) or name
-   local pluginpath = vim.fn.stdpath "data" .. "/lazy/" .. name
-
-   if not vim.loop.fs_stat(pluginpath) then
-      vim.fn.system {
-         "git",
-         "clone",
-         "--filter=blob:none",
-         url,
-         "--branch=" .. branch,
-         pluginpath,
-      }
-   end
-
-   vim.opt.rtp:prepend(pluginpath)
-end
-
-return M
+return utils

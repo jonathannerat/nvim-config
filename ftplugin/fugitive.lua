@@ -1,5 +1,4 @@
-vim.keymap.set('n', '<M-g>', 'gq', {
-   silent = true,
+vim.keymap.set("n", "<M-g>", "gq", {
    remap = true,
-   buffer = true
+   buffer = true,
 })

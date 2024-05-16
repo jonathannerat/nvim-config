@@ -1,77 +1,127 @@
-local Mapper = require "user.utils.mapper"
-local vimcmd = require("user.utils").vimcmd
+local tfind = require("user.utils.table").find
 
+require "user.utils.keymap" {
+   {
+      group = { mode = "normal" },
+      {
+         "<ESC>",
+         vim = "nohlsearch",
+         desc = "Clear search results",
+      },
+      {
+         "<LEADER>Qa",
+         vim = "quitall!",
+         desc = "Force quit all",
+      },
+      {
+         "<LEADER>Q",
+         vim = "quit!",
+         desc = "Force quit",
+      },
+      {
+         "<LEADER>r",
+         vim = "e %",
+         desc = "Reload current buffer",
+      },
+      {
+         "<C-w>m",
+         "<C-w>_<C-w>|",
+         desc = "Maximize current window",
+      },
+      {
+         "<M-j>",
+         ":m .+1<CR>==",
+         desc = "Move current line down",
+      },
+      {
+         "<M-k>",
+         ":m .-2<CR>==",
+         desc = "Move current line up",
+      },
+      {
+         "g<",
+         vim = "tabmove-",
+         desc = "Move current tab left",
+      },
+      {
+         "g>",
+         vim = "tabmove+",
+         desc = "Move current tab right",
+      },
+      {
+         "<LEADER>qa",
+         vim = "quitall",
+         desc = "Quit all",
+      },
+      {
+         "<LEADER>q",
+         vim = "quit",
+         desc = "Quit",
+      },
+      {
+         "<LEADER>w",
+         vim = "write",
+         desc = "Save",
+      },
+      {
+         "<SPACE>",
+         disable = true,
+         desc = "Disable default <SPACE> mapping",
+      },
+   },
+   {
+      group = { mode = "insert" },
+      {
+         "<M-j>",
+         "<ESC>:m .+1<CR>==gi",
+         desc = "Move current line down",
+      },
+      {
+         "<M-k>",
+         "<ESC>:m .-2<CR>==gi",
+         desc = "Move current line up",
+      },
+      { "jk", "<ESC>" },
+   },
+   {
+      group = { mode = "visual" },
+      {
+         "/",
+         [[<ESC>/\%V]],
+         desc = "Forward search inside selected region",
+      },
+      {
+         "?",
+         [[<ESC>?\%V]],
+         desc = "Backward search inside selected region",
+      },
+      {
+         "<M-j>",
+         ":m '>+1<CR>gv=gv",
+         desc = "Move selected lines down",
+      },
+      {
+         "<M-k>",
+         ":m '>-2<CR>gv=gv",
+         desc = "Move selected lines up",
+      },
+   },
+   {
+      group = { mode = "command" },
+      { "<C-j>", "<DOWN>" },
+      { "<C-k>", "<UP>" },
+   },
+}
+
+-- Terminal mode
+vim.keymap.set("t", "<C-M-q>", [[<C-\><C-n>]])
+
+-- Toggle bottom terminal
 local api = vim.api
-local map = Mapper:new()
-
-map:mode("normal", function(m)
-   m:with_options({ silent = true, noremap = true }, {
-      ["g<"] = vimcmd "tabmove-",
-      ["g>"] = vimcmd "tabmove+",
-      ["<c-w>m"] = "<c-w>_<c-w>|",
-      ["<c-t>"] = vimcmd "tabnew",
-      ["<leader>Q"] = vimcmd "q!",
-      ["<leader>Qa"] = vimcmd "qa!",
-      ["<leader>cd"] = vimcmd "lcd %:h",
-      ["<leader>hh"] = vimcmd "noh",
-      ["<leader>q"] = vimcmd "q",
-      ["<leader>qa"] = vimcmd "qa",
-      ["<leader>r"] = vimcmd "e %",
-      ["<leader>u"] = vimcmd "UltiSnipsEdit",
-      ["<leader>w"] = vimcmd "w",
-      ["<m-j>"] = ":m .+1<CR>==",
-      ["<m-k>"] = ":m .-2<CR>==",
-   })
-
-   m:with_silent {
-      ["<C-w><C-f>"] = ":vsplit<CR>gf",
-   }
-
-   m:with_noremap {
-      ["<space>"] = "",
-      ["Q"] = "",
-   }
-end)
-
-map:mode("insert", function(m)
-   m:with_options({ silent = true, noremap = true }, {
-      ["<m-j>"] = "<esc>:m .+1<CR>==gi",
-      ["<m-k>"] = "<esc>:m .-2<CR>==gi",
-   })
-
-   m:with_noremap {
-      jk = "<esc>",
-   }
-end)
-
-map:mode("visual", function(m)
-   m:with_options({ noremap = true }, {
-      ["/"] = "<esc>/\\%V",
-      ["?"] = "<esc>?\\%V",
-   })
-end)
-
-map:with_options({ silent = true, noremap = true }, function(m)
-   m:mode("command", {
-      ["<c-j>"] = "<down>",
-      ["<c-k>"] = "<up>",
-   })
-
-   m:mode("terminal", {
-      ["<c-m-q>"] = [[<c-\><c-n>]],
-   })
-
-   m:mode("visual", {
-      ["<m-j>"] = ":m '>+1<cr>gv=gv",
-      ["<m-k>"] = ":m '<-2<cr>gv=gv",
-   })
-end)
-
--- Toggle bottom term
 local termbuf, termwin
 vim.keymap.set({ "n", "t" }, "<M-t>", function()
    local tabpage = api.nvim_get_current_tabpage()
-   local win_in_tab = table.find(api.nvim_tabpage_list_wins(tabpage), termwin)
+   local win_in_tab = tfind(api.nvim_tabpage_list_wins(tabpage), termwin)
 
    if termwin then -- term is open in some window
       api.nvim_win_close(termwin, false)

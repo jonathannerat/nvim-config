@@ -1,37 +1,17 @@
-; Injections in nvim config
-(
- (function_call
-   (identifier) @_identifier
-   (arguments _ (string content: _ @lua)))
- (#match? @_identifier "lua_command"))
+(table_constructor
+  (field
+    name: (identifier) @_field
+    value: (string
+      content: (_) @injection.content))
+  ; limit so only 2-argument functions gets matched before pred handle
+  (#eq? @_field "lua")
+  (#set! injection.language "lua"))
 
-(
- (function_call
-   (identifier) @_identifier
-   (arguments (string content: _ @lua)))
- (#match? @_identifier "luacmd"))
-
-(
- (function_call
-   (identifier) @_identifier
-   (arguments (string content: _ @vim)))
- (#match? @_identifier "vimcmd"))
-
-; Injections in awesome config
-(
- (function_call
-   (identifier) @_identifier
-   (arguments (string content: _ @bash)))
- (#match? @_identifier "spawn"))
-
-(
- (function_call
-   (_ _ (identifier) @_identifier)
-   (arguments (string content: _ @bash)))
- (#match? @_identifier "with_shell"))
-
-(
- (function_call
-   (dot_index_expression (identifier) (identifier) @_identifier)
-   (arguments (string content: _ @bash)))
- (#match? @_identifier "with_shell"))
+(table_constructor
+  (field
+    name: (identifier) @_field
+    value: (string
+      content: (_) @injection.content))
+  ; limit so only 2-argument functions gets matched before pred handle
+  (#eq? @_field "vim")
+  (#set! injection.language "vim"))

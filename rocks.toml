@@ -1,0 +1,123 @@
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+[rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+cmp-buffer = "scm"
+cmp-nvim-lsp = "scm"
+cmp-path = "scm"
+"comment.nvim" = "0.8.0"
+"formatter.nvim" = "scm"
+"heirline.nvim" = "scm"
+"kanagawa.nvim" = "scm"
+knap = "scm"
+"lspkind.nvim" = "scm"
+"neo-tree.nvim" = "3.14"
+neorg = "8.4.0"
+nvim-autopairs = "scm"
+nvim-navic = "scm"
+nvim-treesitter-context = "scm"
+nvim-treesitter-textobjects = "scm"
+nvim-ts-context-commentstring = "scm"
+"rocks-config.nvim" = "1.5.0"
+"rocks-git.nvim" = "1.4.0"
+"rocks-treesitter.nvim" = "scm"
+"rocks.nvim" = "2.26.0"
+"schemastore.nvim" = "0.2.0"
+"telescope.nvim" = "scm"
+"rocks-dev.nvim" = "1.2.1"
+
+[plugins.colorizer]
+git = "NvChad/nvim-colorizer.lua"
+config = {}
+
+[plugins.neogen]
+version = "2.17.1"
+config = {}
+
+[plugins.nvim-surround]
+version = "2.1.5"
+config = {}
+
+[plugins.nvim-treesitter]
+git = "nvim-treesitter/nvim-treesitter"
+
+[plugins.treesj]
+version = "scm"
+config = {}
+
+[plugins.cmp-ultisnips]
+git = "quangnguyen30192/cmp-nvim-ultisnips"
+
+[plugins.editorconfig]
+git = "gpanders/editorconfig.nvim"
+
+[plugins.emmet]
+git = "mattn/emmet-vim"
+
+[plugins.cmp]
+git = "hrsh7th/nvim-cmp"
+
+[plugins.window-picker]
+git = "s1n7ax/nvim-window-picker"
+
+[plugins.telescope-fzf-native]
+git = "nvim-telescope/telescope-fzf-native.nvim"
+build = "make"
+
+[plugins.telescope-live-grep-args]
+git = "nvim-telescope/telescope-live-grep-args.nvim"
+
+[plugins.ultisnips]
+git = "SirVer/ultisnips"
+
+[plugins."neodev.nvim"]
+version = "scm"
+
+[plugins.nvim-lspconfig]
+git = "neovim/nvim-lspconfig"
+
+[plugins."mason.nvim"]
+git = "williamboman/mason.nvim"
+
+[plugins."mason-lspconfig.nvim"]
+git = "williamboman/mason-lspconfig.nvim"
+
+[plugins."dressing.nvim"]
+version = "scm"
+config = {}
+
+[plugins.fugitive]
+git = "tpope/vim-fugitive"
+
+[plugins."gitsigns.nvim"]
+git = "lewis6991/gitsigns.nvim"
+rev = "v0.8.0"
+config = {}
+
+[plugins.vimtex]
+git = "lervag/vimtex"
+rev = "v2.9"
+
+[plugins.vim-blade]
+git = "jwalton512/vim-blade"
+
+[plugins.plantuml-syntax]
+git = "aklt/plantuml-syntax"
+rev = "v0.2.0"
+
+[plugins."info.vim"]
+git = "HiPhish/info.vim"
+
+[plugins.vim-slime]
+git = "jpalardy/vim-slime"
+name = "slime"
+
+[plugins.vim-startuptime]
+git = "dstein64/vim-startuptime"
+rev = "v4.5.0"
+
+[config]
+plugins_dir = "user/plugins/"
