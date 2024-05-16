@@ -1,12 +1,12 @@
 local utils = require "user.utils"
 
-require "user.vim_options"
-
 -- Bootstraping lazy.nvim
 utils.bootstrap {
    url = "https://github.com/folke/lazy.nvim.git",
    branch = "stable",
 }
+
+require "user.vim_options"
 
 -- Load plugins from another file
 require("lazy").setup("user.plugins", {

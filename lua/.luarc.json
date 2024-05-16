@@ -1,9 +1,0 @@
-{
-    "workspace.library": [
-        "/home/jt/.local/share/nvim/lazy/neodev.nvim/types/stable",
-        "/usr/share/nvim/runtime/lua",
-        "/home/jt/.local/share/nvim/lazy/neotest/lua",
-        "/home/jt/.config/nvim/lua",
-        "${3rd}/luv/library"
-    ]
-}
