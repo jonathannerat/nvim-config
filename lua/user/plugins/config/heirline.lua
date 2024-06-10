@@ -1,4 +1,4 @@
-local option = require("user.options")
+local option = require "user.options"
 local conditions = require "heirline.conditions"
 local utils = require "heirline.utils"
 
@@ -235,7 +235,7 @@ local LSPActive = {
    hl = { fg = "green", bold = true },
 
    provider = function()
-      local active_clients = vim.lsp.get_active_clients { bufnr = 0 }
+      local active_clients = vim.lsp.get_clients { bufnr = 0 }
 
       return " " .. (#active_clients == 1 and "" or "[#" .. #active_clients .. "]")
    end,
@@ -253,7 +253,6 @@ local Navic = {
 
 Navic = { flexible = 3, Navic, { provider = "" } }
 
-
 local function get_icon(name)
    return vim.fn.sign_getdefined("DiagnosticSign" .. name)[1].text
 end
@@ -262,10 +261,10 @@ local Diagnostics = {
    condition = conditions.has_diagnostics,
 
    static = {
-      error_icon = get_icon("Error"),
-      warn_icon = get_icon("Warn"),
-      info_icon = get_icon("Info"),
-      hint_icon = get_icon("Hint"),
+      error_icon = get_icon "Error",
+      warn_icon = get_icon "Warn",
+      info_icon = get_icon "Info",
+      hint_icon = get_icon "Hint",
    },
 
    init = function(self)
@@ -520,17 +519,22 @@ local TabpageFileNameBlock = {
       end
    end,
    on_click = {
-      callback = function(_, minwid, _, button)
+      callback = function(self, tabpage, _, button)
          if button == "m" then -- close on mouse middle click
+            local bufwin = vim.api.nvim_tabpage_get_win(tabpage)
+            local bufnr = vim.api.nvim_win_get_buf(bufwin)
             vim.schedule(function()
-               vim.api.nvim_buf_delete(minwid, { force = false })
+               vim.api.nvim_buf_delete(bufnr, { force = false })
             end)
          else
-            vim.api.nvim_win_set_buf(0, minwid)
+            vim.schedule(function()
+               vim.notify(("tabpage: %d"):format(tabpage))
+               vim.api.nvim_set_current_tabpage(tabpage)
+            end)
          end
       end,
       minwid = function(self)
-         return self.bufnr
+         return self.tabpage
       end,
       name = "heirline_tabline_buffer_callback",
    },
