@@ -36,6 +36,18 @@ return {
                ["<c-x>"] = "split_with_window_picker",
                ["<space>"] = "noop",
                S = "noop",
+               c = {
+                  "copy",
+                  config = {
+                     show_path = "relative",
+                  },
+               },
+               m = {
+                  "move",
+                  config = {
+                     show_path = "relative",
+                  },
+               },
                o = "toggle_node",
                s = {
                   function(state)
