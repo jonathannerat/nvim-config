@@ -1,6 +1,7 @@
 local utils = require "user.utils"
 local vimcmd = utils.vimcmd
 local silent = utils.silent
+local options = require "user.options"
 
 vim.fn.sign_define {
    { name = "DiagnosticSignError", text = " ", texthl = "DiagnosticSignError" },
@@ -8,6 +9,9 @@ vim.fn.sign_define {
    { name = "DiagnosticSignInfo", text = " ", texthl = "DiagnosticSignInfo" },
    { name = "DiagnosticSignHint", text = "󰌵 ", texthl = "DiagnosticSignHint" },
 }
+
+local find_files_cmd = vim.iter(options "cmd.find_files"):join ","
+local find_all_files_cmd = vim.iter(options "cmd.find_all_files"):join ","
 
 return {
    { "rebelot/kanagawa.nvim", priority = 1000 },
@@ -86,7 +90,10 @@ return {
       end,
       keys = silent {
          { "<leader>fb", vimcmd "Telescope buffers" },
-         { "<leader>ff", vimcmd "Telescope find_files find_command=fd layout_config={preview_cutoff=120}" },
+         {
+            "<leader>ff",
+            vimcmd("Telescope find_files layout_config={preview_cutoff=120} find_command=" .. find_files_cmd),
+         },
          { "<leader>fh", vimcmd "Telescope help_tags" },
          { "<leader>fm", vimcmd "Telescope man_pages" },
          { "<leader>fo", vimcmd "Telescope oldfiles" },
@@ -94,7 +101,7 @@ return {
          { "<leader>ft", vimcmd "Telescope treesitter" },
          {
             "<leader>fF",
-            vimcmd "Telescope find_files find_command=fd,-t,f,-t,l,-H,--no-ignore-vcs layout_config={preview_cutoff=120}",
+            vimcmd("Telescope find_files layout_config={preview_cutoff=120} find_command=" .. find_all_files_cmd),
          },
          {
             "<leader>fl",
