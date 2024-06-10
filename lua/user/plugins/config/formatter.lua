@@ -26,18 +26,7 @@ return {
       blade = { prettier_format },
       c = { clike_format },
       cpp = { clike_format },
-      lua = {
-         function()
-            return {
-               exe = "stylua",
-               args = {
-                  "--config-path " .. os.getenv "XDG_CONFIG_HOME" .. "/stylua/stylua.toml",
-                  "-",
-               },
-               stdin = true,
-            }
-         end,
-      },
+      lua = { require("formatter.filetypes.lua").stylua },
       python = { require("formatter.filetypes.python").black },
       ruby = {
          require("formatter.filetypes.ruby").rubocop,
@@ -68,19 +57,12 @@ return {
          prettier_format,
       },
       php = {
-         function()
+         function ()
             return {
-               exe = "prettier",
-               args = {
-                  "--config-precedence",
-                  "prefer-file",
-                  "--stdin-filepath",
-                  get_filename(),
-               },
+               exe = "pint-stdin",
                stdin = true,
-               try_node_modules = true,
             }
-         end,
+         end
       },
       json = {
          prettier_format,
@@ -117,6 +99,7 @@ return {
             }
          end,
       },
+      html = { prettier_format },
       ["*"] = {
          require("formatter.filetypes.any").remove_trailing_whitespace,
       },
