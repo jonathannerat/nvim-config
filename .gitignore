@@ -1,1 +1,2 @@
-lua/my/custom.lua
+lua/user/options/custom.lua
+lazy-lock.json
