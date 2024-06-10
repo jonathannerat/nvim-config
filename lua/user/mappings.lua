@@ -67,30 +67,14 @@ map:with_options({ silent = true, noremap = true }, function(m)
    })
 end)
 
--- Toggle bottom term
-local termbuf, termwin
-vim.keymap.set({ "n", "t" }, "<M-t>", function()
-   local tabpage = api.nvim_get_current_tabpage()
-   local win_in_tab = table.find(api.nvim_tabpage_list_wins(tabpage), termwin)
+local FTerm = require "FTerm"
 
-   if termwin then -- term is open in some window
-      api.nvim_win_close(termwin, false)
+local lazygit = FTerm:new {
+   cmd = "lazygit"
+}
 
-      if win_in_tab then
-         termwin = nil
-      end
-   end
-
-   if not win_in_tab then
-      vim.cmd "botright split"
-      vim.cmd "resize 10"
-      termwin = api.nvim_get_current_win()
-
-      if not termbuf then
-         vim.cmd "terminal"
-         termbuf = api.nvim_get_current_buf()
-      end
-
-      api.nvim_win_set_buf(termwin, termbuf)
-   end
+vim.keymap.set({"n", "t"}, "<M-g>", function ()
+   lazygit:toggle()
 end)
+
+vim.keymap.set({"n", "t"}, "<M-t>", FTerm.toggle)
