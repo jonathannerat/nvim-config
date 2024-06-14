@@ -1,28 +1,14 @@
-local split = require("user.utils").split
 local default_opts = require "user.options.defaults"
 local has_custom, custom_opts = pcall(require, "user.options.custom")
 
---- Get option from table
----@param options table<string, any>
----@param keys string[]
-local function get(options, keys)
-   for _, k in ipairs(keys) do
-      if type(options) == "table" then
-         options = options[k]
-      else
-         break
-      end
-   end
-
-   return options
-end
-
-return function(key)
-   local keys = split(key, ".")
-   local option = get(default_opts, keys)
+return function(key, default)
+   local keys = vim.split(key, ".", { plain = true })
+   local value = vim.tbl_get(default_opts, unpack(keys))
+   local option = value ~= nil and value or default
 
    if has_custom then
-      option = get(custom_opts, keys) or option
+      value = vim.tbl_get(custom_opts, unpack(keys))
+      option = value ~= nil and value or option
    end
 
    return option
