@@ -56,7 +56,7 @@ function M.extend_with_defaults(opts)
    return opts
 end
 
-M.ensure_installed = { "bashls", "jsonls", "lua_ls", "vimls" }
+M.ensure_installed = { "bashls", "jsonls", "lua_ls" }
 
 M.lsp_servers = option "lsp_servers"
 
