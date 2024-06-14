@@ -1,3 +1,4 @@
+local option = require "user.options"
 local autocmd = vim.api.nvim_create_autocmd
 local function command(name, cmd)
    return vim.api.nvim_create_user_command(name, cmd, {})
@@ -34,9 +35,15 @@ autocmd("BufWritePost", {
 })
 
 -- Set options for documents
+local tw = option "vim.textwidth"
+local cmd = "setlocal spell"
+if type(tw) == "number" then
+   cmd = cmd .. " tw=" .. tostring(tw)
+end
+
 autocmd("FileType", {
    pattern = { "markdown", "norg", "tex" },
-   command = "setlocal tw=80 spell",
+   command = cmd,
 })
 
 autocmd({ "FileType" }, {
