@@ -3,13 +3,6 @@ local vimcmd = utils.vimcmd
 local silent = utils.silent
 local options = require "user.options"
 
-vim.fn.sign_define {
-   { name = "DiagnosticSignError", text = " ", texthl = "DiagnosticSignError" },
-   { name = "DiagnosticSignWarn", text = " ", texthl = "DiagnosticSignWarn" },
-   { name = "DiagnosticSignInfo", text = " ", texthl = "DiagnosticSignInfo" },
-   { name = "DiagnosticSignHint", text = "󰌵 ", texthl = "DiagnosticSignHint" },
-}
-
 local find_files_cmd = vim.iter(options "cmd.find_files"):join ","
 local find_all_files_cmd = vim.iter(options "cmd.find_all_files"):join ","
 

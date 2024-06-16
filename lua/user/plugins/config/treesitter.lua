@@ -1,47 +1,27 @@
+local option = require "user.options"
+
+local ensure_installed = vim.fn.extend({
+   "c",
+   "lua",
+   "vim",
+   "vimdoc",
+   "query",
+}, option("treesitter.also_install", {}))
+
 return {
-   parsers = {
-      x86asm = {
-         install_info = {
-            url = "https://github.com/bearcove/tree-sitter-x86asm",
-            files = { "src/parser.c" },
-            branch = "main",
-         },
-      },
-      gotmpl = {
-         install_info = {
-            url = "https://github.com/ngalaiko/tree-sitter-go-template",
-            files = { "src/parser.c" },
-         },
-         filetypes = { "gotmpl" },
-         used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl" },
-      },
-   },
+   parsers = option("treesitter.parsers", {}),
    opts = {
-      ensure_installed = {
-         "c",
-         "cpp",
-         "css",
-         "haskell",
-         "html",
-         "javascript",
-         "lua",
-         "markdown",
-         "markdown_inline",
-         "php",
-         "vim",
-         "vue",
-      },
+      ensure_installed = ensure_installed,
       highlight = {
          enable = true,
-         disable = { "tex", "latex", "html", "php" }, -- conflicts with vimtex's concela
+         disable = { "latex" }, -- conflicts with vimtex's concela
       },
       incremental_selection = { enable = true },
       indent = { enable = true },
-      playground = { enable = true },
       textobjects = {
          select = {
             enable = true,
-            disable = { "tex", "latex" },
+            disable = { "latex" },
             lookahead = true,
             keymaps = {
                -- You can use the capture groups defined in textobjects.scm
@@ -58,26 +38,29 @@ return {
                ["]m"] = "@function.outer",
                ["]i"] = "@conditional.outer",
             },
-            goto_next_end = {
-               ["]M"] = "@function.outer",
-               ["]I"] = "@conditional.outer",
-            },
             goto_previous_start = {
                ["[m"] = "@function.outer",
                ["[i"] = "@conditional.outer",
             },
-            goto_previous_end = {
-               ["[M"] = "@function.outer",
-               ["[I"] = "@conditional.outer",
+         },
+         swap = {
+            enable = true,
+            swap_next = {
+               ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+               ["<leader>A"] = "@parameter.inner",
             },
          },
-      },
-      context_commentstring = {
-         enable = true,
-      },
-      autotag = {
-         enable = true,
-         filetypes = { "html", "xml", "vue", "php" },
+         lsp_interop = {
+            enable = true,
+            border = "none",
+            floating_preview_opts = {},
+            peek_definition_code = {
+               ["<leader>k"] = "@function.outer",
+               ["<leader>K"] = "@class.outer",
+            },
+         },
       },
    },
 }

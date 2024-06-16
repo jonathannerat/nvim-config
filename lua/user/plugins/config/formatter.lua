@@ -28,18 +28,8 @@ return {
       cpp = { clike_format },
       lua = { require("formatter.filetypes.lua").stylua },
       python = { require("formatter.filetypes.python").black },
-      ruby = {
-         require("formatter.filetypes.ruby").rubocop,
-      },
-      rust = {
-         function()
-            return {
-               exe = "rustfmt",
-               args = { "--emit=stdout" },
-               stdin = true,
-            }
-         end,
-      },
+      ruby = { require("formatter.filetypes.ruby").rubocop },
+      rust = { require"formatter.filetypes.rust".rustfmt },
       sh = { shell_format },
       zsh = { shell_format },
       haskell = {
@@ -50,23 +40,18 @@ return {
             }
          end,
       },
-      javascript = {
-         prettier_format,
-      },
-      vue = {
-         prettier_format,
-      },
+      javascript = { prettier_format },
+      vue = { prettier_format },
       php = {
-         function ()
+         function()
             return {
                exe = "pint-stdin",
                stdin = true,
             }
-         end
+         end,
       },
-      json = {
-         prettier_format,
-      },
+      json = { require("formatter.filetypes.json").jq },
+      jsonc = { require("formatter.filetypes.json").jq },
       tex = {
          function()
             return {

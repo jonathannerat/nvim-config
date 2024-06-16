@@ -1,5 +1,4 @@
 local utils = require "user.utils"
-local vimcmd = utils.vimcmd
 local luacmd = utils.luacmd
 local silent = utils.silent
 
@@ -16,11 +15,6 @@ return {
          vim.g.tex_conceal = "adbmg"
          vim.g.tex_flavor = "latex"
       end,
-   },
-
-   { -- Git IDE
-      "tpope/vim-fugitive",
-      cmd = { "G", "Git", "Ggrep", "Glgrep", "Gclog", "Gllog", "Gcd", "Glcd" },
    },
 
    -- Git integration for buffers
@@ -56,24 +50,6 @@ return {
          { "<leader>tt", luacmd "require('neotest').run.run()" },
          { "<leader>tf", luacmd "require('neotest').run.run(vim.fn.expand('%'))" },
          { "<leader>to", luacmd "require('neotest').output.open{enter = true, last_run = true}" },
-      },
-   },
-
-   { -- Markdown Previewer
-      "iamcco/markdown-preview.nvim",
-      ft = "markdown",
-      build = function()
-         vim.fn["mkdp#util#install"]()
-      end,
-      init = function()
-         vim.g.mkdp_echo_preview_url = 1
-         vim.g.mkdp_open_to_the_world = 1
-         vim.g.mkdp_port = 8007
-         vim.g.mkdp_refresh_slow = 1
-         vim.g.mkdp_theme = "dark"
-      end,
-      keys = silent {
-         { "<leader>mp", vimcmd "MarkdownPreviewToggle" },
       },
    },
 

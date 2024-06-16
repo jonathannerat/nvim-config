@@ -253,19 +253,8 @@ local Navic = {
 
 Navic = { flexible = 3, Navic, { provider = "" } }
 
-local function get_icon(name)
-   return vim.fn.sign_getdefined("DiagnosticSign" .. name)[1].text
-end
-
 local Diagnostics = {
    condition = conditions.has_diagnostics,
-
-   static = {
-      error_icon = get_icon "Error",
-      warn_icon = get_icon "Warn",
-      info_icon = get_icon "Info",
-      hint_icon = get_icon "Hint",
-   },
 
    init = function(self)
       self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
@@ -279,25 +268,25 @@ local Diagnostics = {
    {
       provider = function(self)
          -- 0 is just another output, we can decide to print it or not!
-         return self.errors > 0 and (self.error_icon .. self.errors .. " ")
+         return self.errors > 0 and (self.errors .. " ")
       end,
       hl = { fg = "diag_error" },
    },
    {
       provider = function(self)
-         return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
+         return self.warnings > 0 and (self.warnings .. " ")
       end,
       hl = { fg = "diag_warn" },
    },
    {
       provider = function(self)
-         return self.info > 0 and (self.info_icon .. self.info .. " ")
+         return self.info > 0 and (self.info .. " ")
       end,
       hl = { fg = "diag_info" },
    },
    {
       provider = function(self)
-         return self.hints > 0 and (self.hint_icon .. self.hints)
+         return self.hints > 0 and (self.hints)
       end,
       hl = { fg = "diag_hint" },
    },
@@ -519,7 +508,7 @@ local TabpageFileNameBlock = {
       end
    end,
    on_click = {
-      callback = function(self, tabpage, _, button)
+      callback = function(_, tabpage, _, button)
          if button == "m" then -- close on mouse middle click
             local bufwin = vim.api.nvim_tabpage_get_win(tabpage)
             local bufnr = vim.api.nvim_win_get_buf(bufwin)

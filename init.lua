@@ -8,15 +8,15 @@ utils.bootstrap {
 
 require "user.vim_options"
 
+local option = require "user.options"
+
 -- Load plugins from another file
 require("lazy").setup("user.plugins", {
     dev = {
-        path = "~/projects/nvim-plugins",
+        path = option "dirs.nvim_plugins",
         patterns = {"jonathannerat"}
     }
 })
-
-local option = require "user.options"
 
 require "user.filetypes"
 require "user.commands"

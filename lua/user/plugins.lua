@@ -11,29 +11,9 @@ return {
       },
       ft = "norg",
       cmd = "Neorg",
-      opts = {
-         load = {
-            ["core.defaults"] = {},
-            ["core.concealer"] = {},
-            ["core.keybinds"] = {
-               config = {
-                  default_keybinds = true,
-               },
-            },
-            ["core.dirman"] = {
-               config = {
-                  default_workspace = "notes",
-                  workspaces = {
-                     notes = "~/notebook/",
-                  },
-               },
-            },
-            ["core.completion"] = {
-               config = { engine = "nvim-cmp" },
-            },
-            ["core.export"] = {},
-         },
-      },
+      opts = function ()
+         return require "user.plugins.config.neorg"
+      end,
    },
 
    { -- Preview color #aaaaaa

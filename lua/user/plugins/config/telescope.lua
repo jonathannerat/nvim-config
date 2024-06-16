@@ -8,7 +8,7 @@ local function actions_system_open(prompt_bufnr)
    local entry = action_state.get_selected_entry()
 
    if not entry then
-      print "[telescope] Nothing currently selected"
+      vim.notify("[telescope] Nothing currently selected")
       return
    end
 

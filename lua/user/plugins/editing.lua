@@ -88,14 +88,13 @@ return {
                documentation = cmp.config.window.bordered(),
             },
             formatting = {
+               fields = {'abbr', 'kind', 'menu'},
                format = lspkind.cmp_format {
                   mode = "symbol_text",
                   maxwidth = 50,
                   ellipsis_char = "…",
                },
-            },
-            performance = {
-               max_view_entries = 20,
+               expandable_indicator = true
             },
          }
 
