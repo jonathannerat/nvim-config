@@ -100,7 +100,7 @@ require "user.utils.keymap" {
       },
       {
          "<M-k>",
-         ":m '>-2<CR>gv=gv",
+         ":m '<-2<CR>gv=gv",
          desc = "Move selected lines up",
       },
    },
