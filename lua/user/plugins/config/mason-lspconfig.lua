@@ -51,6 +51,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
             lua = "vim.diagnostic.open_float {scope = 'buffer'}",
             desc = "View buffer diagnostics",
          },
+         {
+            "<C-k>",
+            lua = "vim.lsp.buf.signature_help()",
+            desc = "View signature help for hovered function",
+         },
       }
 
       if client.server_capabilities.documentFormattingProvider then
