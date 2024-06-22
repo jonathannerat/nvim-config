@@ -1,4 +1,5 @@
 local option = require "user.options"
+local keymap = require "user.utils.keymap"
 local autocmd = vim.api.nvim_create_autocmd
 local function command(name, cmd)
    return vim.api.nvim_create_user_command(name, cmd, {})
@@ -14,11 +15,6 @@ command("LuaPlayground", function()
       vim.notify("Error creating file with mktemp", vim.log.levels.ERROR)
    end
 end)
-
-autocmd("FileType", {
-   pattern = { "html", "css", "blade", "vue" },
-   command = "EmmetInstall",
-})
 
 autocmd("BufWritePost", {
    pattern = { "/tmp/lua_playground.*.lua" },
@@ -55,4 +51,57 @@ autocmd({ "FileType" }, {
 autocmd("TermOpen", {
    pattern = "*",
    command = "startinsert",
+})
+
+local navic = require "nvim-navic"
+
+autocmd("LspAttach", {
+   callback = function(args)
+      local bufnr = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+      if not client then
+         return
+      end
+
+      ---@type KeymapGroup
+      local keymaps = {
+         group = { name = "LSP", silent = true, buffer = bufnr },
+         {
+            "<C-w>D",
+            lua = "vim.diagnostic.open_float {scope = 'buffer'}",
+            desc = "View buffer diagnostics",
+         },
+         {
+            "<C-k>",
+            lua = "vim.lsp.buf.signature_help()",
+            desc = "View signature help for hovered function",
+         },
+      }
+
+      if client.server_capabilities.documentFormattingProvider then
+         keymaps[#keymaps + 1] = {
+            "<leader>sf",
+            lua = "vim.lsp.buf.format { async = true }",
+            desc = "Format file (async)",
+         }
+      end
+
+      if client.server_capabilities.documentRangeFormattingProvider then
+         keymaps[#keymaps + 1] = {
+            "<leader>sf",
+            lua = "vim.lsp.buf.format { async = true }",
+            mode = "visual",
+            desc = "Format lines (async)",
+         }
+      end
+
+      keymap(keymaps)
+
+      navic.attach(client, bufnr)
+   end,
+})
+
+autocmd("LspProgress", {
+   callback = require "user.utils.lsp_progress",
 })

@@ -1,11 +1,3 @@
-local utils = require "user.utils"
-local vimcmd = utils.vimcmd
-local silent = utils.silent
-local options = require "user.options"
-
-local find_files_cmd = vim.iter(options "cmd.find_files"):join ","
-local find_all_files_cmd = vim.iter(options "cmd.find_all_files"):join ","
-
 return {
    { "rebelot/kanagawa.nvim", priority = 1000 },
 
@@ -13,15 +5,20 @@ return {
       "goolord/alpha-nvim",
       event = "VimEnter",
       dependencies = "nvim-tree/nvim-web-devicons",
-      config = function()
-         local config = require("alpha.themes.startify").config
-
-         require("alpha").setup(config)
+      opts = function()
+         return require("alpha.themes.theta").config
       end,
    },
 
    {
       "nvim-neo-tree/neo-tree.nvim",
+      branch = "v3.x",
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         "nvim-tree/nvim-web-devicons",
+         "MunifTanjim/nui.nvim",
+         "s1n7ax/nvim-window-picker",
+      },
       opts = {
          window = {
             mappings = {
@@ -62,17 +59,6 @@ return {
             },
          },
       },
-      branch = "v3.x",
-      dependencies = {
-         "nvim-lua/plenary.nvim",
-         "nvim-tree/nvim-web-devicons",
-         "MunifTanjim/nui.nvim",
-         "s1n7ax/nvim-window-picker",
-      },
-      keys = silent {
-         { "<M-e>", vimcmd "Neotree filesystem toggle" },
-         { "<M-f>", vimcmd "Neotree filesystem reveal" },
-      },
    },
 
    {
@@ -93,31 +79,6 @@ return {
             telescope.load_extension(extension)
          end
       end,
-      keys = silent {
-         { "<leader>fb", vimcmd "Telescope buffers" },
-         {
-            "<leader>ff",
-            vimcmd("Telescope find_files layout_config={preview_cutoff=120} find_command=" .. find_files_cmd),
-         },
-         { "<leader>fh", vimcmd "Telescope help_tags" },
-         { "<leader>fm", vimcmd "Telescope man_pages" },
-         { "<leader>fo", vimcmd "Telescope oldfiles" },
-         { "<leader>fr", vimcmd "Telescope resume" },
-         { "<leader>ft", vimcmd "Telescope treesitter" },
-         {
-            "<leader>fF",
-            vimcmd("Telescope find_files layout_config={preview_cutoff=120} find_command=" .. find_all_files_cmd),
-         },
-         {
-            "<leader>fl",
-            function()
-               require("telescope").extensions.live_grep_args.live_grep_args {
-                  layout_strategy = "vertical",
-                  layout_config = { prompt_position = "top", mirror = true },
-               }
-            end,
-         },
-      },
    },
 
    {
@@ -130,6 +91,7 @@ return {
 
    {
       "folke/zen-mode.nvim",
+      cmd = "ZenMode",
       opts = {
          options = {
             enabled = true,
@@ -143,4 +105,17 @@ return {
    },
 
    { "stevearc/dressing.nvim", config = true },
+
+   {
+      "rcarriga/nvim-notify",
+      opts = {
+         stages = "static",
+         time_formats = {
+            notification = "%H:%M"
+         },
+      },
+      init = function()
+         vim.notify = require "notify"
+      end,
+   },
 }

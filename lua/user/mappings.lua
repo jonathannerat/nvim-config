@@ -1,4 +1,7 @@
-require "user.utils.keymap" {
+local keymap = require "user.utils.keymap"
+local options = require "user.options"
+
+keymap {
    {
       group = { mode = "normal" },
       {
@@ -111,14 +114,128 @@ require "user.utils.keymap" {
    },
 }
 
+keymap {
+   {
+      "g<Tab>",
+      "<Plug>(snippy-cut-text)",
+      mode = "normal",
+      desc = "Start snippet completion with text-object",
+   },
+   {
+      "<Tab>",
+      "<Plug>(snippy-cut-text)",
+      mode = "x",
+      desc = "Start snippet completion with selected text",
+   },
+   {
+      "<leader>bf",
+      vim = "Format",
+      desc = "Format buffer",
+   },
+   {
+      "<leader>bF",
+      vim = "FormatWrite",
+      desc = "Format and write buffer",
+   },
+   {
+      "<leader>m",
+      vim = "TSJToggle",
+      desc = "Toggle split/join of secuencial blocks of code (arrays, maps, etc.)",
+   },
+   {
+      "<leader>s",
+      vim = "SnippyEdit",
+      desc = "Edit snippets for current filetype",
+   },
+   {
+      "<leader>tt",
+      lua = "require('neotest').run.run()",
+      desc = "Run tests for current project",
+   },
+   {
+      "<leader>tf",
+      lua = "require('neotest').run.run(vim.api.nvim_buf_get_name(0))",
+      desc = "Run tests for current file",
+   },
+   {
+      "<leader>to",
+      lua = "require('neotest').output.open{ enter = true, last_run = true }",
+      desc = "Show output of last tests",
+   },
+   {
+      "<M-e>",
+      vim = "Neotree filesystem toggle",
+      desc = "Toggle filesystem sidebar",
+   },
+   {
+      "<M-f>",
+      vim = "Neotree filesystem reveal",
+      desc = "Show filesystem sidebar",
+   },
+   {
+      "<leader>fb",
+      vim = "Telescope buffers",
+      desc = "Find open buffers",
+   },
+   {
+      "<leader>fh",
+      vim = "Telescope help_tags",
+      desc = "Find vim help tags",
+   },
+   {
+      "<leader>fm",
+      vim = "Telescope man_pages",
+      desc = "Find man pages",
+   },
+   {
+      "<leader>fo",
+      vim = "Telescope oldfiles",
+      desc = "Find man old files",
+   },
+   {
+      "<leader>fr",
+      vim = "Telescope resume",
+      desc = "Resume last find",
+   },
+   {
+      "<leader>ft",
+      vim = "Telescope treesitter",
+      desc = "Find treesitter elements",
+   },
+   {
+      "<leader>fl",
+      vim = "Telescope live_grep layout_strategy=vertical layout_config={prompt_position=top}",
+   },
+   {
+      "<leader>ff",
+      function()
+         require("telescope.builtin").find_files {
+            layout_config = { preview_cutoff = 120 },
+            find_command = options "cmd.find_files",
+         }
+      end,
+      desc = "Find files with preview",
+   },
+   {
+      "<leader>fF",
+      function()
+         require("telescope.builtin").find_files {
+            layout_config = { preview_cutoff = 120 },
+            find_command = options "cmd.find_all_files",
+         }
+      end,
+      desc = "Find files with preview (include hidden files)",
+   },
+}
+
 local FTerm = require "FTerm"
 
 local lazygit = FTerm:new {
-   cmd = "lazygit"
+   cmd = "lazygit",
 }
 
-vim.keymap.set({"n", "t"}, "<M-g>", function ()
+vim.keymap.set({ "n", "t" }, "<M-g>", function()
    lazygit:toggle()
 end)
 
-vim.keymap.set({"n", "t"}, "<M-t>", FTerm.toggle)
+vim.keymap.set({ "n", "t" }, "<M-t>", FTerm.toggle)

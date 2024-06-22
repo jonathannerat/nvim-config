@@ -1,6 +1,6 @@
 local utils = require "user.utils"
 
--- Bootstraping lazy.nvim
+-- Bootstrapping lazy.nvim
 utils.bootstrap {
    url = "https://github.com/folke/lazy.nvim.git",
    branch = "stable",
@@ -21,6 +21,5 @@ require("lazy").setup("user.plugins", {
 require "user.filetypes"
 require "user.commands"
 require "user.mappings"
-require "user.highlights"
 
 vim.cmd("colorscheme " .. option "theme")

@@ -1,3 +1,6 @@
+local shell_format = require("formatter.filetypes.sh").shfmt
+local prettier_format = require "formatter.defaults.prettier"
+
 local function get_filename()
    return vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
 end
@@ -11,82 +14,45 @@ local clike_format = function()
    }
 end
 
-local shell_format = function()
-   return {
-      exe = "shfmt",
-      args = { "-i", 2 },
-      stdin = true,
-   }
+local function stdin_fmt(exe, args)
+   return function()
+      return {
+         exe = exe,
+         stdin = true,
+         args = args,
+      }
+   end
 end
-
-local prettier_format = require "formatter.defaults.prettier"
 
 return {
    filetype = {
       blade = { prettier_format },
       c = { clike_format },
       cpp = { clike_format },
+      go = { require("formatter.filetypes.go").gofmt },
+      html = { prettier_format },
+      javascript = { prettier_format },
+      json = { require("formatter.filetypes.json").jq },
+      jsonc = { require("formatter.filetypes.json").jq },
       lua = { require("formatter.filetypes.lua").stylua },
       python = { require("formatter.filetypes.python").black },
       ruby = { require("formatter.filetypes.ruby").rubocop },
-      rust = { require"formatter.filetypes.rust".rustfmt },
+      rust = { require("formatter.filetypes.rust").rustfmt },
       sh = { shell_format },
-      zsh = { shell_format },
-      haskell = {
-         function()
-            return {
-               exe = "ormolu",
-               stdin = true,
-            }
-         end,
-      },
-      javascript = { prettier_format },
       vue = { prettier_format },
-      php = {
-         function()
-            return {
-               exe = "pint-stdin",
-               stdin = true,
-            }
-         end,
-      },
-      json = { require("formatter.filetypes.json").jq },
-      jsonc = { require("formatter.filetypes.json").jq },
-      tex = {
-         function()
-            return {
-               exe = "latexindent",
-               args = {
-                  [[-y="defaultIndent:'  '"]],
-               },
-               stdin = true,
-            }
-         end,
-      },
-      go = {
-         require("formatter.filetypes.go").gofmt,
-      },
+      zsh = { shell_format },
+      fennel = { stdin_fmt("fnlfmt", { "-" }) },
+      haskell = { stdin_fmt "ormolu" },
       java = {
-         function()
-            return {
-               exe = "clang-format",
-               args = { "--style=Google", "--assume-filename=" .. get_filename() },
-               stdin = true,
-            }
-         end,
+         stdin_fmt("clang-format", {
+            "--style=Google",
+            "--assume-filename=" .. get_filename(),
+         }),
       },
-      fennel = {
-         function()
-            return {
-               exe = "fnlfmt",
-               args = { "-" },
-               stdin = true,
-            }
-         end,
-      },
-      html = { prettier_format },
+      php = { stdin_fmt "pint-stdin" },
+      tex = { stdin_fmt("latexindent", { [[-y="defaultIndent:'  '"]] }) },
       ["*"] = {
-         require("formatter.filetypes.any").remove_trailing_whitespace,
+         require("formatter.filetypes.any").substitute_trailing_whitespace,
       },
    },
 }

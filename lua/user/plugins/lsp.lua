@@ -17,6 +17,4 @@ return {
          return require "user.plugins.config.mason-lspconfig"
       end,
    },
-
-   "mfussenegger/nvim-jdtls",
 }

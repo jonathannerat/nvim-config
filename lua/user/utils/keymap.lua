@@ -1,10 +1,10 @@
 local vim_keymap_set = vim.keymap.set
 
----@alias VimMode "n"|"i"|"v"|"c"|"t"
+---@alias VimMode "n"|"i"|"v"|"c"|"t"|"x"
 
 ---@class Keymap
 ---@field [1] string
----@field [2]? string
+---@field [2]? string|function
 ---@field vim? string
 ---@field lua? string
 ---@field desc? string

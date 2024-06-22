@@ -1,0 +1,14 @@
+extends c
+
+snippet main "C++ main function"
+	#include <iostream>
+
+	int main(int argc, char **argv) {
+		std::cout << "Hello world" << std::endl;
+	}
+
+snippet inc< "include system header"
+	#include <${1:header}>$0
+
+snippet inc" "#include local header"
+	#include "${1:header}"$0

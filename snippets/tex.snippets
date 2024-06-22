@@ -1,0 +1,72 @@
+snippet article "Article"
+	\documentclass[a4paper,10pt]{article}
+	
+	\usepackage[utf8]{inputenc}
+	\usepackage[spanish]{babel}
+	
+	\usepackage{float}
+	\usepackage{graphicx}
+	\usepackage{subcaption}
+	
+	\author{${1:Jonathan Teran}}
+	\title{${2:Document Title}}
+	\date{}
+	
+	\begin{document}
+	$0
+	\end{document}
+
+snippet fig "Figure"
+	\begin{figure\}
+		\centering
+		\includegraphics[width=${2:\textwidth}]{${1:/path/to/image.png}\}
+		\caption{${3:Caption}\}
+		\label{fig:${4:label}\}
+	\end{figure\}
+
+snippet subfig "Subfigures"
+	\begin{figure}
+	    \centering
+	    \begin{subfigure}[b]{${1:0.4\textwidth}}
+	        \centering
+	        \includegraphics[width=${2:\textwidth}]{${3:/path/to/image1.png}}
+	        \caption{${4:First image caption}}
+	        \label{fig:${5:first-image-label}}
+	    \end{subfigure}
+	    \hfill
+	    \begin{subfigure}[b]{$1}
+	        \centering
+	        \includegraphics[width=$2]{${6:/path/to/image2.png}}
+	        \caption{${7:Second image caption}}
+	        \label{fig:${8:second-image-label}}
+	    \end{subfigure}
+	    \caption{${7:Figure caption}}
+	    \label{fig:${8:fig-label}}
+	\end{figure}
+
+snippet ii "Italics" i
+	\textit{${1:${VISUAL}}}$0
+snippet bb "Bold" i
+	\textbf{${1:${VISUAL}}}$0
+
+snippet tt "Teletype" i
+	\texttt{${1:${VISUAL}}}$0
+snippet sc "Small Caps" i
+	\textsc{${1:${VISUAL}}}$0
+snippet q "Quote" i
+	\`\`${1:${VISUAL}}''$0
+snippet - "Item"
+	\item $1
+snippet sec "Section"
+	\section{${1:Section}}$0
+snippet ssec "Sub-section"
+	\subsection{${1:Sub-section}}$0
+snippet list "Itemize list"
+	\begin{itemize}
+		\item $0
+	\end{itemize}
+
+snippet enum "Enumerate list"
+	\begin{enumerate}
+		\item $0
+	\end{enumerate}

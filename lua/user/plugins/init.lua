@@ -11,15 +11,16 @@ return {
       },
       ft = "norg",
       cmd = "Neorg",
-      opts = function ()
+      opts = function()
          return require "user.plugins.config.neorg"
       end,
    },
 
    { -- Preview color #aaaaaa
       "NvChad/nvim-colorizer.lua",
-      cmd = "ColorizerToggle",
-      config = true,
+      opts = {
+         filetypes = { "css", "sass" },
+      },
    },
 
    {

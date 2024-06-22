@@ -1,7 +1,3 @@
-local utils = require "user.utils"
-local vimcmd = utils.vimcmd
-local silent = utils.silent
-
 return {
    { -- TreeSitter support
       "nvim-treesitter/nvim-treesitter",
@@ -47,21 +43,39 @@ return {
       "hrsh7th/nvim-cmp",
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
-         "quangnguyen30192/cmp-nvim-ultisnips",
          "hrsh7th/cmp-buffer",
          "hrsh7th/cmp-path",
          "onsails/lspkind-nvim", -- LSP Completion symbols
          "windwp/nvim-autopairs",
+         {
+            "dcampos/cmp-snippy",
+            dependencies = "dcampos/nvim-snippy",
+         },
+         {
+            "dcampos/cmp-emmet-vim",
+            dependencies = { -- Emmet support
+               "mattn/emmet-vim",
+               init = function()
+                  vim.g.user_emmet_mode = "in"
+                  vim.g.user_emmet_install_global = 0
+               end,
+            },
+         },
       },
       config = function()
          local cmp = require "cmp"
-         local lspkind = require "lspkind"
-         local ultisnips_mappings = require "cmp_nvim_ultisnips.mappings"
+         local snippy = require "snippy"
+
+         local function has_words_before()
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+         end
 
          cmp.setup {
             sources = cmp.config.sources {
                { name = "nvim_lsp" },
-               { name = "ultisnips" },
+               { name = "snippy" },
+               { name = "emmet_vim" },
                { name = "buffer" },
                { name = "path" },
             },
@@ -71,42 +85,46 @@ return {
                   select = true,
                },
                ["<Tab>"] = cmp.mapping(function(fallback)
-                  ultisnips_mappings.compose { "select_next_item", "expand", "jump_forwards" }(fallback)
+                  if cmp.visible() then
+                     cmp.select_next_item()
+                  elseif snippy.can_expand_or_advance() then
+                     snippy.expand_or_advance()
+                  elseif has_words_before() then
+                     cmp.complete()
+                  else
+                     fallback()
+                  end
                end, { "i", "s" }),
                ["<S-Tab>"] = cmp.mapping(function(fallback)
-                  ultisnips_mappings.compose { "select_prev_item", "jump_backwards" }(fallback)
+                  if cmp.visible() then
+                     cmp.select_prev_item()
+                  elseif snippy.can_jump(-1) then
+                     snippy.previous()
+                  else
+                     fallback()
+                  end
                end, { "i", "s" }),
                ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                ["<C-f>"] = cmp.mapping.scroll_docs(4),
             },
             snippet = {
                expand = function(args)
-                  vim.fn["UltiSnips#Anon"](args.body)
+                  snippy.expand_snippet(args.body)
                end,
             },
-            window = {
-               documentation = cmp.config.window.bordered(),
-            },
             formatting = {
-               fields = {'abbr', 'kind', 'menu'},
-               format = lspkind.cmp_format {
+               fields = { "abbr", "kind", "menu" },
+               format = require("lspkind").cmp_format {
                   mode = "symbol_text",
                   maxwidth = 50,
                   ellipsis_char = "…",
                },
-               expandable_indicator = true
+               expandable_indicator = true,
             },
          }
 
          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
          cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-      end,
-   },
-
-   {
-      "SirVer/ultisnips",
-      init = function()
-         vim.g.UltiSnipsEditSplit = "context"
       end,
    },
 
@@ -141,10 +159,6 @@ return {
       opts = function()
          return require "user.plugins.config.formatter"
       end,
-      keys = silent {
-         { "<leader>bf", vimcmd "Format" },
-         { "<leader>bF", vimcmd "FormatWrite" },
-      },
    },
 
    { -- Annotation generation
@@ -155,26 +169,12 @@ return {
       config = true,
    },
 
-   { -- Emmet support
-      "mattn/emmet-vim",
-      init = function()
-         vim.g.user_emmet_mode = "in"
-         vim.g.user_emmet_install_global = 0
-      end,
-   },
-
    { -- Split / Join blocks of code
       "Wansmer/treesj",
-      keys = { "<space>m", "<space>j", "<space>s" },
       dependencies = "nvim-treesitter/nvim-treesitter",
-      config = true,
-   },
-
-   {
-      url = "https://git.sr.ht/~vigoux/architext.nvim",
-      dependencies = {
-         -- Not required, only used to refine the language resolution
-         "nvim-treesitter/nvim-treesitter",
+      cmd = "TSJToggle",
+      opts = {
+         use_default_keymaps = false,
       },
    },
 }

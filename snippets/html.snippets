@@ -1,0 +1,19 @@
+snippet html "HTML Document"
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>${1:Title}</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrint-to-fit=no"/>
+	</head>
+	<body>
+		$0
+	</body>
+
+snippet script< "Script file"
+	<script src="${1:/path/to/file.js}"></script>
+
+snippet script> "Script inline"
+	<script>
+	$0
+	</script>

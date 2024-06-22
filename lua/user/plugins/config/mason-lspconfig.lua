@@ -1,7 +1,6 @@
 local mason_lspconfig = require "mason-lspconfig"
 local lspconfig = require "lspconfig"
 
-local keymap = require "user.utils.keymap"
 local options = require "user.options"
 
 local default_lsp_opts = {
@@ -31,55 +30,6 @@ for name, server_config in pairs(options "lsp.servers") do
       lspconfig[name].setup(server_config)
    end
 end
-
-local navic = require "nvim-navic"
-
-vim.api.nvim_create_autocmd("LspAttach", {
-   callback = function(args)
-      local bufnr = args.buf
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-      if not client then
-         return
-      end
-
-      ---@type KeymapGroup
-      local keymaps = {
-         group = { name = "LSP", silent = true, buffer = bufnr },
-         {
-            "<C-w>D",
-            lua = "vim.diagnostic.open_float {scope = 'buffer'}",
-            desc = "View buffer diagnostics",
-         },
-         {
-            "<C-k>",
-            lua = "vim.lsp.buf.signature_help()",
-            desc = "View signature help for hovered function",
-         },
-      }
-
-      if client.server_capabilities.documentFormattingProvider then
-         keymaps[#keymaps + 1] = {
-            "<leader>sf",
-            lua = "vim.lsp.buf.format { async = true }",
-            desc = "Format file (async)",
-         }
-      end
-
-      if client.server_capabilities.documentRangeFormattingProvider then
-         keymaps[#keymaps + 1] = {
-            "<leader>sf",
-            lua = "vim.lsp.buf.format { async = true }",
-            mode = "visual",
-            desc = "Format lines (async)",
-         }
-      end
-
-      keymap(keymaps)
-
-      navic.attach(client, bufnr)
-   end,
-})
 
 return {
    ensure_installed = options "lsp.ensure_installed",
