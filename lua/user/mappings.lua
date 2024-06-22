@@ -1,9 +1,12 @@
 local keymap = require "user.utils.keymap"
 local options = require "user.options"
 
+local find_files = options "cmd.find_files"
+local find_all_files = options "cmd.find_all_files"
+
 keymap {
    {
-      group = { mode = "normal" },
+      group = { silent = true },
       {
          "<ESC>",
          vim = "nohlsearch",
@@ -71,7 +74,7 @@ keymap {
       },
    },
    {
-      group = { mode = "insert" },
+      group = { mode = "insert", silent = true },
       {
          "<M-j>",
          "<ESC>:m .+1<CR>==gi",
@@ -85,7 +88,7 @@ keymap {
       { "jk", "<ESC>" },
    },
    {
-      group = { mode = "visual" },
+      group = { mode = "visual", silent = true },
       {
          "/",
          [[<ESC>/\%V]],
@@ -108,17 +111,17 @@ keymap {
       },
    },
    {
-      group = { mode = "command" },
+      group = { mode = "command", silent = true },
       { "<C-j>", "<DOWN>" },
       { "<C-k>", "<UP>" },
    },
 }
 
 keymap {
+   group = { silent = true },
    {
       "g<Tab>",
       "<Plug>(snippy-cut-text)",
-      mode = "normal",
       desc = "Start snippet completion with text-object",
    },
    {
@@ -211,7 +214,7 @@ keymap {
       function()
          require("telescope.builtin").find_files {
             layout_config = { preview_cutoff = 120 },
-            find_command = options "cmd.find_files",
+            find_command = find_files,
          }
       end,
       desc = "Find files with preview",
@@ -221,10 +224,14 @@ keymap {
       function()
          require("telescope.builtin").find_files {
             layout_config = { preview_cutoff = 120 },
-            find_command = options "cmd.find_all_files",
+            find_command = find_all_files,
          }
       end,
       desc = "Find files with preview (include hidden files)",
+   },
+   {
+      "<leader>n",
+      lua = "require('notify').dismiss()",
    },
 }
 
