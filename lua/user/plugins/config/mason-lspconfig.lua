@@ -40,19 +40,6 @@ return {
          lspconfig[server_name].setup(extend(opts))
       end,
 
-      lua_ls = function()
-         require("neodev").setup {
-            override = function(root_dir, library)
-               local config_dir = vim.fs.normalize(options "dirs.nvim_config")
-               if root_dir:find(config_dir, 1, true) == 1 then
-                  library.enabled = true
-                  library.plugins = true
-               end
-            end,
-         }
-         lspconfig.lua_ls.setup(extend(options "lsp.servers.lua_ls"))
-      end,
-
       jsonls = function()
          lspconfig.jsonls.setup(extend {
             settings = {

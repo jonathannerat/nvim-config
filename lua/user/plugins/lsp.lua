@@ -8,7 +8,11 @@ return {
             config = true,
          },
          "neovim/nvim-lspconfig",
-         "folke/neodev.nvim", -- sumneko_lua lsp + nvim integration
+         { -- sumneko_lua lsp + nvim integration
+            "folke/lazydev.nvim",
+            ft = "lua",
+            config = true
+         },
          "b0o/SchemaStore.nvim",
          "hrsh7th/cmp-nvim-lsp",
       },
