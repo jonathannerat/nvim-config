@@ -130,9 +130,16 @@ return {
 
    {
       "windwp/nvim-autopairs",
-      opts = {
-         disable_filetype = { "TelescopePrompt" },
-      },
+      config = function()
+         local autopairs = require "nvim-autopairs"
+         local Rule = require "nvim-autopairs.rule"
+
+         autopairs.setup {
+            disable_filetype = { "TelescopePrompt" },
+         }
+
+         autopairs.add_rule(Rule("/*", "*/", { "vue", "javascript", "typescript" }))
+      end,
    },
 
    "gpanders/editorconfig.nvim",
