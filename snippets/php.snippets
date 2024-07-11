@@ -42,9 +42,9 @@ snippet php "php tag"
 	$0
 
 snippet fun "function"
-	${3:${1:public}$2 }function ${4:name}($5)${6:: ${7:void}}
+	${3:${1|public,protected,private|} $2}function ${4:name}($5)${6:: ${7|void,bool,string,array,mixed|}}
 	{
-		${0:// code}
+		${0:$VISUAL}
 	}
 
 snippet afun "anonymous function" i
@@ -53,4 +53,4 @@ snippet afun "anonymous function" i
 	}
 
 snippet fn "anonymous arrow function" i
-	fn ($1) => $0
+	fn ($1) => ${0:$VISUAL}
