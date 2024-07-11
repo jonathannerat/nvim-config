@@ -181,6 +181,26 @@ keymap {
       desc = "Find open buffers",
    },
    {
+      "<leader>ff",
+      function()
+         require("telescope.builtin").find_files {
+            layout_config = { preview_cutoff = 120 },
+            find_command = find_files,
+         }
+      end,
+      desc = "Find files with preview",
+   },
+   {
+      "<leader>fg",
+      function()
+         require("telescope.builtin").live_grep {
+            layout_config = { prompt_position = "top" },
+            layout_strategy = "vertical"
+         }
+      end,
+      desc = "Search text using regex in all files",
+   },
+   {
       "<leader>fh",
       vim = "Telescope help_tags",
       desc = "Find vim help tags",
@@ -204,20 +224,6 @@ keymap {
       "<leader>ft",
       vim = "Telescope treesitter",
       desc = "Find treesitter elements",
-   },
-   {
-      "<leader>fl",
-      vim = "Telescope live_grep layout_strategy=vertical layout_config={prompt_position=top}",
-   },
-   {
-      "<leader>ff",
-      function()
-         require("telescope.builtin").find_files {
-            layout_config = { preview_cutoff = 120 },
-            find_command = find_files,
-         }
-      end,
-      desc = "Find files with preview",
    },
    {
       "<leader>fF",
