@@ -1,5 +1,4 @@
 local shell_format = require("formatter.filetypes.sh").shfmt
-local prettier_format = require "formatter.defaults.prettier"
 
 local function get_filename()
    return vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
@@ -26,31 +25,26 @@ end
 
 return {
    filetype = {
-      blade = { prettier_format },
+      blade = { require "formatter.defaults.prettier" },
       c = { clike_format },
       cpp = { clike_format },
+      fennel = { stdin_fmt("fnlfmt", { "-" }) },
       go = { require("formatter.filetypes.go").gofmt },
-      html = { prettier_format },
-      javascript = { prettier_format },
+      haskell = { stdin_fmt "ormolu" },
+      html = { require("formatter.filetypes.html").prettier },
+      javascript = { require("formatter.filetypes.javascript").prettier },
       json = { require("formatter.filetypes.json").jq },
       jsonc = { require("formatter.filetypes.json").jq },
       lua = { require("formatter.filetypes.lua").stylua },
+      php = { stdin_fmt "pint-stdin" },
       python = { require("formatter.filetypes.python").black },
       ruby = { require("formatter.filetypes.ruby").rubocop },
       rust = { require("formatter.filetypes.rust").rustfmt },
+      scss = { require("formatter.filetypes.css").prettier },
       sh = { shell_format },
-      vue = { prettier_format },
-      zsh = { shell_format },
-      fennel = { stdin_fmt("fnlfmt", { "-" }) },
-      haskell = { stdin_fmt "ormolu" },
-      java = {
-         stdin_fmt("clang-format", {
-            "--style=Google",
-            "--assume-filename=" .. get_filename(),
-         }),
-      },
-      php = { stdin_fmt "pint-stdin" },
       tex = { stdin_fmt("latexindent", { [[-y="defaultIndent:'  '"]] }) },
+      vue = { require("formatter.filetypes.vue").prettier },
+      zsh = { shell_format },
       ["*"] = {
          require("formatter.filetypes.any").substitute_trailing_whitespace,
       },
