@@ -53,13 +53,7 @@ return {
          },
          {
             "dcampos/cmp-emmet-vim",
-            dependencies = { -- Emmet support
-               "mattn/emmet-vim",
-               init = function()
-                  vim.g.user_emmet_mode = "in"
-                  vim.g.user_emmet_install_global = 0
-               end,
-            },
+            dependencies = "emmet-vim",
          },
       },
       config = function()
@@ -125,6 +119,14 @@ return {
 
          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
          cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+      end,
+   },
+
+   { -- Emmet support
+      "mattn/emmet-vim",
+      init = function()
+         vim.g.user_emmet_mode = "in"
+         vim.g.user_emmet_install_global = 0
       end,
    },
 

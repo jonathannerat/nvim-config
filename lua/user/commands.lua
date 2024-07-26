@@ -21,6 +21,12 @@ autocmd("BufWritePost", {
    command = "luafile %",
 })
 
+autocmd("FileType", {
+   pattern = { "blade" },
+   command = "EmmetInstall",
+   group = vim.api.nvim_create_augroup("emmet_on_filetypes", {}),
+})
+
 -- Reload sxhkd daemon
 autocmd("BufWritePost", {
    pattern = { os.getenv "XDG_CONFIG_HOME" .. "/sxhkd/sxhkdrc" },
