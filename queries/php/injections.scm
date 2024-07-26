@@ -8,3 +8,11 @@
   (#eq? @_cls_id "DB")
   (#eq? @_cls_method_id "connection")
   (#eq? @_method_id "select"))
+
+((assignment_expression
+   left: (variable_name
+           (name) @_var)
+   right: (encapsed_string
+            (string_content) @injection.content))
+  (#set! injection.language "sql")
+  (#eq? @_var "sql"))
