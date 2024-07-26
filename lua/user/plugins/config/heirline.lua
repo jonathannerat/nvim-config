@@ -517,7 +517,6 @@ local TabpageFileNameBlock = {
             end)
          else
             vim.schedule(function()
-               vim.notify(("tabpage: %d"):format(tabpage))
                vim.api.nvim_set_current_tabpage(tabpage)
             end)
          end
