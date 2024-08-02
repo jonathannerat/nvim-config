@@ -562,7 +562,8 @@ local WinBars = {
         condition = function()
             return conditions.buffer_matches({ buftype = { "terminal" } })
         end,
-        utils.surround({ "", "" }, "dark_red", {
+        utils.surround({ "", "" }, "green", {
+            hl = { fg = "bg_dark", force = true },
             FileType,
             Space,
             TerminalName,
@@ -572,10 +573,10 @@ local WinBars = {
         condition = function()
             return not conditions.is_active()
         end,
-        utils.surround({ "", "" }, "bright_bg", { hl = { fg = "gray", force = true }, FileNameBlock }),
+        utils.surround({ "", "" }, "bg_light", { hl = { fg = "gray", force = true }, FileNameBlock }),
     },
     -- A winbar for regular files
-    utils.surround({ "", "" }, "bright_bg", FileNameBlock),
+    utils.surround({ "", "" }, "bg_light", FileNameBlock),
 }
 
 return {
@@ -584,5 +585,11 @@ return {
    winbar = WinBars,
    opts = {
       colors = colors,
+      disable_winbar_cb = function(args)
+         return conditions.buffer_matches({
+            buftype = { "nofile", "prompt", "help", "quickfix" },
+            filetype = { "^git.*", "Trouble", "dashboard" },
+         }, args.buf)
+      end,
    },
 }
