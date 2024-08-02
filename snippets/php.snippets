@@ -20,21 +20,57 @@ snippet class "PHP Class"
 		$0
 	}
 
-# snippet enum "php enum"
-# <?php
-#
-# namespace `!p
-# import os
-# relpath = path.removeprefix(os.getcwd() + "/")
-# dirs = relpath.split("/")[:-1]
-# already_title = lambda s: s[0].upper() == s[0]
-# snip.rv = "\\".join(map(lambda s: s if already_title(s) else s.title(), dirs))
-# `;
-#
-# enum `!p snip.rv = fn.removesuffix(".php")`${2:: ${1:int}}
-# {
-# 	case $3 = $4;$0
-# }
+snippet model "Laravel Model Class"
+	<?php
+
+	namespace `!l (function()
+		local wordtotitle = function (w) local l = w:sub(1,1) if l == l:upper() then return w else return (l:upper() .. w:sub(2)) end end
+		local strtotitle = function (s) return vim.iter(vim.split(s, "[-_]")):map(wordtotitle):join("") end
+		local file = vim.api.nvim_buf_get_name(0)
+		local cwd = vim.uv.cwd() .. "/"
+		local relpath = cwd == file:sub(1, #cwd) and file:sub(#cwd+1) or nil
+		local components = vim.split(relpath, "/", {plain=true})
+		return vim.iter(components):slice(1, #components-1):map(strtotitle):join("\\")
+	end)()`;
+
+	use Illuminate\Database\Eloquent\Model;
+	
+	class `!l (function ()
+		local file = vim.fn.expand('%:t')
+		local s = ".php"
+		return file:sub(-#s) == s and file:sub(1, -#s-1) or nil
+	end)()` extends ${1:Model}
+	{
+		protected $connection = ${2};
+
+		protected $table = ${3};
+
+		protected $primaryKey = ${4};
+
+		$0
+	}
+
+snippet enum "php enum"
+	<?php
+
+	namespace `!l (function()
+		local wordtotitle = function (w) local l = w:sub(1,1) if l == l:upper() then return w else return (l:upper() .. w:sub(2)) end end
+		local strtotitle = function (s) return vim.iter(vim.split(s, "[-_]")):map(wordtotitle):join("") end
+		local file = vim.api.nvim_buf_get_name(0)
+		local cwd = vim.uv.cwd() .. "/"
+		local relpath = cwd == file:sub(1, #cwd) and file:sub(#cwd+1) or nil
+		local components = vim.split(relpath, "/", {plain=true})
+		return vim.iter(components):slice(1, #components-1):map(strtotitle):join("\\")
+	end)()`;
+
+	enum `!l (function ()
+		local file = vim.fn.expand('%:t')
+		local s = ".php"
+		return file:sub(-#s) == s and file:sub(1, -#s-1) or nil
+	end)()`${2:: ${1|int,string|}}
+	{
+		case $3 = $4;$0
+	}
 
 snippet php "php tag"
 	<?php
