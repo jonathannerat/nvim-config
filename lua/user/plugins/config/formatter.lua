@@ -25,7 +25,11 @@ end
 
 return {
    filetype = {
-      blade = { require "formatter.defaults.prettier" },
+      blade = {
+         function()
+            return require "formatter.defaults.prettier" "blade"
+         end,
+      },
       c = { clike_format },
       cpp = { clike_format },
       fennel = { stdin_fmt("fnlfmt", { "-" }) },
