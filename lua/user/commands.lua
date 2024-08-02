@@ -83,6 +83,14 @@ autocmd("LspAttach", {
             lua = "vim.lsp.buf.signature_help()",
             desc = "View signature help for hovered function",
          },
+         {
+            "<C-h>",
+            function ()
+               vim.lsp.buf.clear_references()
+               vim.lsp.buf.document_highlight()
+            end,
+            desc = "Highlight hovered symbol",
+         },
       }
 
       if client.server_capabilities.documentFormattingProvider then
