@@ -10,9 +10,7 @@
   (#eq? @_method_id "select"))
 
 ((assignment_expression
-   left: (variable_name
-           (name) @_var)
-   right: (encapsed_string
-            (string_content) @injection.content))
+   left: (variable_name (name) @_var)
+   right: (_ (string_content) @injection.content))
   (#set! injection.language "sql")
   (#eq? @_var "sql"))
