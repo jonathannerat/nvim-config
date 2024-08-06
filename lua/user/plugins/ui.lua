@@ -1,5 +1,14 @@
+local option = require "user.options"
+
 return {
-   { "rebelot/kanagawa.nvim", priority = 1000 },
+   { "rebelot/kanagawa.nvim" },
+
+   {
+      "loctvl842/monokai-pro.nvim",
+      opts = {
+         filter = option "variant"
+      },
+   },
 
    {
       "goolord/alpha-nvim",

@@ -2,41 +2,13 @@ local option = require "user.options"
 local conditions = require "heirline.conditions"
 local utils = require "heirline.utils"
 
-local kanagawa = require("kanagawa.colors").setup { theme = option "variant" }
-local palette_colors = kanagawa.palette
-local theme_colors = kanagawa.theme
+local theme = option "theme"
+local colors = option("heirline." .. theme)
+colors = colors and (type(colors) == "function" and colors() or colors)
 
-local colors = {
-   bg = palette_colors.sumiInk0,
-   bg_dark = palette_colors.sumiInk1,
-   bg_darker = palette_colors.sumiInk0,
-   bg_light = palette_colors.sumiInk2,
-   bg_lighter = palette_colors.sumiInk4,
-   fg = palette_colors.fujiWhite,
-   fg_dark = palette_colors.oldWhite,
-   fg_darker = palette_colors.oldWhite,
-   red = palette_colors.peachRed,
-   green = palette_colors.springGreen,
-   blue = palette_colors.crystalBlue,
-   cyan = palette_colors.waveAqua2,
-   yellow = palette_colors.carpYellow,
-   magenta = palette_colors.sakuraPink,
-   orange = palette_colors.surimiOrange,
-   violet = palette_colors.oniViolet,
-   primary_blue = palette_colors.crystalBlue,
-   darkblue = palette_colors.waveBlue2,
-
-   git_add = theme_colors.vcs.added,
-   git_del = theme_colors.vcs.removed,
-   git_change = theme_colors.vcs.changed,
-
-   diag_error = theme_colors.diag.error,
-   diag_warn = theme_colors.diag.warning,
-   diag_info = theme_colors.diag.info,
-   diag_hint = theme_colors.diag.hint,
-}
-
-require("heirline").load_colors(colors)
+if colors then
+   require("heirline").load_colors(colors)
+end
 
 local ViMode = {
    init = function(self)
@@ -286,7 +258,7 @@ local Diagnostics = {
    },
    {
       provider = function(self)
-         return self.hints > 0 and (self.hints)
+         return self.hints > 0 and self.hints
       end,
       hl = { fg = "diag_hint" },
    },
@@ -557,26 +529,26 @@ local TabPages = {
 }
 
 local WinBars = {
-    fallthrough = false,
-    {   -- A special winbar for terminals
-        condition = function()
-            return conditions.buffer_matches({ buftype = { "terminal" } })
-        end,
-        utils.surround({ "", "" }, "green", {
-            hl = { fg = "bg_dark", force = true },
-            FileType,
-            Space,
-            TerminalName,
-        }),
-    },
-    {   -- An inactive winbar for regular files
-        condition = function()
-            return not conditions.is_active()
-        end,
-        utils.surround({ "", "" }, "bg_light", { hl = { fg = "gray", force = true }, FileNameBlock }),
-    },
-    -- A winbar for regular files
-    utils.surround({ "", "" }, "bg_light", FileNameBlock),
+   fallthrough = false,
+   { -- A special winbar for terminals
+      condition = function()
+         return conditions.buffer_matches { buftype = { "terminal" } }
+      end,
+      utils.surround({ "", "" }, "green", {
+         hl = { fg = "bg_dark", force = true },
+         FileType,
+         Space,
+         TerminalName,
+      }),
+   },
+   { -- An inactive winbar for regular files
+      condition = function()
+         return not conditions.is_active()
+      end,
+      utils.surround({ "", "" }, "bg_light", { hl = { fg = "gray", force = true }, FileNameBlock }),
+   },
+   -- A winbar for regular files
+   utils.surround({ "", "" }, "bg_light", FileNameBlock),
 }
 
 return {
