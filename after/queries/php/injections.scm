@@ -1,3 +1,5 @@
+; extends
+
 ((member_call_expression
    (scoped_call_expression
      (name) @_cls_id
