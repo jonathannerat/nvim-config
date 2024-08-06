@@ -7,5 +7,6 @@ vim.filetype.add {
    },
    pattern = {
       [chezmoi_tmpl_pat] = "gotmpl",
+      [".*%.blade%.php"] = "blade",
    },
 }
