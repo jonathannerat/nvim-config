@@ -23,4 +23,26 @@ function M.bootstrap(opts)
    vim.opt.rtp:prepend(pluginpath)
 end
 
+--- Get XDG Standard directories
+---@param name "config" | "data" | "cache"
+---@param ... string
+function M.xdgdir(name, ...)
+   local home = os.getenv "HOME"
+   local dir
+
+   if name == "config" then
+      dir = os.getenv "XDG_CONFIG_HOME" or vim.fs.joinpath(home, '.config')
+   elseif name == "data" then
+      dir = os.getenv "XDG_DATA_HOME" or vim.fs.joinpath(home, '.local', 'share')
+   elseif name == "cache" then
+      dir = os.getenv "XDG_CACHE_HOME" or vim.fs.joinpath(home, '.cache')
+   end
+
+   if #({...}) > 0 then
+      dir = vim.fs.joinpath(dir, ...)
+   end
+
+   return dir
+end
+
 return M

@@ -1,3 +1,4 @@
+local utils = require "user.utils"
 local option = require "user.options"
 local keymap = require "user.utils.keymap"
 local autocmd = vim.api.nvim_create_autocmd
@@ -16,6 +17,9 @@ command("LuaPlayground", function()
    end
 end)
 
+command("PeekOpen", function () require("peek").open() end)
+command("PeekOpen", function () require("peek").open() end)
+
 autocmd("BufWritePost", {
    pattern = { "/tmp/lua_playground.*.lua" },
    command = "luafile %",
@@ -29,7 +33,7 @@ autocmd("FileType", {
 
 -- Reload sxhkd daemon
 autocmd("BufWritePost", {
-   pattern = { os.getenv "XDG_CONFIG_HOME" .. "/sxhkd/sxhkdrc" },
+   pattern = { utils.xdgdir("config", "sxhkd", "sxhkdrc") },
    callback = function()
       io.popen "pkill -USR1 sxhkd"
       vim.notify "sxhkd daemon reloaded!"

@@ -1,4 +1,5 @@
-local chezmoi_tmpl_pat = os.getenv "XDG_DATA_HOME" .. "/chezmoi/.*%.tmpl"
+local utils = require "user.utils"
+local chezmoi_tmpl_pat = utils.xdgdir("data", "chezmoi", ".*%.tmpl")
 
 vim.filetype.add {
    extension = {
