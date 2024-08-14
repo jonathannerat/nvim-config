@@ -53,7 +53,7 @@ local ViMode = {
          t = "T",
       },
       mode_colors = {
-         n = "primary_blue",
+         n = "blue",
          i = "yellow",
          v = "magenta",
          V = "magenta",
@@ -156,7 +156,7 @@ local FileType = {
       return string.upper(vim.bo.filetype)
    end,
 
-   hl = { fg = "primary_blue" },
+   hl = { fg = "blue" },
 }
 
 local FileEncoding = {
@@ -389,7 +389,7 @@ local TerminalStatusline = {
       return conditions.buffer_matches { buftype = { "terminal" } }
    end,
 
-   hl = { bg = "darkblue" },
+   hl = { bg = "blue" },
 
    -- Quickly add a condition to the ViMode to only show it when buffer is active!
    { condition = conditions.is_active, ViMode, Space },
