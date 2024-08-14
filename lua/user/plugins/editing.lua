@@ -186,4 +186,13 @@ return {
          use_default_keymaps = false,
       },
    },
+
+   {
+      "toppair/peek.nvim",
+      event = { "VeryLazy" },
+      build = "deno task --quiet build:fast",
+      config = {
+         app = "chromium"
+      }
+   }
 }
