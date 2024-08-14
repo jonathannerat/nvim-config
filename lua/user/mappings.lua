@@ -239,6 +239,11 @@ keymap {
       "<leader>n",
       lua = "require('notify').dismiss()",
    },
+   {
+      "<leader>cc",
+      vim = "TSContextToggle",
+      desc = "Toggle treesitter context"
+   },
 }
 
 local FTerm = require "FTerm"
