@@ -6,6 +6,8 @@ local ensure_installed = vim.fn.extend({
    "vim",
    "vimdoc",
    "query",
+   "markdown",
+   "markdown_inline"
 }, option("treesitter.also_install", {}))
 
 return {
