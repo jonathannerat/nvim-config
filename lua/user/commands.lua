@@ -99,7 +99,7 @@ autocmd("LspAttach", {
 
       if client.server_capabilities.documentFormattingProvider then
          keymaps[#keymaps + 1] = {
-            "<leader>sf",
+            "<leader>lf",
             lua = "vim.lsp.buf.format { async = true }",
             desc = "Format file (async)",
          }
@@ -107,7 +107,7 @@ autocmd("LspAttach", {
 
       if client.server_capabilities.documentRangeFormattingProvider then
          keymaps[#keymaps + 1] = {
-            "<leader>sf",
+            "<leader>lf",
             lua = "vim.lsp.buf.format { async = true }",
             mode = "visual",
             desc = "Format lines (async)",
