@@ -10,7 +10,7 @@ function M.bootstrap(opts)
    local pluginpath = vim.fn.stdpath "data" .. "/lazy/" .. name
 
    if not vim.loop.fs_stat(pluginpath) then
-      vim.fn.system {
+      local out = vim.fn.system {
          "git",
          "clone",
          "--filter=blob:none",
@@ -18,6 +18,16 @@ function M.bootstrap(opts)
          "--branch=" .. branch,
          pluginpath,
       }
+
+      if vim.v.shell_error ~= 0 then
+         vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+            { "\nPress any key to exit..." },
+         }, true, {})
+         vim.fn.getchar()
+         os.exit(1)
+      end
    end
 
    vim.opt.rtp:prepend(pluginpath)
