@@ -188,7 +188,7 @@ return {
    {
       "toppair/peek.nvim",
       event = { "VeryLazy" },
-      build = "deno task --quiet build:fast",
+      build = "test -f deno && deno task --quiet build:fast",
       config = {
          app = "chromium"
       }
