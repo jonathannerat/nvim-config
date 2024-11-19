@@ -1,33 +1,34 @@
+local options = require "user.options"
+
 return {
-   { -- Organization tool (note taking / todo lists / etc.)
+   {
       "nvim-neorg/neorg",
-      dependencies = {
-         "nvim-lua/plenary.nvim",
-         {
-            "vhyrro/luarocks.nvim",
-            priority = 1000, -- We'd like this plugin to load first out of the rest
-            config = true, -- This automatically runs `require("luarocks-nvim").setup()`
+      lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+      version = "*", -- Pin Neorg to the latest stable release
+      opts = {
+         load = {
+            ["core.defaults"] = {},
+            ["core.concealer"] = {},
+            ["core.completion"] = {
+               config = { engine = "nvim-cmp" },
+            },
+            ["core.dirman"] = {
+               config = {
+                  default_workspace = "notes",
+                  workspaces = {
+                     notes = options "dirs.notebook",
+                  },
+               },
+            },
+            ["core.export"] = {},
          },
       },
-      ft = "norg",
-      cmd = "Neorg",
-      opts = function()
-         return require "user.plugins.config.neorg"
-      end,
    },
 
    { -- Preview color #aaaaaa
-      "NvChad/nvim-colorizer.lua",
+      "norcalli/nvim-colorizer.lua",
       opts = {
          filetypes = { "css", "sass" },
       },
-   },
-
-   {
-      "dstein64/vim-startuptime",
-      cmd = "StartupTime",
-      init = function()
-         vim.g.startuptime_tries = 10
-      end,
    },
 }
