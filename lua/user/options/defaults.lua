@@ -8,6 +8,7 @@ return {
    },
    cmd = {
       find_files = { "find", "-type", "f" },
+      find_files_no_vcs = { "find", "-type", "f" },
       find_all_files = { "find", "-type", "f" },
    },
    dirs = {

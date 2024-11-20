@@ -2,6 +2,7 @@ local keymap = require "user.utils.keymap"
 local options = require "user.options"
 
 local find_files = options "cmd.find_files"
+local find_files_no_vcs = options "cmd.find_files_no_vsc"
 local find_all_files = options "cmd.find_all_files"
 
 keymap {
@@ -204,6 +205,16 @@ keymap {
       "<leader>fh",
       vim = "Telescope help_tags",
       desc = "Find vim help tags",
+   },
+   {
+      "<leader>fi",
+      function()
+         require("telescope.builtin").find_files {
+            layout_config = { preview_cutoff = 120 },
+            find_command = find_files_no_vcs,
+         }
+      end,
+      desc = "Find files with preview",
    },
    {
       "<leader>fm",
