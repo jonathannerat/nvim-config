@@ -1,31 +1,25 @@
 # jonathannerat's Neovim dotfiles
 
-To install this configs, you can symlink them to your neovim config directory. You can also use `stow`.
-
-
-## Installation with stow
-
-You can install them by using the excellent utility [stow](https://github.com/AitorATuin/stow/tree/bug-56727) like so:
+To install this config, simply clone it to your Neovim config directory (make sure to backup your
+current configs by running `test -d $HOME/.config/nvim && mv $HOME/.config/nvim{,.bak}`)
 
 ```sh
-stow --dotfiles -v -t ~ stow/
+git clone https://github.com/jonathannerat/nvim-config $HOME/.config/nvim
 ```
 
-Make sure you backup your `~/.config/nvim` or remove the previous symlinks there before running this, or you'll get a
-warning from stow.
+Then you can run `:Lazy sync` to download all the plugins.
 
-Also, there's currently [a bug](https://github.com/aspiers/stow/issues/33) in the main release of stow that prevents
-folders like `dot-config` being translated to `.config`, so that's why I'm linking to AitorATuin's fork (and bugfix
-branch). You can also install it by using [this](https://aur.archlinux.org/packages/stow-dotfiles-git) AUR package
+You can personalize the way plugins work by creating the file `lua/user/options/custom.lua` and
+returning a table overriding an option in `lua/user/options/defaults.lua`. For example, if you use
+`fd` to find files, you can add this to `custom.lua` to set the appropriate commands:
 
-There's a `Makefile` so I don't have to type the command every time, just run:
-
-```sh
-make install
+```lua
+return {
+   cmd = {
+      find_files = { "fd", "-t", "f" },
+      find_files_no_vcs = { "fd", "-t", "f", "--no-ignore-vcs" },
+      find_all_files = { "fd", "-t", "f", "-t", "l", "-H", "--no-ignore-vcs" },
+   },
 ```
 
-, and to uninstall:
-
-```sh
-make uninstall
-```
+In ubuntu, you probably wan to replace `fd` with `fdfind`.
