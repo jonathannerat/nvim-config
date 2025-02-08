@@ -73,6 +73,11 @@ keymap {
          disable = true,
          desc = "Disable default <SPACE> mapping",
       },
+      {
+         "gP",
+         vim = "PeekToggle",
+         desc = "REST: Select current environment",
+      },
    },
    {
       group = { mode = "insert", silent = true },

@@ -188,9 +188,9 @@ return {
    {
       "toppair/peek.nvim",
       event = { "VeryLazy" },
-      build = "test -f deno && deno task --quiet build:fast",
-      config = {
-         app = "chromium"
+      build = "deno task --quiet build:fast",
+      opts = {
+         app = require "user.options" "cmd.peek_browser"
       }
    }
 }

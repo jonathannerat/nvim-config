@@ -10,6 +10,7 @@ return {
       find_files = { "find", "-type", "f" },
       find_files_no_vcs = { "find", "-type", "f" },
       find_all_files = { "find", "-type", "f" },
+      peek_browser = "browser",
    },
    dirs = {
       nvim_config = vim.fn.stdpath "config",

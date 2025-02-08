@@ -17,8 +17,13 @@ command("LuaPlayground", function()
    end
 end)
 
-command("PeekOpen", function () require("peek").open() end)
-command("PeekOpen", function () require("peek").open() end)
+local peek = require "peek"
+
+function peek_toggle()
+   return peek.is_open and peek.close() or peek.open()
+end
+
+command("PeekToggle", peek_toggle)
 
 autocmd("BufWritePost", {
    pattern = { "/tmp/lua_playground.*.lua" },
