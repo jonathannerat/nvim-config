@@ -18,7 +18,7 @@ local function actions_system_open(prompt_bufnr)
       print "[telescope] No filename in selected entry"
    end
 
-   filename:normalize(vim.loop.cwd())
+   filename:normalize(vim.uv.cwd())
 
    local opener = "xdg-open"
 
@@ -33,39 +33,45 @@ local function actions_system_open(prompt_bufnr)
    os.execute(string.format("%s %s", opener, filename))
 end
 
-return {
+local telescope = require "telescope"
+
+local extensions = {
+  fzf = {
+     fuzzy = true,
+     override_generic_sorter = false,
+     override_file_sorter = true,
+     case_mode = "smart_case",
+  },
+  live_grep_args = {
+     mappings = { -- extend mappings
+        i = {
+           ["<C-k>"] = lga_actions.quote_prompt(),
+           ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+        },
+     },
+  },
+}
+
+telescope.setup {
    defaults = {
-      file_previewer = previewers.vim_buffer_cat.new,
-      grep_previewer = previewers.vim_buffer_vimgrep.new,
       path_display = function(_, path)
          local tail = require("telescope.utils").path_tail(path)
          return string.format("%s (%s)", tail, path)
       end,
       mappings = {
          i = {
-            ["<C-o>"] = actions_system_open,
             ["<C-Down>"] = "cycle_history_next",
             ["<C-Up>"] = "cycle_history_prev",
+            ["<C-i>"] = "select_drop",
+            ["<C-o>"] = "select_tab_drop",
             ["<C-r>"] = "delete_buffer",
-            ["<C-j>"] = "select_drop",
-            ["<C-k>"] = "select_tab_drop",
+            ["<C-s>"] = actions_system_open,
          },
       },
    },
-   extensions = {
-      fzf = {
-         fuzzy = true,
-         override_generic_sorter = false,
-         override_file_sorter = true,
-         case_mode = "smart_case",
-      },
-      live_grep_args = {
-         mappings = { -- extend mappings
-            i = {
-               ["<C-k>"] = lga_actions.quote_prompt(),
-               ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
-            },
-         },
-      },
-   },
+   extensions = extensions,
 }
+
+for extension, _ in pairs(extensions) do
+    telescope.load_extension(extension)
+end

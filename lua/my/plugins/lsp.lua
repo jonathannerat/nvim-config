@@ -1,7 +1,10 @@
+require("mason").setup()
+
 local mason_lspconfig = require "mason-lspconfig"
+
 local lspconfig = require "lspconfig"
 
-local options = require "user.options"
+local config = require("my.utils").config
 
 local default_lsp_opts = {
    capabilities = require("cmp_nvim_lsp").default_capabilities(),
@@ -25,17 +28,17 @@ local function is_installed_through_mason(name)
 end
 
 -- Setup handlers for every other lsp that can't be installed through mason
-for name, server_config in pairs(options "lsp.servers") do
+for name, server_config in pairs(config "lsp.servers") do
    if not is_installed_through_mason(name) then
       lspconfig[name].setup(server_config)
    end
 end
 
-return {
-   ensure_installed = options "lsp.ensure_installed",
+mason_lspconfig.setup {
+   ensure_installed = config "lsp.ensure_installed",
    handlers = {
       function(server_name)
-         local opts = options("lsp.servers." .. server_name)
+         local opts = config("lsp.servers." .. server_name)
 
          lspconfig[server_name].setup(extend(opts))
       end,
@@ -51,4 +54,12 @@ return {
          })
       end,
    }
+}
+
+require("lazydev").setup {
+    library = {
+       -- See the configuration section for more details
+       -- Load luvit types when the `vim.uv` word is found
+       { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+    },
 }

@@ -1,24 +1,10 @@
 local home_dir = os.getenv "HOME"
 
 return {
-   theme = "default",
-   lsp = {
-      ensure_installed = { "bashls", "jsonls", "lua_ls" },
-      servers = {},
-   },
-   cmd = {
-      find_files = { "find", "-type", "f" },
-      find_files_no_vcs = { "find", "-type", "f" },
-      find_all_files = { "find", "-type", "f" },
-      peek_browser = "browser",
-   },
-   dirs = {
-      nvim_config = vim.fn.stdpath "config",
-      nvim_plugins = home_dir,
-      notebook = vim.fs.joinpath(home_dir, "Notebook")
-   },
-   heirline = {
-      default = {
+   ui = {
+       theme = "default",
+       colorscheme = "default",
+       colors = {
          -- based on neovim's habamax theme
          bg = "#202020",
          bg_dark = "#1d1d1d",
@@ -45,5 +31,25 @@ return {
          git_del = "#af5f5f",
          git_change = "#af875f",
       }
-   }
+   },
+   lsp = {
+      ensure_installed = { "bashls", "jsonls", "lua_ls" },
+      servers = {},
+   },
+   cmd = {
+      find_files = { "find", "-type", "f" },
+      find_files_no_vcs = { "find", "-type", "f" },
+      find_all_files = { "find", "-type", "f" },
+      peek_browser = "browser",
+   },
+   vim = {
+       textwidth = 0,
+       tabwidth = 8,
+       timeoutlen = 1000,
+   },
+   dirs = {
+      nvim_config = vim.fn.stdpath "config",
+      nvim_plugins = home_dir,
+      notebook = vim.fs.joinpath(home_dir, "Notebook")
+   },
 }

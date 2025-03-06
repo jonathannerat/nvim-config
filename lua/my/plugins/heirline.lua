@@ -1,13 +1,11 @@
-local option = require "user.options"
+local config = require("my.utils").config
 local conditions = require "heirline.conditions"
 local utils = require "heirline.utils"
 
-local theme = option "theme"
-local colors = option("heirline." .. theme)
-colors = colors and (type(colors) == "function" and colors() or colors)
+local colors = config "ui.colors"
 
 if colors then
-   require("heirline").load_colors(colors)
+   require("heirline").load_colors(type(colors) == "function" and colors() or colors)
 end
 
 local ViMode = {
@@ -339,7 +337,7 @@ local HelpFileName = {
       local filename = vim.api.nvim_buf_get_name(0)
       return vim.fn.fnamemodify(filename, ":t")
    end,
-   hl = { fg = colors.blue },
+   hl = { fg = "blue" },
 }
 
 local Spell = {
@@ -551,12 +549,11 @@ local WinBars = {
    utils.surround({ "", "" }, "bg_light", FileNameBlock),
 }
 
-return {
+require("heirline").setup {
    statusline = StatusLines,
    tabline = TabPages,
    winbar = WinBars,
    opts = {
-      colors = colors,
       disable_winbar_cb = function(args)
          return conditions.buffer_matches({
             buftype = { "nofile", "prompt", "help", "quickfix" },
@@ -565,3 +562,4 @@ return {
       end,
    },
 }
+

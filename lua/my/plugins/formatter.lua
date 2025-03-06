@@ -23,7 +23,7 @@ local function stdin_fmt(exe, args)
    end
 end
 
-return {
+require("formatter").setup {
    filetype = {
       blade = {
          function()
