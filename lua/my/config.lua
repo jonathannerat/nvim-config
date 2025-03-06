@@ -37,9 +37,10 @@ return {
       servers = {},
    },
    cmd = {
-      find_files = { "find", "-type", "f" },
-      find_files_no_vcs = { "find", "-type", "f" },
-      find_all_files = { "find", "-type", "f" },
+      find_files = { "find", "-type", "f", "-not", "-path", "*/.*" },
+      find_files_hidden = { "find", "-type", "f" },
+      find_files_vcs = { "find", "-type", "f" },
+      find_files_all = { "find", "-type", "f" },
       peek_browser = "browser",
    },
    vim = {

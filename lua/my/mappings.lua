@@ -2,8 +2,9 @@ local utils = require("my.utils")
 local config = utils.config
 
 local find_files = config("cmd.find_files")
-local find_files_no_vcs = config("cmd.find_files_no_vcs")
-local find_all_files = config("cmd.find_all_files")
+local find_files_hidden = config("cmd.find_files_hidden")
+local find_files_vcs = config("cmd.find_files_vcs")
+local find_files_all = config("cmd.find_files_all")
 
 utils.map({
 	{
@@ -126,17 +127,6 @@ utils.map({
 			end,
 		},
 		{
-			"<M-S-o>",
-			function()
-				local oil = require("oil")
-				if vim.bo.filetype == "oil" then
-					oil.close()
-				else
-					oil.open_float(vim.fn.stdpath("config"))
-				end
-			end,
-		},
-		{
 			"<leader>fb",
 			vim = "Telescope buffers",
 			desc = "Find open buffers",
@@ -149,7 +139,37 @@ utils.map({
 					find_command = find_files,
 				})
 			end,
-			desc = "Find files with preview",
+			desc = "Find files",
+		},
+		{
+			"<leader>fH",
+			function()
+				require("telescope.builtin").find_files({
+					layout_config = { preview_cutoff = 120 },
+					find_command = find_files_hidden,
+				})
+			end,
+			desc = "Find files including hidden",
+		},
+		{
+			"<leader>fG",
+			function()
+				require("telescope.builtin").find_files({
+					layout_config = { preview_cutoff = 120 },
+					find_command = find_files_vcs,
+				})
+			end,
+			desc = "Find files including VCS ignored files",
+		},
+		{
+			"<leader>fF",
+			function()
+				require("telescope.builtin").find_files({
+					layout_config = { preview_cutoff = 120 },
+					find_command = find_files_all,
+				})
+			end,
+			desc = "Find ALL files",
 		},
 		{
 			"<leader>fg",
@@ -165,16 +185,6 @@ utils.map({
 			"<leader>fh",
 			vim = "Telescope help_tags",
 			desc = "Find vim help tags",
-		},
-		{
-			"<leader>fi",
-			function()
-				require("telescope.builtin").find_files({
-					layout_config = { preview_cutoff = 120 },
-					find_command = find_files_no_vcs,
-				})
-			end,
-			desc = "Find files without ignoring VCS files",
 		},
 		{
 			"<leader>fm",
@@ -197,16 +207,6 @@ utils.map({
 			desc = "Find treesitter elements",
 		},
 		{
-			"<leader>fF",
-			function()
-				require("telescope.builtin").find_files({
-					layout_config = { preview_cutoff = 120 },
-					find_command = find_all_files,
-				})
-			end,
-			desc = "Find files with preview (include hidden files)",
-		},
-		{
 			"<leader>n",
 			lua = "require('notify').dismiss()",
 		},
@@ -217,7 +217,9 @@ utils.map({
 		},
 		{
 			"<M-t>",
-			lua = "require('FTerm').toggle()",
+			function ()
+            require("FTerm").toggle()
+			end,
 			desc = "Toggle floating terminal",
 			mode = { "normal", "terminal" },
 		},
@@ -265,3 +267,17 @@ utils.map({
 		{ "<C-k>", "<UP>" },
 	},
 })
+
+local lazygit = require("FTerm"):new {
+   cmd = "lazygit",
+   ft = "LazygitFTerm"
+}
+
+utils.map {
+   {
+      "<M-g>",
+      function() lazygit:toggle() end,
+      mode = { "normal", "terminal" },
+      desc = "Open floating lazygit terminal"
+   }
+}
