@@ -7,6 +7,7 @@ utils.set {
 	autoindent = false,
 	background = "dark",
 	backup = false,
+	colorcolumn = config "vim.colorcolumn",
 	conceallevel = 2,
 	copyindent = true,
 	cursorline = true,
