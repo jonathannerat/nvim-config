@@ -44,6 +44,7 @@ require("paq")({
 	"SmiteshP/nvim-navic",
 	"rebelot/heirline.nvim",
 	"numToStr/FTerm.nvim",
+	"j-hui/fidget.nvim",
 
 	-- Text editing
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -89,4 +90,10 @@ utils.setup({
 	treesj = {
 		use_default_keymaps = false,
 	},
+
+	fidget = {
+	   notification = {
+	      override_vim_notify = true,
+	   }
+	}
 })
