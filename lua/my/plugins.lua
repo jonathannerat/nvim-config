@@ -48,6 +48,7 @@ require("paq")({
 	-- Text editing
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	"nvim-treesitter/nvim-treesitter-context",
+	"nvim-treesitter/nvim-treesitter-textobjects",
 	"windwp/nvim-autopairs",
 	"kylechui/nvim-surround",
 	"mhartington/formatter.nvim",
@@ -69,6 +70,7 @@ utils.setup({
 	"my.plugins.cmp",
 	"my.plugins.heirline",
 	"my.plugins.formatter",
+	"my.plugins.treesitter",
 
 	"nvim-surround",
 	"zen-mode",

@@ -36,6 +36,10 @@ return {
       ensure_installed = { "bashls", "jsonls", "lua_ls" },
       servers = {},
    },
+   treesitter = {
+      ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+      parsers = {},
+   },
    cmd = {
       find_files = { "find", "-type", "f", "-not", "-path", "*/.*" },
       find_files_hidden = { "find", "-type", "f" },
