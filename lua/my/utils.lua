@@ -1,7 +1,7 @@
 local M = {}
 
 --- Bootstrap a plugin into rtp
----@param opts {url: string, name: string, branch: string}
+---@param opts {url: string, name: string, branch: string, package: string}
 function M.bootstrap(opts)
 	local url = opts.url
 	local branch = opts.branch or "main"
@@ -10,7 +10,7 @@ function M.bootstrap(opts)
 	name = name:sub(-4) == ".git" and name:sub(1, -5) or name
 	local pluginpath = vim.fn.stdpath("data") .. "/site/pack/" .. packname .. "/start/" .. name
 
-	if not vim.loop.fs_stat(pluginpath) then
+	if not vim.uv.fs_stat(pluginpath) then
 		local out = vim.fn.system({
 			"git",
 			"clone",
@@ -43,8 +43,7 @@ function M.set(options)
 	local opt_table_actions = { "append", "prepend", "remove" }
 
 	for k, v in pairs(options) do
-		option = nil
-		value = nil
+		local option, value, action
 		if type(k) == "number" then
 			option = v
 			value = true
@@ -59,7 +58,6 @@ function M.set(options)
 		end
 
 		if type(value) == "table" then
-			action = nil
 			for _, a in ipairs(opt_table_actions) do
 				if value[a] ~= nil then
 					action = a
