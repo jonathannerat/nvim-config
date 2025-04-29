@@ -14,22 +14,22 @@ require("oil").setup({
 		["<BS>"] = "actions.parent",
 		q = "actions.close",
 		R = "actions.refresh",
-		v = {
+		["<C-v>"] = {
 			"actions.select",
 			opts = { vertical = true },
 			desc = "Open file in vertical split",
 		},
-		x = {
+		["<C-x>"] = {
 			"actions.select",
 			opts = { horizontal = true },
 			desc = "Open file in horizontal split",
 		},
-		t = {
+		["<C-t>"] = {
 			"actions.select",
 			opts = { tab = true },
 			desc = "Open file in new tab",
 		},
-		s = {
+		["<C-s>"] = {
 			"actions.open_external",
 			desc = "Open file using system opener",
 		},
