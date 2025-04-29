@@ -40,7 +40,7 @@ require("formatter").setup {
       json = { require("formatter.filetypes.json").jq },
       jsonc = { require("formatter.filetypes.json").jq },
       lua = { require("formatter.filetypes.lua").stylua },
-      php = { stdin_fmt "pint-stdin" },
+      php = { require("formatter.filetypes.php").php_cs_fixer, stdin_fmt "pint-stdin" },
       python = { require("formatter.filetypes.python").black },
       ruby = { require("formatter.filetypes.ruby").rubocop },
       rust = { require("formatter.filetypes.rust").rustfmt },
