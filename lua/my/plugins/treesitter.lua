@@ -1,5 +1,5 @@
 local config = require("my.utils").config
-local custom_parsers config "treesitter.parsers"
+local custom_parsers = config "treesitter.parsers"
 
 if custom_parsers then
    local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
