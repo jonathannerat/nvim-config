@@ -27,6 +27,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				desc = "Rename the current symbol",
 			},
 			{
+				"gca",
+				lua = "vim.lsp.buf.code_action()",
+				desc = "List the code actions available",
+			},
+			{
 				"<C-w>D",
 				lua = "vim.diagnostic.open_float {scope = 'buffer'}",
 				desc = "View diagnostics for current file",
