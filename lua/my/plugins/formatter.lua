@@ -49,8 +49,6 @@ require("formatter").setup {
       tex = { stdin_fmt("latexindent", { [[-y="defaultIndent:'  '"]] }) },
       vue = { require("formatter.filetypes.vue").prettier },
       zsh = { shell_format },
-      ["*"] = {
-         require("formatter.filetypes.any").substitute_trailing_whitespace,
-      },
+      sql = { require("formatter.filetypes.sql").sql_formatter },
    },
 }
