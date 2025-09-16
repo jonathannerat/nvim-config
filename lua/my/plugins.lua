@@ -43,8 +43,8 @@ require("paq")({
 	-- UI
 	"SmiteshP/nvim-navic",
 	"rebelot/heirline.nvim",
-	"numToStr/FTerm.nvim",
 	"j-hui/fidget.nvim",
+	"folke/snacks.nvim",
 
 	-- Text editing
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -54,11 +54,7 @@ require("paq")({
 	"kylechui/nvim-surround",
 	"mhartington/formatter.nvim",
 	"Wansmer/treesj",
-	"folke/zen-mode.nvim",
 	"danymat/neogen",
-
-	-- Integration with third party tools
-	"lewis6991/gitsigns.nvim",
 
 	-- Colorschemes
 	"rebelot/kanagawa.nvim",
@@ -72,11 +68,12 @@ utils.setup({
 	"my.plugins.heirline",
 	"my.plugins.formatter",
 	"my.plugins.treesitter",
+	"my.plugins.snacks",
 
 	"nvim-surround",
-	"zen-mode",
 	"gitsigns",
 	"neogen",
+	"fidget",
 
 	["treesitter-context"] = {
 		enabled = true,
@@ -90,10 +87,4 @@ utils.setup({
 	treesj = {
 		use_default_keymaps = false,
 	},
-
-	fidget = {
-	   notification = {
-	      override_vim_notify = true,
-	   }
-	}
 })

@@ -127,6 +127,13 @@ utils.map({
 			end,
 		},
 		{
+			"<M-g>",
+			function()
+				require("snacks").lazygit()
+			end,
+			desc = "Open floating lazygit window"
+		},
+		{
 			"<leader>fb",
 			vim = "Telescope buffers",
 			desc = "Find open buffers",
@@ -216,12 +223,25 @@ utils.map({
 			desc = "Toggle treesitter context",
 		},
 		{
+			"<leader>.",
+			function () require("snacks").scratch() end,
+			desc = "Toggle scratch buffer",
+		},
+		{
+			"<leader>S",
+			function () require("snacks").scratch.select() end,
+			desc = "Select scratch buffer",
+		},
+		{
 			"<M-t>",
-			function ()
-            require("FTerm").toggle()
-			end,
+			function () require("snacks").terminal.toggle() end,
 			desc = "Toggle floating terminal",
 			mode = { "normal", "terminal" },
+		},
+		{
+			"<M-z>",
+			function () require("snacks").zen() end,
+			desc = "Enable Zen mode",
 		},
 	},
 	{
@@ -267,17 +287,3 @@ utils.map({
 		{ "<C-k>", "<UP>" },
 	},
 })
-
-local lazygit = require("FTerm"):new {
-   cmd = "lazygit",
-   ft = "LazygitFTerm"
-}
-
-utils.map {
-   {
-      "<M-g>",
-      function() lazygit:toggle() end,
-      mode = { "normal", "terminal" },
-      desc = "Open floating lazygit terminal"
-   }
-}

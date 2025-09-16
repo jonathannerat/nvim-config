@@ -1,5 +1,6 @@
 local has_navic, navic = pcall(require, "nvim-navic")
 local map = require("my.utils").map
+local Snacks = require("snacks")
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
@@ -42,4 +43,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			navic.attach(client, ev.buf)
 		end
 	end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "OilActionsPost",
+  callback = function(event)
+      if event.data.actions.type == "move" then
+          Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+      end
+  end,
 })
