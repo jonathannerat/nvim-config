@@ -45,6 +45,7 @@ require("paq")({
 	"rebelot/heirline.nvim",
 	"j-hui/fidget.nvim",
 	"folke/snacks.nvim",
+	"lewis6991/gitsigns.nvim",
 
 	-- Text editing
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
