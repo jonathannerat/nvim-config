@@ -2,8 +2,6 @@ require("mason").setup()
 
 local mason_lspconfig = require "mason-lspconfig"
 
-local lspconfig = require "lspconfig"
-
 local config = require("my.utils").config
 
 local default_lsp_opts = {
@@ -30,7 +28,11 @@ end
 -- Setup handlers for every other lsp that can't be installed through mason
 for name, server_config in pairs(config "lsp.servers") do
    if not is_installed_through_mason(name) then
-      lspconfig[name].setup(server_config)
+      if #server_config == 0 then
+         vim.lsp.enable(name)
+      else
+         vim.lsp.config(name, server_config)
+      end
    end
 end
 
@@ -40,11 +42,11 @@ mason_lspconfig.setup {
       function(server_name)
          local opts = config("lsp.servers." .. server_name)
 
-         lspconfig[server_name].setup(extend(opts))
+         vim.lsp.config(server_name, extend(opts))
       end,
 
       jsonls = function()
-         lspconfig.jsonls.setup(extend {
+         vim.lsp.config("jsonls", extend {
             settings = {
                json = {
                   schemas = require("schemastore").json.schemas(),
