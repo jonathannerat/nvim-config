@@ -43,7 +43,6 @@ require("paq")({
 	-- UI
 	"SmiteshP/nvim-navic",
 	"rebelot/heirline.nvim",
-	"j-hui/fidget.nvim",
 	"folke/snacks.nvim",
 
 	-- Text editing
@@ -73,7 +72,6 @@ utils.setup({
 	"nvim-surround",
 	"gitsigns",
 	"neogen",
-	"fidget",
 
 	["treesitter-context"] = {
 		enabled = true,
