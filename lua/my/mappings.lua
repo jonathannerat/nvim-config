@@ -215,7 +215,8 @@ utils.map({
 		},
 		{
 			"<leader>n",
-			lua = "require('notify').dismiss()",
+			function () require("snacks").notifier.show_history() end,
+			desc = "Show notification history",
 		},
 		{
 			"<leader>cc",
