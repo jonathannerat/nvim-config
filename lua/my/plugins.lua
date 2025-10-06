@@ -28,6 +28,7 @@ require("paq")({
 	"neovim/nvim-lspconfig",
 	"williamboman/mason-lspconfig.nvim",
 	"williamboman/mason.nvim",
+	"nvimdev/lspsaga.nvim",
 
 	-- Completion
 	"hrsh7th/cmp-nvim-lsp",
@@ -86,4 +87,11 @@ utils.setup({
 	treesj = {
 		use_default_keymaps = false,
 	},
+
+	lspsaga = {
+		lightbulb = { enable = false },
+		symbol_in_winbar = { enable = false },
+		implement = { enable = false },
+		beacon = { enabled = false },
+	}
 })

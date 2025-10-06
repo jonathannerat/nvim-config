@@ -244,6 +244,11 @@ utils.map({
 			function () require("snacks").zen() end,
 			desc = "Enable Zen mode",
 		},
+		{
+			"K",
+			vim = "Lspsaga hover_doc",
+			desc = "Open hover documentation"
+		}
 	},
 	{
 		group = { mode = "insert", silent = true },
