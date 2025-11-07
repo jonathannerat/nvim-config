@@ -46,6 +46,7 @@ require("paq")({
 	"rebelot/heirline.nvim",
 	"folke/snacks.nvim",
 	"lewis6991/gitsigns.nvim",
+	"catgoose/nvim-colorizer.lua",
 
 	-- Text editing
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -93,5 +94,12 @@ utils.setup({
 		symbol_in_winbar = { enable = false },
 		implement = { enable = false },
 		beacon = { enabled = false },
+	},
+	colorizer = {
+		filetypes = {
+			"css",
+			"html",
+			"twig",
+		},
 	}
 })
